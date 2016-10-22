@@ -124,6 +124,36 @@ body {
 #login input:focus, #login button:focus {
     outline: none;
 }
+#Welcome_content
+{
+    position: absolute;
+    left:30%;
+    top:10%;
+    width: 60%;
+    height: 70%;
+    z-index: 3;
+    text-align: center;
+}
+
+#Welcome_content span
+{
+    top: 30%;
+}
+#editEvent
+{
+    position: absolute;
+    left: 20%;
+    top:10%;
+    width: 80%;
+    height: 90%;
+    display: none;
+    background-color: red;
+}
+
+
+
+
+/*--------------------------------------------------------------------------------------------*/
 @media (max-width: 1024px) {
     #mainContent {
         width: calc((100% - 210px) - 2 * 65px);
