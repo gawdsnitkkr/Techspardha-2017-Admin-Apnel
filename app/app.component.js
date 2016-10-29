@@ -19,6 +19,9 @@ var AppComponent = (function () {
     function AppComponent(sessionService, router) {
         this.sessionService = sessionService;
         this.router = router;
+        //narendra........................................
+        this.count = 0;
+        this.count1 = 0;
         this.toolbarColor = '#676767';
         this.toolbarBackground = 'rgb(255, 255, 255)';
         this.contentColor = '#676767';
@@ -26,6 +29,20 @@ var AppComponent = (function () {
         this.toggleClassSidebar = 'show-sidebar';
         this.toggleClassContent = 'sidebar-displayed';
     }
+    AppComponent.prototype.showEvents = function () {
+        this.count++;
+        if (this.count % 2 != 0)
+            document.getElementById('eventList').style.display = "block";
+        else
+            document.getElementById('eventList').style.display = "none";
+    };
+    AppComponent.prototype.showParticipations = function () {
+        this.count1++;
+        if (this.count1 % 2 != 0)
+            document.getElementById('participants').style.display = "block";
+        else
+            document.getElementById('participants').style.display = "none";
+    };
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
         if (window.innerWidth <= 768) {

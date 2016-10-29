@@ -12,8 +12,30 @@ import constants = require('./shared/constants');
     selector: 'my-app',
     templateUrl: 'app/app.component.html',
     providers: []
+    //narendra........................................
+    // template:'<button (click)="CountNumber()">hits={{count}}</button>',
 })
 export class AppComponent {
+
+    //narendra........................................
+    count=0,count1=0;
+    showEvents()
+    {
+        this.count++;
+        if(this.count%2!=0)
+        document.getElementById('eventList').style.display="block";
+        else
+            document.getElementById('eventList').style.display="none";
+    },
+    showParticipations()
+    {
+        this.count1++;
+        if(this.count1%2!=0)
+            document.getElementById('participants').style.display="block";
+        else
+            document.getElementById('participants').style.display="none";
+    },
+
     private admin: Admin;
     toolbarColor: string = '#676767';
     toolbarBackground: string = 'rgb(255, 255, 255)';
@@ -62,5 +84,9 @@ export class AppComponent {
             this.toggleClassContent = 'sidebar-displayed';
         }
     }
+
+
+
+
 }
 

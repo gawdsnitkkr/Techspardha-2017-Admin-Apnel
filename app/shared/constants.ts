@@ -11,7 +11,7 @@ export var colorScheme = [
     }
 ];
 export var apis = {
-    // getAdmin: 'http://techspardha:81/api/admin/get'
-    getAdmin: 'app/event/event.component.html'
+    getAdmin: 'http://techspardha:81/api/admin/get'
+    // getAdmin: 'app/event/event.component.html'
 
 };

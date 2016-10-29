@@ -9,9 +9,9 @@
 <div id="content" [style.color]="contentColor" [style.background]="contentBackground">
     <div id="sidebar" [ngClass]="toggleClassSidebar">
         <ul>
-            <li routerLink="edit-event" routerLinkActive="active" >
+            <li  routerLink="edit-event" routerLinkActive="active" >
                 <img class="sidebar-icon" src="app/assests/event.svg"/>
-                Edit Event
+                Edit Event{{times}}
             </li>
             <li routerLink="participants" routerLinkActive="active">
                 <img class="sidebar-icon" src="app/assests/participants.svg"/>
@@ -27,13 +27,17 @@
         <router-outlet></router-outlet>
     </div>
 </div>
+<!--================================================-->
 <div id="Welcome_content">
-<span>WELCOME TO ADMIN PANEL<br></span><br>
-    <span> TECHSPARDHA</span>
-    <hr>
-    <h1>Events</h1>
-    <hr>
-
-
+    <span>WELCOME TO ADMIN PANEL<br></span><br>
+    <span> TECHSPARDHA 2017</span>
+    <button (click)="showEvents()" id="EventsButton">Event Lists</button> <br>
+        <button (click)="showParticipations()" id="ParicipantsButton">Paricipants</button> <br>
+    <ul id="eventList">
+        <li>Retrive from detabase</li>
+    </ul>
+    <ul id="participants">
+        <li>retrive from detabase</li
+    </ul>
 </div>
 
