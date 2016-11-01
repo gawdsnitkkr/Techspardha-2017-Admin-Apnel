@@ -11,5 +11,6 @@ export var colorScheme = [
     }
 ];
 export var apis = {
-    getAdmin: 'http://techspardha:81/api/admin/get'
+    //getAdmin: 'http://techspardha:81/api/admin/get'
+    getAdmin: 'app/admin.json' //dummy module, remove it
 };

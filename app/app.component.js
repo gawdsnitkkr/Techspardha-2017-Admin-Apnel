@@ -14,7 +14,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var session_service_1 = require('./shared/session.service');
-var constants = require('./shared/constants');
 var AppComponent = (function () {
     function AppComponent(sessionService, router) {
         this.sessionService = sessionService;
@@ -31,20 +30,18 @@ var AppComponent = (function () {
         if (window.innerWidth <= 768) {
             this.toggleSidebar();
         }
-        console.log(constants.colorScheme);
+        //console.log(constants.colorScheme);
         this.admin = this.sessionService.getAdmin();
         if (this.admin == null) {
             this.sessionService.retrieveAdmin()
                 .subscribe(function (admin) {
                 _this.admin = admin;
                 _this.sessionService.setAdmin(admin);
-                console.log(_this.sessionService.getAdmin());
+                //console.log(this.sessionService.getAdmin());
+            }, function (err) {
+                console.log('error occured');
             });
         }
-        /*this.router.events.subscribe((event) => {
-            console.log('route changed', event);
-            return false;
-        });*/
     };
     AppComponent.prototype.changeLayout = function (toolbarColor, toolbarBackground, contentColor, contentBackground) {
         this.toolbarColor = toolbarColor;
