@@ -12,6 +12,8 @@ exports.colorScheme = [
 ];
 exports.apis = {
     //getAdmin: 'http://techspardha:81/api/admin/get'
-    getAdmin: 'app/admin.json' //dummy module, remov
+    getAdmin: 'app/admin.json',
+    getParticipants: 'app/participants.json',
+    getEvent: 'app/event.json'
 };
 //# sourceMappingURL=constants.js.map

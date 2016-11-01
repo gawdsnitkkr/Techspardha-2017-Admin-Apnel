@@ -22,15 +22,22 @@ var AppComponent = (function () {
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.admin = this.sessionService.getAdmin();
+        this.redirectToDashboard(this.admin);
         if (this.admin == null) {
             this.sessionService.retrieveAdmin()
                 .subscribe(function (admin) {
                 _this.admin = admin;
                 _this.sessionService.setAdmin(admin);
                 //console.log(this.sessionService.getAdmin());
+                _this.redirectToDashboard(admin);
             }, function (err) {
                 console.log('error occured');
             });
+        }
+    };
+    AppComponent.prototype.redirectToDashboard = function (admin) {
+        if (admin && admin.name && admin.status) {
+            this.router.navigate(['/welcome']);
         }
     };
     AppComponent = __decorate([

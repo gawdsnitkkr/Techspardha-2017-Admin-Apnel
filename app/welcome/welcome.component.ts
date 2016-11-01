@@ -21,6 +21,7 @@ export class WelcomeComponent {
             this.toggleSidebar();
         }
         //console.log(constants.colorScheme);
+        //getting event, participants list
     }
     changeLayout(toolbarColor: string, toolbarBackground: string, contentColor: string, contentBackground: string): void {
         this.toolbarColor = toolbarColor;
@@ -36,5 +37,11 @@ export class WelcomeComponent {
             this.toggleClassSidebar = 'show-sidebar';
             this.toggleClassContent = 'sidebar-displayed';
         }
+    }
+    getEvent(): void {
+        
+    }
+    getParticipants(): void {
+        
     }
 }

@@ -26,6 +26,7 @@ var WelcomeComponent = (function () {
             this.toggleSidebar();
         }
         //console.log(constants.colorScheme);
+        //getting event, participants list
     };
     WelcomeComponent.prototype.changeLayout = function (toolbarColor, toolbarBackground, contentColor, contentBackground) {
         this.toolbarColor = toolbarColor;
@@ -42,6 +43,10 @@ var WelcomeComponent = (function () {
             this.toggleClassSidebar = 'show-sidebar';
             this.toggleClassContent = 'sidebar-displayed';
         }
+    };
+    WelcomeComponent.prototype.getEvent = function () {
+    };
+    WelcomeComponent.prototype.getParticipants = function () {
     };
     WelcomeComponent = __decorate([
         core_1.Component({
