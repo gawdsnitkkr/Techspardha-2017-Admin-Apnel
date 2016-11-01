@@ -30,7 +30,7 @@ export class AppComponent {
         if (window.innerWidth <= 768) {
             this.toggleSidebar();
         }
-        console.log(constants.colorScheme);
+        //console.log(constants.colorScheme);
         this.admin = this.sessionService.getAdmin();
         if (this.admin == null) {
             this.sessionService.retrieveAdmin()
@@ -38,14 +38,13 @@ export class AppComponent {
                     admin => {
                         this.admin = admin;
                         this.sessionService.setAdmin(admin);
-                        console.log(this.sessionService.getAdmin());
+                        //console.log(this.sessionService.getAdmin());
+                    },
+                    err => {
+                        console.log('error occured');
                     }
                 );
         }
-        /*this.router.events.subscribe((event) => {
-            console.log('route changed', event);
-            return false;
-        });*/
     }
     changeLayout(toolbarColor: string, toolbarBackground: string, contentColor: string, contentBackground: string): void {
         this.toolbarColor = toolbarColor;

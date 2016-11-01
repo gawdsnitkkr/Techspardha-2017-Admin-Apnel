@@ -15,7 +15,7 @@ import { Admin } from './admin.interface';
 export class AuthGuard implements CanActivate {
     constructor(private sessionService: SessionService, private router: Router) {}
     canActivate(): boolean {
-        console.log('AuthGuard#canActivate called');
+        //console.log('AuthGuard#canActivate called');
         let admin: Admin = this.sessionService.getAdmin();
         return this.checkLogin(admin);
     }
@@ -28,8 +28,8 @@ export class AuthGuard implements CanActivate {
         } else {
             this.sessionService.retrieveAdmin().subscribe(admin => {
                 this.sessionService.setAdmin(admin);
-                return this.checkLogin(admin)
             });
+            this.router.navigate(['/welcome']);
         }
     }
 }

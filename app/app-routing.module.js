@@ -26,12 +26,12 @@ var AppRoutingModule = (function () {
         core_1.NgModule({
             imports: [
                 router_1.RouterModule.forRoot([
-                    { path: 'login', component: login_component_1.LoginComponent },
+                    { path: 'login', component: login_component_1.LoginComponent, canActivate: [auth_guard_service_1.AuthGuard] },
                     { path: 'edit-event', component: event_component_1.EventComponent, canActivate: [auth_guard_service_1.AuthGuard] },
                     { path: 'participants', component: participants_component_1.ParticipantsComponent, canActivate: [auth_guard_service_1.AuthGuard] },
                     { path: 'notification', component: notification_component_1.NotificationComponent, canActivate: [auth_guard_service_1.AuthGuard] },
-                    { path: '', component: welcome_component_1.WelcomeComponent, canActivate: [auth_guard_service_1.AuthGuard] },
-                    { path: '**', component: welcome_component_1.WelcomeComponent, canActivate: [auth_guard_service_1.AuthGuard] }
+                    { path: '', component: welcome_component_1.WelcomeComponent },
+                    { path: '**', component: welcome_component_1.WelcomeComponent }
                 ], { useHash: true })
             ],
             exports: [

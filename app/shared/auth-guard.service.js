@@ -20,7 +20,7 @@ var AuthGuard = (function () {
         this.router = router;
     }
     AuthGuard.prototype.canActivate = function () {
-        console.log('AuthGuard#canActivate called');
+        //console.log('AuthGuard#canActivate called');
         var admin = this.sessionService.getAdmin();
         return this.checkLogin(admin);
     };
@@ -36,8 +36,8 @@ var AuthGuard = (function () {
         else {
             this.sessionService.retrieveAdmin().subscribe(function (admin) {
                 _this.sessionService.setAdmin(admin);
-                return _this.checkLogin(admin);
             });
+            this.router.navigate(['/welcome']);
         }
     };
     AuthGuard = __decorate([

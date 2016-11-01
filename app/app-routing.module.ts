@@ -14,12 +14,12 @@ import { AuthGuard }    from './shared/auth-guard.service';
 @NgModule({
     imports: [
         RouterModule.forRoot([
-            { path: 'login', component: LoginComponent },
+            { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
             { path: 'edit-event', component: EventComponent, canActivate: [AuthGuard] },
             { path: 'participants', component: ParticipantsComponent, canActivate: [AuthGuard] },
             { path: 'notification', component: NotificationComponent, canActivate: [AuthGuard] },
-            { path: '', component: WelcomeComponent, canActivate: [AuthGuard] },
-            { path: '**', component: WelcomeComponent, canActivate: [AuthGuard] }
+            { path: '', component: WelcomeComponent },
+            { path: '**', component: WelcomeComponent }
         ], { useHash: true })
     ],
     exports: [
