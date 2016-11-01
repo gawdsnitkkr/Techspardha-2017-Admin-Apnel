@@ -1,0 +1,34 @@
+{
+  "eventNaem": "",
+  "discription": "",
+  "venue": "",
+  "time": "",
+  "status": "",
+  "cordinators": [
+    {
+      "name": "narendra",
+      "email": "abc@gmail.com",
+      "mobile": "9098787878"
+    }
+    {
+      "name": "narendra1",
+      "email": "abc@gmail.com",
+      "mobile": "9098787878"
+    }
+    {
+      "name": "narendra2",
+      "email": "abc@gmail.com",
+      "mobile": "9098787878"
+    }
+    {
+      "name": "narendra3",
+      "email": "abc@gmail.com",
+      "mobile": "9098787878"
+    }
+    {
+      "name": "narendra",
+      "email": "abc@gmail.com",
+      "mobile": "9098787878"
+    }
+  ]
+}

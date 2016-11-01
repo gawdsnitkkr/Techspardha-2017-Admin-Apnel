@@ -1,0 +1,63 @@
+[
+  { "name": "Narendra",
+    "EmailId": "abc@gmail.com",
+    "Mobile": "9999999999",
+    "Gender": "MALE",
+    "College": "NIT KKR"
+  },
+  { "name": "Varun",
+    "EmailId": "xyz@gmail.com",
+    "Mobile": "09090909",
+    "Gender": "Male",
+    "College": "MNIT JPR"
+  },
+  { "name": "Narendra",
+    "EmailId": "abc@gmail.com",
+    "Mobile": "9999999999",
+    "Gender": "MALE",
+    "College": "NIT KKR"
+  },
+  { "name": "Varun",
+    "EmailId": "xyz@gmail.com",
+    "Mobile": "09090909",
+    "Gender": "Male",
+    "College": "MNIT JPR"
+  },
+  { "name": "Narendra",
+    "EmailId": "abc@gmail.com",
+    "Mobile": "9999999999",
+    "Gender": "MALE",
+    "College": "NIT KKR"
+  },
+  { "name": "Varun",
+    "EmailId": "xyz@gmail.com",
+    "Mobile": "09090909",
+    "Gender": "Male",
+    "College": "MNIT JPR"
+  },
+  { "name": "Narendra",
+    "EmailId": "abc@gmail.com",
+    "Mobile": "9999999999",
+    "Gender": "MALE",
+    "College": "NIT KKR"
+  },
+  { "name": "Varun",
+    "EmailId": "xyz@gmail.com",
+    "Mobile": "09090909",
+    "Gender": "Male",
+    "College": "MNIT JPR"
+  },
+  { "name": "Narendra",
+    "EmailId": "abc@gmail.com",
+    "Mobile": "9999999999",
+    "Gender": "MALE",
+    "College": "NIT KKR"
+  },
+  { "name": "Varun",
+    "EmailId": "xyz@gmail.com",
+    "Mobile": "09090909",
+    "Gender": "Male",
+    "College": "MNIT JPR"
+  }
+
+]
