@@ -14,7 +14,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var WelcomeComponent = (function () {
     function WelcomeComponent() {
+        this.toolbarColor = '#676767';
+        this.toolbarBackground = 'rgb(255, 255, 255)';
+        this.contentColor = '#676767';
+        this.contentBackground = 'rgb(238, 238, 238)';
+        this.toggleClassSidebar = 'show-sidebar';
+        this.toggleClassContent = 'sidebar-displayed';
     }
+    WelcomeComponent.prototype.ngOnInit = function () {
+        if (window.innerWidth <= 768) {
+            this.toggleSidebar();
+        }
+        //console.log(constants.colorScheme);
+    };
+    WelcomeComponent.prototype.changeLayout = function (toolbarColor, toolbarBackground, contentColor, contentBackground) {
+        this.toolbarColor = toolbarColor;
+        this.toolbarBackground = toolbarBackground;
+        this.contentColor = contentColor;
+        this.contentBackground = contentBackground;
+    };
+    WelcomeComponent.prototype.toggleSidebar = function () {
+        if (this.toggleClassSidebar == 'show-sidebar') {
+            this.toggleClassSidebar = 'hide-sidebar';
+            this.toggleClassContent = 'sidebar-hidden';
+        }
+        else {
+            this.toggleClassSidebar = 'show-sidebar';
+            this.toggleClassContent = 'sidebar-displayed';
+        }
+    };
     WelcomeComponent = __decorate([
         core_1.Component({
             templateUrl: 'app/welcome/welcome.component.html'

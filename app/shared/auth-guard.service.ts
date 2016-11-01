@@ -29,7 +29,7 @@ export class AuthGuard implements CanActivate {
             this.sessionService.retrieveAdmin().subscribe(admin => {
                 this.sessionService.setAdmin(admin);
             });
-            this.router.navigate(['/welcome']);
+            this.router.navigate(['/login']);
         }
     }
 }

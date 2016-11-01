@@ -18,19 +18,9 @@ var AppComponent = (function () {
     function AppComponent(sessionService, router) {
         this.sessionService = sessionService;
         this.router = router;
-        this.toolbarColor = '#676767';
-        this.toolbarBackground = 'rgb(255, 255, 255)';
-        this.contentColor = '#676767';
-        this.contentBackground = 'rgb(238, 238, 238)';
-        this.toggleClassSidebar = 'show-sidebar';
-        this.toggleClassContent = 'sidebar-displayed';
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
-        if (window.innerWidth <= 768) {
-            this.toggleSidebar();
-        }
-        //console.log(constants.colorScheme);
         this.admin = this.sessionService.getAdmin();
         if (this.admin == null) {
             this.sessionService.retrieveAdmin()
@@ -41,22 +31,6 @@ var AppComponent = (function () {
             }, function (err) {
                 console.log('error occured');
             });
-        }
-    };
-    AppComponent.prototype.changeLayout = function (toolbarColor, toolbarBackground, contentColor, contentBackground) {
-        this.toolbarColor = toolbarColor;
-        this.toolbarBackground = toolbarBackground;
-        this.contentColor = contentColor;
-        this.contentBackground = contentBackground;
-    };
-    AppComponent.prototype.toggleSidebar = function () {
-        if (this.toggleClassSidebar == 'show-sidebar') {
-            this.toggleClassSidebar = 'hide-sidebar';
-            this.toggleClassContent = 'sidebar-hidden';
-        }
-        else {
-            this.toggleClassSidebar = 'show-sidebar';
-            this.toggleClassContent = 'sidebar-displayed';
         }
     };
     AppComponent = __decorate([

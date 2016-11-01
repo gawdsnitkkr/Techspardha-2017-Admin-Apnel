@@ -37,7 +37,7 @@ var AuthGuard = (function () {
             this.sessionService.retrieveAdmin().subscribe(function (admin) {
                 _this.sessionService.setAdmin(admin);
             });
-            this.router.navigate(['/welcome']);
+            this.router.navigate(['/login']);
         }
     };
     AuthGuard = __decorate([

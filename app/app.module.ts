@@ -6,9 +6,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent }   from './app.component';
-import { EventComponent }   from './event/event.component';
-import { NotificationComponent }   from './notification/notification.component';
-import { ParticipantsComponent }   from './participants/participants.component';
 import { WelcomeComponent }   from './welcome/welcome.component';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -25,10 +22,11 @@ import { LoginComponent }   from './login/login.component';
     declarations: [
         AppComponent,
         LoginComponent,
-        EventComponent,
+        WelcomeComponent
+        /*EventComponent,
         WelcomeComponent,
         NotificationComponent,
-        ParticipantsComponent
+        ParticipantsComponent*/
     ],
     providers: [
         SessionService, AuthGuard
