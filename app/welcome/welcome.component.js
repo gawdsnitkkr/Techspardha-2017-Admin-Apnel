@@ -12,47 +12,48 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Created by varun on 12/10/16.
  */
 var core_1 = require('@angular/core');
+var participants_service_1 = require('../shared/participants.service');
+var event_service_1 = require('../shared/event.service');
 var WelcomeComponent = (function () {
-    function WelcomeComponent() {
-        this.toolbarColor = '#676767';
-        this.toolbarBackground = 'rgb(255, 255, 255)';
-        this.contentColor = '#676767';
-        this.contentBackground = 'rgb(238, 238, 238)';
-        this.toggleClassSidebar = 'show-sidebar';
-        this.toggleClassContent = 'sidebar-displayed';
+    function WelcomeComponent(participantsService, eventService) {
+        this.participantsService = participantsService;
+        this.eventService = eventService;
     }
     WelcomeComponent.prototype.ngOnInit = function () {
-        if (window.innerWidth <= 768) {
-            this.toggleSidebar();
-        }
-        //console.log(constants.colorScheme);
+        var _this = this;
         //getting event, participants list
-    };
-    WelcomeComponent.prototype.changeLayout = function (toolbarColor, toolbarBackground, contentColor, contentBackground) {
-        this.toolbarColor = toolbarColor;
-        this.toolbarBackground = toolbarBackground;
-        this.contentColor = contentColor;
-        this.contentBackground = contentBackground;
-    };
-    WelcomeComponent.prototype.toggleSidebar = function () {
-        if (this.toggleClassSidebar == 'show-sidebar') {
-            this.toggleClassSidebar = 'hide-sidebar';
-            this.toggleClassContent = 'sidebar-hidden';
+        this.event = this.eventService.getEvent();
+        if (!this.event) {
+            this.eventService.retrieveEvent()
+                .subscribe(function (event) {
+                _this.event = event;
+                _this.eventService.setEvent(event);
+            }, function (err) {
+                console.log('error occured');
+            });
         }
-        else {
-            this.toggleClassSidebar = 'show-sidebar';
-            this.toggleClassContent = 'sidebar-displayed';
+        this.participants = this.participantsService.getParticipants();
+        if (!this.participants) {
+            this.participantsService.retrieveParticipants()
+                .subscribe(function (participants) {
+                _this.participants = participants;
+                _this.participantsService.setParticipants(participants);
+            }, function (err) {
+                console.log('error occured');
+            });
         }
     };
     WelcomeComponent.prototype.getEvent = function () {
+        return this.event;
     };
     WelcomeComponent.prototype.getParticipants = function () {
+        return this.participants;
     };
     WelcomeComponent = __decorate([
         core_1.Component({
             templateUrl: 'app/welcome/welcome.component.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [participants_service_1.ParticipantsService, event_service_1.EventService])
     ], WelcomeComponent);
     return WelcomeComponent;
 }());

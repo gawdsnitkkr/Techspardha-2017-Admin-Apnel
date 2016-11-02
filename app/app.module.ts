@@ -10,6 +10,8 @@ import { WelcomeComponent }   from './welcome/welcome.component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { SessionService } from './shared/session.service';
+import { ParticipantsService } from './shared/participants.service';
+import { EventService } from './shared/event.service';
 import { AuthGuard } from './shared/auth-guard.service';
 
 import { LoginComponent }   from './login/login.component';
@@ -23,13 +25,9 @@ import { LoginComponent }   from './login/login.component';
         AppComponent,
         LoginComponent,
         WelcomeComponent
-        /*EventComponent,
-        WelcomeComponent,
-        NotificationComponent,
-        ParticipantsComponent*/
     ],
     providers: [
-        SessionService, AuthGuard
+        SessionService, AuthGuard, ParticipantsService, EventService
     ],
     bootstrap:    [
         AppComponent

@@ -17,8 +17,7 @@ export class AppComponent {
     constructor(
         private sessionService: SessionService,
         private router: Router
-    ) {
-    }
+    ) {}
     ngOnInit(): void {
         this.admin = this.sessionService.getAdmin();
         this.redirectToDashboard(this.admin);

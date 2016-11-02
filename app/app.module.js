@@ -18,6 +18,8 @@ var app_component_1 = require('./app.component');
 var welcome_component_1 = require('./welcome/welcome.component');
 var app_routing_module_1 = require('./app-routing.module');
 var session_service_1 = require('./shared/session.service');
+var participants_service_1 = require('./shared/participants.service');
+var event_service_1 = require('./shared/event.service');
 var auth_guard_service_1 = require('./shared/auth-guard.service');
 var login_component_1 = require('./login/login.component');
 var AppModule = (function () {
@@ -36,7 +38,7 @@ var AppModule = (function () {
                 welcome_component_1.WelcomeComponent
             ],
             providers: [
-                session_service_1.SessionService, auth_guard_service_1.AuthGuard
+                session_service_1.SessionService, auth_guard_service_1.AuthGuard, participants_service_1.ParticipantsService, event_service_1.EventService
             ],
             bootstrap: [
                 app_component_1.AppComponent

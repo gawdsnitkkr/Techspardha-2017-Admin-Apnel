@@ -3,45 +3,55 @@
  */
 import { Component, OnInit } from '@angular/core';
 
+import { ParticipantsService } from '../shared/participants.service';
+import { EventService } from '../shared/event.service';
 import constants = require('../shared/constants');
+import { Participant } from '../shared/participant.interface';
+import { Event } from '../shared/event.interface';
 
 @Component({
     templateUrl: 'app/welcome/welcome.component.html'
 })
 export class WelcomeComponent {
-    toolbarColor: string = '#676767';
-    toolbarBackground: string = 'rgb(255, 255, 255)';
-    contentColor: string = '#676767';
-    contentBackground: string = 'rgb(238, 238, 238)';
-    toggleClassSidebar: string = 'show-sidebar';
-    toggleClassContent: string = 'sidebar-displayed';
-    constructor() {}
+    private event: Event;
+    private participants: Participant[];
+    constructor(
+        private participantsService: ParticipantsService,
+        private eventService: EventService
+    ) {}
     ngOnInit(): void {
-        if (window.innerWidth <= 768) {
-            this.toggleSidebar();
-        }
-        //console.log(constants.colorScheme);
         //getting event, participants list
-    }
-    changeLayout(toolbarColor: string, toolbarBackground: string, contentColor: string, contentBackground: string): void {
-        this.toolbarColor = toolbarColor;
-        this.toolbarBackground = toolbarBackground;
-        this.contentColor = contentColor;
-        this.contentBackground = contentBackground;
-    }
-    toggleSidebar(): void {
-        if (this.toggleClassSidebar == 'show-sidebar') {
-            this.toggleClassSidebar = 'hide-sidebar';
-            this.toggleClassContent = 'sidebar-hidden';
-        } else {
-            this.toggleClassSidebar = 'show-sidebar';
-            this.toggleClassContent = 'sidebar-displayed';
+        this.event = this.eventService.getEvent();
+        if (!this.event) {
+            this.eventService.retrieveEvent()
+                .subscribe(
+                    event => {
+                        this.event = event;
+                        this.eventService.setEvent(event);
+                    },
+                    err => {
+                        console.log('error occured');
+                    }
+                );
+        }
+        this.participants = this.participantsService.getParticipants();
+        if (!this.participants) {
+            this.participantsService.retrieveParticipants()
+                .subscribe(
+                    participants => {
+                        this.participants = participants;
+                        this.participantsService.setParticipants(participants);
+                    },
+                    err => {
+                        console.log('error occured');
+                    }
+                );
         }
     }
-    getEvent(): void {
-        
+    getEvent(): Event {
+        return this.event;
     }
-    getParticipants(): void {
-        
+    getParticipants(): Participant[] {
+        return this.participants;
     }
 }

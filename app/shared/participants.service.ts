@@ -5,26 +5,23 @@ import { Injectable} from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
-import { Admin } from './admin.interface';
+import { Participant } from './participant.interface';
 import constants = require('./constants');
 
 @Injectable()
-export class SessionService {
-    private static admin: Admin;
-    private getAdminUrl: string = constants.apis.getAdmin;
+export class ParticipantsService {
+    private static participants: Participant[];
+    private getParticipantsUrl: string = constants.apis.getParticipants;
     constructor(private http: Http) {
     }
-    getAdmin(): Admin {
-        //console.log('get admin called');
-        return SessionService.admin;
+    getParticipants(): Participant[] {
+        return ParticipantsService.participants;
     }
-    setAdmin(admin: Admin) : void {
-        //console.log('set admin called');
-        SessionService.admin = admin;
+    setParticipants(participants: Participant[]) : void {
+        ParticipantsService.participants = participants;
     }
-    retrieveAdmin(): Observable<Admin> {
-        //console.log('retrieve admin called');
-        return this.http.post(this.getAdminUrl, {}, {})
+    retrieveParticipants(): Observable<Participant[]> {
+        return this.http.post(this.getParticipantsUrl, {}, {})
             .map((response: Response) => response.json())
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }

@@ -15,30 +15,27 @@ var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var Rx_1 = require('rxjs/Rx');
 var constants = require('./constants');
-var SessionService = (function () {
-    function SessionService(http) {
+var EventService = (function () {
+    function EventService(http) {
         this.http = http;
-        this.getAdminUrl = constants.apis.getAdmin;
+        this.getEventUrl = constants.apis.getEvent;
     }
-    SessionService.prototype.getAdmin = function () {
-        //console.log('get admin called');
-        return SessionService.admin;
+    EventService.prototype.getEvent = function () {
+        return EventService.event;
     };
-    SessionService.prototype.setAdmin = function (admin) {
-        //console.log('set admin called');
-        SessionService.admin = admin;
+    EventService.prototype.setEvent = function (event) {
+        EventService.event = event;
     };
-    SessionService.prototype.retrieveAdmin = function () {
-        //console.log('retrieve admin called');
-        return this.http.post(this.getAdminUrl, {}, {})
+    EventService.prototype.retrieveEvent = function () {
+        return this.http.post(this.getEventUrl, {}, {})
             .map(function (response) { return response.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    SessionService = __decorate([
+    EventService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])
-    ], SessionService);
-    return SessionService;
+    ], EventService);
+    return EventService;
 }());
-exports.SessionService = SessionService;
+exports.EventService = EventService;
 //# sourceMappingURL=event.service.js.map

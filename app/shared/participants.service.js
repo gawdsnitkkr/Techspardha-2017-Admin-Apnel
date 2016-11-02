@@ -15,30 +15,27 @@ var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var Rx_1 = require('rxjs/Rx');
 var constants = require('./constants');
-var SessionService = (function () {
-    function SessionService(http) {
+var ParticipantsService = (function () {
+    function ParticipantsService(http) {
         this.http = http;
-        this.getAdminUrl = constants.apis.getAdmin;
+        this.getParticipantsUrl = constants.apis.getParticipants;
     }
-    SessionService.prototype.getAdmin = function () {
-        //console.log('get admin called');
-        return SessionService.admin;
+    ParticipantsService.prototype.getParticipants = function () {
+        return ParticipantsService.participants;
     };
-    SessionService.prototype.setAdmin = function (admin) {
-        //console.log('set admin called');
-        SessionService.admin = admin;
+    ParticipantsService.prototype.setParticipants = function (participants) {
+        ParticipantsService.participants = participants;
     };
-    SessionService.prototype.retrieveAdmin = function () {
-        //console.log('retrieve admin called');
-        return this.http.post(this.getAdminUrl, {}, {})
+    ParticipantsService.prototype.retrieveParticipants = function () {
+        return this.http.post(this.getParticipantsUrl, {}, {})
             .map(function (response) { return response.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    SessionService = __decorate([
+    ParticipantsService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])
-    ], SessionService);
-    return SessionService;
+    ], ParticipantsService);
+    return ParticipantsService;
 }());
-exports.SessionService = SessionService;
+exports.ParticipantsService = ParticipantsService;
 //# sourceMappingURL=participants.service.js.map

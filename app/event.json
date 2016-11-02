@@ -1,30 +1,30 @@
 {
-  "eventNaem": "",
-  "discription": "",
-  "venue": "",
-  "time": "",
-  "status": "",
-  "cordinators": [
+  "eventName": "Kanvas",
+  "description": "Take part in Web-design, graphics and photography",
+  "venue": "Online",
+  "time": "statrts from 1st Jan",
+  "status": "Not started",
+  "coordinators": [
     {
       "name": "narendra",
       "email": "abc@gmail.com",
       "mobile": "9098787878"
-    }
+    },
     {
       "name": "narendra1",
       "email": "abc@gmail.com",
       "mobile": "9098787878"
-    }
+    },
     {
       "name": "narendra2",
       "email": "abc@gmail.com",
       "mobile": "9098787878"
-    }
+    },
     {
       "name": "narendra3",
       "email": "abc@gmail.com",
       "mobile": "9098787878"
-    }
+    },
     {
       "name": "narendra",
       "email": "abc@gmail.com",
