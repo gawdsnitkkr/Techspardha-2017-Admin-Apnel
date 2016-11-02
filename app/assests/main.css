@@ -6,9 +6,16 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
-    font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+    background-color: #272733/*#2b2b2b*/;
+    color: #eeeeee;
+    /*color: #ef7148;*/
 }
-#toolbar {
+#content {
+    width: 100%;
+    height: 100%;
+}
+/*#toolbar {
     position: fixed;
     top: 0;
     left: 0;
@@ -88,42 +95,63 @@ body {
 .sidebar-hidden {
     left: 0px;
     margin-left: calc(130px + 210px / 2);
-}
+}*/
 #login {
     position: relative;
+    margin: auto;
     margin-top: 5%;
     text-align: center;
     width: 50%;
-    background: #039BE5;
-    height: 50%;
-    margin-left: 25%;
-    border-radius: 2px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    background: #414453;
+    height: 55%;
+    color: #eeeeee;
 }
-#login h2 {
-    padding-top: 20px;
+#login h1 {
+    padding: 25px 0px 25px 0px;
+}
+#login input {
+    background: transparent;
+}
+.text-box {
+    width: 60%;
+    border: 1px solid #e7e7e7;
+    margin: 20px auto;
+    padding: 1.9%;
+}
+#login input {
+    border: 0px;
+    width: 90%;
 }
 #login input, #login button {
-    width: 60%;
-    background: #fcfcfc;
-    border: 2px solid #e7e7e7;
-    margin: 20px auto;
-    padding: 10px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
     display: block;
-    border-radius: 3px;
     font-size: 18px;
     transition: opacity 0.4s;
     text-align: left;
     height: auto;
+    color: #eeeeee;
 }
 #login button {
-    width: 66%;
+    margin: 20px auto;
+    padding: 1.9%;
+    border: 1px solid #e7e7e7;
+    background: #494f53;
     text-align: center;
-    color: #676767;
+    color: #eeeeee;
+    width: 64%;
 }
 #login input:focus, #login button:focus {
     outline: none;
 }
+#login .icon {
+    width: 15px;
+    vertical-align: text-bottom;
+    margin-right: 10px;
+    float: left;
+}
+/*
 @media (max-width: 1024px) {
     #mainContent {
         width: calc((100% - 210px) - 2 * 65px);
@@ -154,4 +182,4 @@ body {
         left: 0;
         margin-left: 30px;
     }
-}
+}*/

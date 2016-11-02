@@ -7,4 +7,6 @@ export interface Admin {
     event: string;
     society: string;
     status: string;
+    mobile: string;
+    email: string;
 }

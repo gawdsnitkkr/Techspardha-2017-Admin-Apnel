@@ -1,29 +1,3 @@
-<div id="toolbar" [style.color]="toolbarColor" [style.background]="toolbarBackground">
-    <div class="hamburger toolbar-item" (click)="toggleSidebar()">
-        <svg width="24px" height="24px" viewBox="0 0 48 48"><path d="M6 36h36v-4H6v4zm0-10h36v-4H6v4zm0-14v4h36v-4H6z"></path></svg>
-    </div>
-    <div class="toolbar-item">
-        Techspardha 2017
-    </div>
-</div>
-<div id="content" [style.color]="contentColor" [style.background]="contentBackground">
-    <div id="sidebar" [ngClass]="toggleClassSidebar">
-        <ul>
-            <li routerLink="edit-event" routerLinkActive="active">
-                <img class="sidebar-icon" src="app/assests/event.svg"/>
-                Edit Event
-            </li>
-            <li routerLink="participants" routerLinkActive="active">
-                <img class="sidebar-icon" src="app/assests/participants.svg"/>
-                Participants
-            </li>
-            <li routerLink="notification" routerLinkActive="active">
-                <img class="sidebar-icon" src="app/assests/notification.svg"/>
-                Send Notification
-            </li>
-        </ul>
-    </div>
-    <div id="mainContent" [ngClass]="toggleClassContent">
-        <router-outlet></router-outlet>
-    </div>
+<div id="content">
+    <router-outlet></router-outlet>
 </div>

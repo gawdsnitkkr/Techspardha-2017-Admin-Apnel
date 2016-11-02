@@ -15,12 +15,11 @@ var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var http_1 = require('@angular/http');
 var app_component_1 = require('./app.component');
-var event_component_1 = require('./event/event.component');
-var notification_component_1 = require('./notification/notification.component');
-var participants_component_1 = require('./participants/participants.component');
 var welcome_component_1 = require('./welcome/welcome.component');
 var app_routing_module_1 = require('./app-routing.module');
 var session_service_1 = require('./shared/session.service');
+var participants_service_1 = require('./shared/participants.service');
+var event_service_1 = require('./shared/event.service');
 var auth_guard_service_1 = require('./shared/auth-guard.service');
 var login_component_1 = require('./login/login.component');
 var AppModule = (function () {
@@ -36,13 +35,10 @@ var AppModule = (function () {
             declarations: [
                 app_component_1.AppComponent,
                 login_component_1.LoginComponent,
-                event_component_1.EventComponent,
-                welcome_component_1.WelcomeComponent,
-                notification_component_1.NotificationComponent,
-                participants_component_1.ParticipantsComponent
+                welcome_component_1.WelcomeComponent
             ],
             providers: [
-                session_service_1.SessionService, auth_guard_service_1.AuthGuard
+                session_service_1.SessionService, auth_guard_service_1.AuthGuard, participants_service_1.ParticipantsService, event_service_1.EventService
             ],
             bootstrap: [
                 app_component_1.AppComponent

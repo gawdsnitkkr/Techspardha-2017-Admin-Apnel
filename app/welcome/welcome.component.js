@@ -12,14 +12,48 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Created by varun on 12/10/16.
  */
 var core_1 = require('@angular/core');
+var participants_service_1 = require('../shared/participants.service');
+var event_service_1 = require('../shared/event.service');
 var WelcomeComponent = (function () {
-    function WelcomeComponent() {
+    function WelcomeComponent(participantsService, eventService) {
+        this.participantsService = participantsService;
+        this.eventService = eventService;
     }
+    WelcomeComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        //getting event, participants list
+        this.event = this.eventService.getEvent();
+        if (!this.event) {
+            this.eventService.retrieveEvent()
+                .subscribe(function (event) {
+                _this.event = event;
+                _this.eventService.setEvent(event);
+            }, function (err) {
+                console.log('error occured');
+            });
+        }
+        this.participants = this.participantsService.getParticipants();
+        if (!this.participants) {
+            this.participantsService.retrieveParticipants()
+                .subscribe(function (participants) {
+                _this.participants = participants;
+                _this.participantsService.setParticipants(participants);
+            }, function (err) {
+                console.log('error occured');
+            });
+        }
+    };
+    WelcomeComponent.prototype.getEvent = function () {
+        return this.event;
+    };
+    WelcomeComponent.prototype.getParticipants = function () {
+        return this.participants;
+    };
     WelcomeComponent = __decorate([
         core_1.Component({
             templateUrl: 'app/welcome/welcome.component.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [participants_service_1.ParticipantsService, event_service_1.EventService])
     ], WelcomeComponent);
     return WelcomeComponent;
 }());

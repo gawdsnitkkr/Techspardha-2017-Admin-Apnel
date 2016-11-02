@@ -14,9 +14,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var login_component_1 = require('./login/login.component');
-var event_component_1 = require('./event/event.component');
-var participants_component_1 = require('./participants/participants.component');
-var notification_component_1 = require('./notification/notification.component');
 var welcome_component_1 = require('./welcome/welcome.component');
 var auth_guard_service_1 = require('./shared/auth-guard.service');
 var AppRoutingModule = (function () {
@@ -26,12 +23,13 @@ var AppRoutingModule = (function () {
         core_1.NgModule({
             imports: [
                 router_1.RouterModule.forRoot([
-                    { path: 'login', component: login_component_1.LoginComponent, canActivate: [auth_guard_service_1.AuthGuard] },
-                    { path: 'edit-event', component: event_component_1.EventComponent, canActivate: [auth_guard_service_1.AuthGuard] },
-                    { path: 'participants', component: participants_component_1.ParticipantsComponent, canActivate: [auth_guard_service_1.AuthGuard] },
-                    { path: 'notification', component: notification_component_1.NotificationComponent, canActivate: [auth_guard_service_1.AuthGuard] },
-                    { path: '', component: welcome_component_1.WelcomeComponent },
-                    { path: '**', component: welcome_component_1.WelcomeComponent }
+                    { path: 'login', component: login_component_1.LoginComponent },
+                    { path: 'welcome', component: welcome_component_1.WelcomeComponent, canActivate: [auth_guard_service_1.AuthGuard] },
+                    /*{ path: 'edit-event', component: EventComponent, canActivate: [AuthGuard] },
+                    { path: 'participants', component: ParticipantsComponent, canActivate: [AuthGuard] },
+                    { path: 'notification', component: NotificationComponent, canActivate: [AuthGuard] },*/
+                    { path: '', component: login_component_1.LoginComponent },
+                    { path: '**', component: login_component_1.LoginComponent }
                 ], { useHash: true })
             ],
             exports: [
