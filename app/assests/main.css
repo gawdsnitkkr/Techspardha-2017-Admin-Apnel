@@ -151,6 +151,64 @@ body {
     margin-right: 10px;
     float: left;
 }
+#header
+{
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:30%;
+    background-color: #349F8D;
+    /*z-index: 2;*/
+}
+#header span
+{
+    position: absolute;
+    font-size:290%;
+    left:18%;
+    top:5%;
+}
+#responseButton ,#eventButton
+{
+    position: absolute;
+    top:0;
+    width:50%;
+    text-align: center;
+    font-size: 200%;
+    padding-top:2%;
+    padding-bottom:2%;
+    border-bottom: 2px solid #E46C47;
+}
+#eventButton
+{
+    left:50%;
+}
+
+#container
+{
+    position: absolute;
+    left:7%;
+    top:13%;
+    background-color:#414453 ;
+    width:86%;
+    height:90%;
+    box-shadow: 2;
+}
+
+#eventTab , #responseTab
+{
+    position: absolute;
+    top:14%;
+    width:100%;
+    height: 90%;
+}
+
+
+
+
+
+
+
 /*
 @media (max-width: 1024px) {
     #mainContent {
