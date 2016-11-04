@@ -26,7 +26,7 @@ export class WelcomeComponent {
             this.eventService.retrieveEvent()
                 .subscribe(
                     event => {
-                        this.event = event;
+                        this.event = event;console.log(event);
                         this.eventService.setEvent(event);
                     },
                     err => {
@@ -39,7 +39,7 @@ export class WelcomeComponent {
             this.participantsService.retrieveParticipants()
                 .subscribe(
                     participants => {
-                        this.participants = participants;
+                        this.participants = participants; console.log(participants);
                         this.participantsService.setParticipants(participants);
                     },
                     err => {
@@ -53,5 +53,8 @@ export class WelcomeComponent {
     }
     getParticipants(): Participant[] {
         return this.participants;
+    }
+    sample(): void {
+        console.log('ok');
     }
 }

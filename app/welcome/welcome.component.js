@@ -27,6 +27,7 @@ var WelcomeComponent = (function () {
             this.eventService.retrieveEvent()
                 .subscribe(function (event) {
                 _this.event = event;
+                console.log(event);
                 _this.eventService.setEvent(event);
             }, function (err) {
                 console.log('error occured');
@@ -37,6 +38,7 @@ var WelcomeComponent = (function () {
             this.participantsService.retrieveParticipants()
                 .subscribe(function (participants) {
                 _this.participants = participants;
+                console.log(participants);
                 _this.participantsService.setParticipants(participants);
             }, function (err) {
                 console.log('error occured');
@@ -48,6 +50,9 @@ var WelcomeComponent = (function () {
     };
     WelcomeComponent.prototype.getParticipants = function () {
         return this.participants;
+    };
+    WelcomeComponent.prototype.sample = function () {
+        console.log('ok');
     };
     WelcomeComponent = __decorate([
         core_1.Component({
