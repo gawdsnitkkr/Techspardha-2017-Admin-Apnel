@@ -13,19 +13,19 @@ import { Event } from '../shared/event.interface';
     templateUrl: 'app/welcome/welcome.component.html'
 })
 export class WelcomeComponent {
-    slide1:number;
-    //slide1 = 0;
-    clickOnResponse(): void {
-        //this.slide1 = 1;
-        //console.log(this.slide1);
-    }
+    // slide1:number;
+    // //slide1 = 0;
+    // clickOnResponse(): void {
+    //     //this.slide1 = 1;
+    //     //console.log(this.slide1);
+    // }
     private event: Event;
     private participants: Participant[];
     constructor(
         private participantsService: ParticipantsService,
         private eventService: EventService
     ) {
-        this.slide1 = 0;
+        // this.slide1 = 0;
     }
     ngOnInit(): void {console.log('called ngonin');
         //getting event, participants list
@@ -34,7 +34,7 @@ export class WelcomeComponent {
             this.eventService.retrieveEvent()
                 .subscribe(
                     event => {
-                        this.event = event;
+                        this.event = event;//console.log(event);
                         this.eventService.setEvent(event);
                         console.log('hey', event);
                     },
@@ -49,7 +49,7 @@ export class WelcomeComponent {
             this.participantsService.retrieveParticipants()
                 .subscribe(
                     participants => {
-                        this.participants = participants;
+                        this.participants = participants; //console.log(participants);
                         this.participantsService.setParticipants(participants);
                     },
                     err => {
@@ -66,6 +66,23 @@ export class WelcomeComponent {
     getParticipants(): Participant[] {
         return this.participants;
     }
-
+    tab1: number = 0;
+    tab2: number = 0;
+    responseClass: string = 'responseDeactive';
+    eventsClass: string = 'eventsDeactive';
+    response(): void {
+        this.tab1 = 0;
+        this.tab2 = 1;
+        this.responseClass = 'responseActive';
+        this.eventsClass = 'eventsDeactive'
+        console.log("in the response");
+    }
+    events(): void {
+        this.tab1 = 1;
+        this.tab2 = 0;
+        this.eventsClass = 'responseActive';
+        this.responseClass = 'eventsDeactive';
+        console.log("in the events ");
+    }
 
 }

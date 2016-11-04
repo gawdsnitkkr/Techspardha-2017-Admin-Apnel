@@ -177,11 +177,22 @@ body {
     font-size: 200%;
     padding-top:2%;
     padding-bottom:2%;
-    border-bottom: 2px solid #E46C47;
+    /*border-bottom: 2px solid #E46C47;*/
+    cursor: pointer;
+}
+.responseActive
+{
+    border-bottom: 4px solid #E46C47;
+    transition: .5s linear;
 }
 #eventButton
 {
     left:50%;
+}
+.eventActive
+{
+    border-bottom: 4px solid #E46C47;
+    transition: 0.5s linear;
 }
 
 #container

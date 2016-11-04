@@ -18,16 +18,23 @@ var WelcomeComponent = (function () {
     function WelcomeComponent(participantsService, eventService) {
         this.participantsService = participantsService;
         this.eventService = eventService;
+        this.tab1 = 0;
+        this.tab2 = 0;
+        this.responseClass = 'responseDeactive';
+        this.eventsClass = 'eventsDeactive';
+        // this.slide1 = 0;
     }
     WelcomeComponent.prototype.ngOnInit = function () {
         var _this = this;
+        console.log('called ngonin');
         //getting event, participants list
         this.event = this.eventService.getEvent();
         if (!this.event) {
             this.eventService.retrieveEvent()
                 .subscribe(function (event) {
-                _this.event = event;
+                _this.event = event; //console.log(event);
                 _this.eventService.setEvent(event);
+                console.log('hey', event);
             }, function (err) {
                 console.log('error occured');
             });
@@ -36,7 +43,7 @@ var WelcomeComponent = (function () {
         if (!this.participants) {
             this.participantsService.retrieveParticipants()
                 .subscribe(function (participants) {
-                _this.participants = participants;
+                _this.participants = participants; //console.log(participants);
                 _this.participantsService.setParticipants(participants);
             }, function (err) {
                 console.log('error occured');
@@ -48,6 +55,20 @@ var WelcomeComponent = (function () {
     };
     WelcomeComponent.prototype.getParticipants = function () {
         return this.participants;
+    };
+    WelcomeComponent.prototype.response = function () {
+        this.tab1 = 0;
+        this.tab2 = 1;
+        this.responseClass = 'responseActive';
+        this.eventsClass = 'eventsDeactive';
+        console.log("in the response");
+    };
+    WelcomeComponent.prototype.events = function () {
+        this.tab1 = 1;
+        this.tab2 = 0;
+        this.eventsClass = 'responseActive';
+        this.responseClass = 'eventsDeactive';
+        console.log("in the events ");
     };
     WelcomeComponent = __decorate([
         core_1.Component({
