@@ -15,20 +15,29 @@ import { Event } from '../shared/event.interface';
 export class WelcomeComponent {
     private event: Event;
     private participants: Participant[];
+    private responseActiveClass: string;
+    private eventActiveClass: string;
+    private showTabContent: string;
     constructor(
         private participantsService: ParticipantsService,
         private eventService: EventService
-    ) {}
-    ngOnInit(): void {
+    ) {
+        this.responseActiveClass = 'response-active';
+        this.eventActiveClass = '';
+        this.showTabContent = 'response';
+    }
+    ngOnInit(): void {console.log('called ngonin');
         //getting event, participants list
         this.event = this.eventService.getEvent();
         if (!this.event) {
             this.eventService.retrieveEvent()
                 .subscribe(
                     event => {
-                        this.event = event;
+                        this.event = event;//console.log(event);
                         this.eventService.setEvent(event);
+                        console.log('hey', event);
                     },
+
                     err => {
                         console.log('error occured');
                     }
@@ -39,7 +48,7 @@ export class WelcomeComponent {
             this.participantsService.retrieveParticipants()
                 .subscribe(
                     participants => {
-                        this.participants = participants;
+                        this.participants = participants; //console.log(participants);
                         this.participantsService.setParticipants(participants);
                     },
                     err => {
@@ -47,6 +56,7 @@ export class WelcomeComponent {
                     }
                 );
         }
+
     }
     getEvent(): Event {
         return this.event;
@@ -54,4 +64,15 @@ export class WelcomeComponent {
     getParticipants(): Participant[] {
         return this.participants;
     }
+    onResponseButtonClick(): void {
+        this.responseActiveClass = 'response-active';
+        this.eventActiveClass = '';
+        this.showTabContent = 'response';
+    }
+    onEventButtonClick(): void {
+        this.responseActiveClass = '';
+        this.eventActiveClass = 'event-active';
+        this.showTabContent = 'event';
+    }
+
 }
