@@ -1,0 +1,59 @@
+<!--<div id="toolbar" [style.color]="toolbarColor" [style.background]="toolbarBackground">
+    <div class="hamburger toolbar-item" (click)="toggleSidebar()">
+        <svg width="24px" height="24px" viewBox="0 0 48 48"><path d="M6 36h36v-4H6v4zm0-10h36v-4H6v4zm0-14v4h36v-4H6z"></path></svg>
+    </div>
+    <div class="toolbar-item">
+        Techspardha 2017
+    </div>
+</div>
+<div [style.color]="contentColor" [style.background]="contentBackground">
+    <div id="sidebar" [ngClass]="toggleClassSidebar">
+        <ul>
+            <li routerLink="edit-event" routerLinkActive="active">
+                <img class="sidebar-icon" src="app/assests/event.svg"/>
+                Edit Event
+            </li>
+            <li routerLink="participants" routerLinkActive="active">
+                <img class="sidebar-icon" src="app/assests/participants.svg"/>
+                Participants
+            </li>
+            <li routerLink="notification" routerLinkActive="active">
+                <img class="sidebar-icon" src="app/assests/notification.svg"/>
+                Send Notification
+            </li>
+        </ul>
+    </div>
+    <div id="mainContent" [ngClass]="toggleClassContent">
+        Hey d
+    </div>
+</div>
+#2b2b2b background
+#494f53 textbox
+#eeeeee-->
+<!--<<<<<<< HEAD-->
+
+
+<div id="header">
+    <span>TECHSPARDHA`17  </span>
+</div>
+<div id="container">
+    <div id="responseButton" (click)="response()" [ngClass]="responseClass" >RESPONSES</div>
+    <div id="eventButton" (click)="events()" [ngClass]="eventsClass">EVENTS</div>
+    <div id="responseTab" *ngIf="tab1==1" >
+        <div id="editText">
+            <p  >Event Description</p>
+            <img src="app/assests/edit.svg" id="icon" (click)="editText()"/>
+            <textarea type="text" #eventsDis id="eventsDis" [ngClass]="editable"></textarea>
+            <p  id="dateText" >Date</p>
+            <input type="date" #date placeholder="--/--/----" id="date" [ngClass]="editable" />
+            <input type="time" #time id="time" [ngClass]="editable" />
+            <input type="text" #venue placeholder="Venue" id="venue" [ngClass]="editable" />
+            <input type="file" #file  id="fileUpload" [ngClass]="editable" name="nk"/>
+            <input type="text" #venue  id="coordinator1" [ngClass]="editable" />
+            <input type="text" #venue  id="coordinator2" [ngClass]="editable" />
+            <input type="text" #venue  id="coordinator3" [ngClass]="editable" />
+        </div>
+    </div>
+    <div id="eventTab" *ngIf="tab2==1">slide1</div>
+</div>
+
