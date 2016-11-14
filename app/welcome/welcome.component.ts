@@ -13,19 +13,18 @@ import { Event } from '../shared/event.interface';
     templateUrl: 'app/welcome/welcome.component.html'
 })
 export class WelcomeComponent {
-    // slide1:number;
-    // //slide1 = 0;
-    // clickOnResponse(): void {
-    //     //this.slide1 = 1;
-    //     //console.log(this.slide1);
-    // }
     private event: Event;
     private participants: Participant[];
+    private responseActiveClass: string;
+    private eventActiveClass: string;
+    private showTabContent: string;
     constructor(
         private participantsService: ParticipantsService,
         private eventService: EventService
     ) {
-        // this.slide1 = 0;
+        this.responseActiveClass = 'response-active';
+        this.eventActiveClass = '';
+        this.showTabContent = 'response';
     }
     ngOnInit(): void {console.log('called ngonin');
         //getting event, participants list
@@ -58,7 +57,6 @@ export class WelcomeComponent {
                 );
         }
 
-
     }
     getEvent(): Event {
         return this.event;
@@ -66,23 +64,15 @@ export class WelcomeComponent {
     getParticipants(): Participant[] {
         return this.participants;
     }
-    tab1: number = 0;
-    tab2: number = 0;
-    responseClass: string = 'responseDeactive';
-    eventsClass: string = 'eventsDeactive';
-    response(): void {
-        this.tab1 = 0;
-        this.tab2 = 1;
-        this.responseClass = 'responseActive';
-        this.eventsClass = 'eventsDeactive'
-        console.log("in the response");
+    onResponseButtonClick(): void {
+        this.responseActiveClass = 'response-active';
+        this.eventActiveClass = '';
+        this.showTabContent = 'response';
     }
-    events(): void {
-        this.tab1 = 1;
-        this.tab2 = 0;
-        this.eventsClass = 'responseActive';
-        this.responseClass = 'eventsDeactive';
-        console.log("in the events ");
+    onEventButtonClick(): void {
+        this.responseActiveClass = '';
+        this.eventActiveClass = 'event-active';
+        this.showTabContent = 'event';
     }
 
 }

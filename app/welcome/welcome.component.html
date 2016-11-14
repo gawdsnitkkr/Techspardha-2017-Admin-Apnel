@@ -1,48 +1,20 @@
-<!--<div id="toolbar" [style.color]="toolbarColor" [style.background]="toolbarBackground">
-    <div class="hamburger toolbar-item" (click)="toggleSidebar()">
-        <svg width="24px" height="24px" viewBox="0 0 48 48"><path d="M6 36h36v-4H6v4zm0-10h36v-4H6v4zm0-14v4h36v-4H6z"></path></svg>
-    </div>
-    <div class="toolbar-item">
-        Techspardha 2017
-    </div>
-</div>
-<div [style.color]="contentColor" [style.background]="contentBackground">
-    <div id="sidebar" [ngClass]="toggleClassSidebar">
-        <ul>
-            <li routerLink="edit-event" routerLinkActive="active">
-                <img class="sidebar-icon" src="app/assests/event.svg"/>
-                Edit Event
-            </li>
-            <li routerLink="participants" routerLinkActive="active">
-                <img class="sidebar-icon" src="app/assests/participants.svg"/>
-                Participants
-            </li>
-            <li routerLink="notification" routerLinkActive="active">
-                <img class="sidebar-icon" src="app/assests/notification.svg"/>
-                Send Notification
-            </li>
-        </ul>
-    </div>
-    <div id="mainContent" [ngClass]="toggleClassContent">
-        Hey d
-    </div>
-</div>
-#2b2b2b background
-#494f53 textbox
-#eeeeee-->
-<!--<<<<<<< HEAD-->
-
-
 <div id="header">
-    <span>TECHSPARDHA`17  </span>
+    <div id="header-left">
+        <h1>Techspardha 2017</h1>
+    </div>
+    <div id="header-right">
+        <h1>Hi, Varun Kumar</h1>
+    </div>
 </div>
 <div id="container">
-    <div id="responseButton" (click)="response()" [ngClass]="responseClass" >RESPONSES</div>
-    <div id="eventButton" (click)="events()" [ngClass]="eventsClass">EVENTS</div>
-    <div id="responseTab" *ngIf="tab1==1" >slide2</div>
-    <div id="eventTab" *ngIf="tab2==1">slide1</div>
-
+    <div id="response-button" (click)="onResponseButtonClick()" [ngClass]="responseActiveClass" >RESPONSES</div>
+    <div id="event-button" (click)="onEventButtonClick()" [ngClass]="eventActiveClass">EVENT</div>
+    <div id="tab-content">
+        <div id="response-tab-content" *ngIf="showTabContent == 'response'" >
+            Response content goes here
+        </div>
+        <div id="event-tab-content" *ngIf="showTabContent == 'event'">
+            Event content goes here
+        </div>
+    </div>
 </div>
-<!--&lt;!&ndash;=======&ndash;&gt;-->
-<!--<button (click)="sample()">Ok</button>-->
-<!--&lt;!&ndash;&gt;>>>>>> 740e99e82bd749c19fb3fcb4e389702f992f5e1c&ndash;&gt;-->
