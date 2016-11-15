@@ -18,14 +18,9 @@ var WelcomeComponent = (function () {
     function WelcomeComponent(participantsService, eventService) {
         this.participantsService = participantsService;
         this.eventService = eventService;
-        this.tab1 = 0;
-        this.tab2 = 0;
-        this.i = 1;
-        this.responseClass = 'responseDeactive';
-        this.eventsClass = 'eventsDeactive';
-        this.editable = 'editable';
-        this.nk = 'false';
-        // this.slide1 = 0;
+        this.responseActiveClass = 'response-active';
+        this.eventActiveClass = '';
+        this.showTabContent = 'response';
     }
     WelcomeComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -59,30 +54,15 @@ var WelcomeComponent = (function () {
     WelcomeComponent.prototype.getParticipants = function () {
         return this.participants;
     };
-    WelcomeComponent.prototype.response = function () {
-        this.tab1 = 1;
-        this.tab2 = 0;
-        this.responseClass = 'responseActive';
-        this.eventsClass = 'eventsDeactive';
-        console.log("in the response");
+    WelcomeComponent.prototype.onResponseButtonClick = function () {
+        this.responseActiveClass = 'response-active';
+        this.eventActiveClass = '';
+        this.showTabContent = 'response';
     };
-    WelcomeComponent.prototype.events = function () {
-        this.tab1 = 0;
-        this.tab2 = 1;
-        this.eventsClass = 'responseActive';
-        this.responseClass = 'eventsDeactive';
-        console.log("in the events ");
-    };
-    WelcomeComponent.prototype.editText = function () {
-        console.log("called");
-        if (this.i % 2 == 0) {
-            this.i = 1;
-            this.editable = 'editable';
-        }
-        else {
-            this.editable = "Disable";
-            this.i = 0;
-        }
+    WelcomeComponent.prototype.onEventButtonClick = function () {
+        this.responseActiveClass = '';
+        this.eventActiveClass = 'event-active';
+        this.showTabContent = 'event';
     };
     WelcomeComponent = __decorate([
         core_1.Component({
