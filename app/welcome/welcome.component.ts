@@ -18,6 +18,8 @@ export class WelcomeComponent {
     private responseActiveClass: string;
     private eventActiveClass: string;
     private showTabContent: string;
+    private inputStatus: string = "inputDeactive";
+    private i: number = 1;
     constructor(
         private participantsService: ParticipantsService,
         private eventService: EventService
@@ -73,6 +75,19 @@ export class WelcomeComponent {
         this.responseActiveClass = '';
         this.eventActiveClass = 'event-active';
         this.showTabContent = 'event';
+    }
+    onInputActive(): void {
+      if(this.i%2==0) {
+          this.inputStatus = "inputDeactive";
+          console.log("deactive Input");
+          this.i=1;
+      }
+      else {
+        this.inputStatus ='inputActive';
+        console.log("active Input");
+        this.i=2;
+      }
+
     }
 
 }

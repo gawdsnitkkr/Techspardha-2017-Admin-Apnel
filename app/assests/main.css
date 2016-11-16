@@ -173,7 +173,23 @@ body {
     width: 100%;
 }
 
+  #editIcon
+  {
+    position: absolute;
+    top: 1%;
+    left: 96%;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+  }
+  .inputDeactive
+  {
+    pointer-events: none;
+  }
+  .inputActive
+  {
 
+  }
 
 
 

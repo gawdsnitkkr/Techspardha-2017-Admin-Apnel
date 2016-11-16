@@ -18,32 +18,33 @@
         <div id="event-tab-content" *ngIf="showTabContent == 'event'">
             <div class="single-box">
                 <p>Event Description</p>
-                <textarea [(ngModel)]="event.description"></textarea>
+                <textarea [(ngModel)]="event.description" [ngClass]="inputStatus"></textarea>
             </div>
             <div class="single-box">
                 <div class="triple-box">
                     <p>Date</p>
-                    <input type="text" [(ngModel)]="event.date"/>
+                    <input type="text" [(ngModel)]="event.date"[ngClass]="inputStatus"/>
                 </div>
                 <div class="triple-box">
                     <p>Time</p>
-                    <input type="text" [(ngModel)]="event.time"/>
+                    <input type="text" [(ngModel)]="event.time" [ngClass]="inputStatus"/>
                 </div>
                 <div class="triple-box">
                     <p>Venue</p>
-                    <input type="text" [(ngModel)]="event.venue"/>
+                    <input type="text" [(ngModel)]="event.venue" [ngClass]="inputStatus"/>
                 </div>
             </div>
             <div class="single-box">
                 <p>Upload Rules Pdf</p>
-                <input type="file"/>
+                <input type="file" [ngClass]="inputStatus"/>
             </div>
             <div class="single-box">
                 <p>Other Coordinators</p>
                 <div class="triple-box" *ngFor="let coordinator of event.coordinators">
-                    <input type="text" [(ngModel)]="coordinator.name"/>
+                    <input type="text" [(ngModel)]="coordinator.name" [ngClass]="inputStatus"/>
                 </div>
             </div>
+            <img alt="Edit" src="app/assests/edit.svg" id="editIcon" (click)="onInputActive()"/>
         </div>
     </div>
 </div>

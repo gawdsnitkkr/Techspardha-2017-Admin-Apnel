@@ -18,6 +18,8 @@ var WelcomeComponent = (function () {
     function WelcomeComponent(participantsService, eventService) {
         this.participantsService = participantsService;
         this.eventService = eventService;
+        this.inputStatus = "inputDeactive";
+        this.i = 1;
         this.responseActiveClass = 'response-active';
         this.eventActiveClass = '';
         this.showTabContent = 'response';
@@ -63,6 +65,18 @@ var WelcomeComponent = (function () {
         this.responseActiveClass = '';
         this.eventActiveClass = 'event-active';
         this.showTabContent = 'event';
+    };
+    WelcomeComponent.prototype.onInputActive = function () {
+        if (this.i % 2 == 0) {
+            this.inputStatus = "inputDeactive";
+            console.log("deactive Input");
+            this.i = 1;
+        }
+        else {
+            this.inputStatus = 'inputActive';
+            console.log("active Input");
+            this.i = 2;
+        }
     };
     return WelcomeComponent;
 }());
