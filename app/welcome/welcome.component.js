@@ -11,9 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 /**
  * Created by varun on 12/10/16.
  */
-var core_1 = require('@angular/core');
-var participants_service_1 = require('../shared/participants.service');
-var event_service_1 = require('../shared/event.service');
+var core_1 = require("@angular/core");
+var participants_service_1 = require("../shared/participants.service");
+var event_service_1 = require("../shared/event.service");
 var WelcomeComponent = (function () {
     function WelcomeComponent(participantsService, eventService) {
         this.participantsService = participantsService;
@@ -64,13 +64,14 @@ var WelcomeComponent = (function () {
         this.eventActiveClass = 'event-active';
         this.showTabContent = 'event';
     };
-    WelcomeComponent = __decorate([
-        core_1.Component({
-            templateUrl: 'app/welcome/welcome.component.html'
-        }), 
-        __metadata('design:paramtypes', [participants_service_1.ParticipantsService, event_service_1.EventService])
-    ], WelcomeComponent);
     return WelcomeComponent;
 }());
+WelcomeComponent = __decorate([
+    core_1.Component({
+        templateUrl: 'app/welcome/welcome.component.html'
+    }),
+    __metadata("design:paramtypes", [participants_service_1.ParticipantsService,
+        event_service_1.EventService])
+], WelcomeComponent);
 exports.WelcomeComponent = WelcomeComponent;
 //# sourceMappingURL=welcome.component.js.map

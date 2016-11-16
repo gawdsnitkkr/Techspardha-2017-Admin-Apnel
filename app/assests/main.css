@@ -179,35 +179,54 @@ body {
 
 
 
-/*
-@media (max-width: 1024px) {
-    #mainContent {
-        width: calc((100% - 210px) - 2 * 65px);
+@media (max-width: 768px) {
+    #login
+    {
+        width:70%;
+        height:60%;
     }
-    .sidebar-displayed {
-        margin-left: 65px;
+    /*#mainContent {*/
+        /*width: calc(100% - 2 * 30px);*/
+    /*}*/
+
+}
+@media (max-width: 425px) {
+    #login
+    {
+        width:80%;
+        height:60%;
+        position: absolute;
+        left:10%;
+        top:10%;
     }
-    .sidebar-hidden {
-        margin-left: calc(65px + 210px / 2);
+    #login h1
+    {
+        /*padding: 35px 0px 35px 0px;*/
+        font-size: 150%;
+    }
+    .text-box
+    {
+        width: 87%;
     }
 }
-@media (max-width: 768px) {
-    #mainContent {
-        width: calc(100% - 2 * 30px);
+@media (max-width: 320px) {
+    #login
+    {
+        position: absolute;
+        left:5%;
+        width:90%;
+        top:10%;
+        height:65%;
     }
-    .hide-sidebar {
-        left: -215px;
+    #login h1
+    {
+        padding: 35px 0px 35px 0px;
+        font-size: 100%;
     }
-    #sidebar {
-        webkit-box-shadow: 3px 1px 3px rgba(0,0,0,.3);
-        box-shadow: 3px 1px 3px rgba(0,0,0,.3);
+    .text-box
+    {
+        width: 87%;
     }
-    .sidebar-displayed {
-        left: 0;
-        margin-left: 30px;
-    }
-    .sidebar-hidden {
-        left: 0;
-        margin-left: 30px;
-    }
-}*/
+
+
+}
