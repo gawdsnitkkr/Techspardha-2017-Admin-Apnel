@@ -77,17 +77,19 @@ export class WelcomeComponent {
         this.showTabContent = 'event';
     }
     onInputActive(): void {
-      if(this.i%2==0) {
+      if(this.i % 2 == 0) {
           this.inputStatus = "inputDeactive";
           console.log("deactive Input");
-          this.i=1;
+          this.i = 1;
       }
       else {
         this.inputStatus ='inputActive';
         console.log("active Input");
-        this.i=2;
+        this.i = 2;
       }
-
+    }
+    saveEvent(): void {
+      console.log(this.getEvent());
     }
 
 }

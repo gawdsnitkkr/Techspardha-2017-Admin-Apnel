@@ -78,6 +78,9 @@ var WelcomeComponent = (function () {
             this.i = 2;
         }
     };
+    WelcomeComponent.prototype.saveEvent = function () {
+        console.log(this.getEvent());
+    };
     return WelcomeComponent;
 }());
 WelcomeComponent = __decorate([

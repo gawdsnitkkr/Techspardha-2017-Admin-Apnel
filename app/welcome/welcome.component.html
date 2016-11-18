@@ -13,17 +13,26 @@
     </div>
     <div id="tab-content">
         <div id="response-tab-content" *ngIf="showTabContent == 'response'" >
-            Response content goes here
+            <!-- Response content goes here -->
+            <div  id="updateStatusButton" (click)="updateStatus">Update Status</div>
+            <div class="boxes" *ngFor="let participants of participants">
+                  <p>{{participants.name}}</p>
+                  <input type="text" [(ngModel)]="participants.name" [ngClass]="inputStatusEvents"/>
+                  <input type="text" [(ngModel)]="participants.emailId" [ngClass]="inputStatusEvents"/>
+                  <input type="text" [(ngModel)]="participants.mobile" [ngClass]="inputStatusEvents"/>
+                  <input type="text" [(ngModel)]="participants.gender" [ngClass]="inputStatusEvents"/>
+                  <input type="text" [(ngModel)]="participants.college" [ngClass]="inputStatusEvents"/>
+            </div>
         </div>
         <div id="event-tab-content" *ngIf="showTabContent == 'event'">
             <div class="single-box">
                 <p>Event Description</p>
-                <textarea [(ngModel)]="event.description" [ngClass]="inputStatus"></textarea>
+                <textarea [(ngModel)]="event.description" #eventDiscription [ngClass]="inputStatus"></textarea>
             </div>
             <div class="single-box">
                 <div class="triple-box">
                     <p>Date</p>
-                    <input type="text" [(ngModel)]="event.date"[ngClass]="inputStatus"/>
+                    <input type="text" [(ngModel)]="event.date" [ngClass]="inputStatus"/>
                 </div>
                 <div class="triple-box">
                     <p>Time</p>
@@ -45,6 +54,7 @@
                 </div>
             </div>
             <img alt="Edit" src="app/assests/edit.svg" id="editIcon" (click)="onInputActive()"/>
+            <div id="save-event" (click)="saveEvent()">Save</div>
         </div>
     </div>
 </div>
