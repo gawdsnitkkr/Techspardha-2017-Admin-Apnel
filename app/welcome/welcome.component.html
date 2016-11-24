@@ -13,15 +13,15 @@
     </div>
     <div id="tab-content">
         <div id="response-tab-content" *ngIf="showTabContent == 'response'" >
-            <!-- Response content goes here -->
-            <div  id="updateStatusButton" (click)="updateStatus">Update Status</div>
+            <!-- Response content goes here  -->
+            <div  id="update-status-button" (click)="onInputActive()">Update Status</div>
             <div class="boxes" *ngFor="let participants of participants">
                   <p>{{participants.name}}</p>
-                  <input type="text" [(ngModel)]="participants.name" [ngClass]="inputStatusEvents"/>
-                  <input type="text" [(ngModel)]="participants.emailId" [ngClass]="inputStatusEvents"/>
-                  <input type="text" [(ngModel)]="participants.mobile" [ngClass]="inputStatusEvents"/>
-                  <input type="text" [(ngModel)]="participants.gender" [ngClass]="inputStatusEvents"/>
-                  <input type="text" [(ngModel)]="participants.college" [ngClass]="inputStatusEvents"/>
+                  <input type="text" [(ngModel)]="participants.name" [ngClass]="inputStatus"/>
+                  <input type="text" [(ngModel)]="participants.emailId" [ngClass]="inputStatus"/>
+                  <input type="text" [(ngModel)]="participants.mobile" [ngClass]="inputStatus"/>
+                  <input type="text" [(ngModel)]="participants.gender" [ngClass]="inputStatus"/>
+                  <input type="text" [(ngModel)]="participants.college" [ngClass]="inputStatus"/>
             </div>
         </div>
         <div id="event-tab-content" *ngIf="showTabContent == 'event'">

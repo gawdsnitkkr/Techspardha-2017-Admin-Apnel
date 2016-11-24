@@ -78,12 +78,12 @@ export class WelcomeComponent {
     }
     onInputActive(): void {
       if(this.i % 2 == 0) {
-          this.inputStatus = "inputDeactive";
+          this.inputStatus = 'inputDeactive';
           console.log("deactive Input");
           this.i = 1;
       }
       else {
-        this.inputStatus ='inputActive';
+        this.inputStatus = 'inputActive';
         console.log("active Input");
         this.i = 2;
       }
