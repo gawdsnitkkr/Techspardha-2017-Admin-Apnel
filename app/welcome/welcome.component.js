@@ -26,7 +26,6 @@ var WelcomeComponent = (function () {
     }
     WelcomeComponent.prototype.ngOnInit = function () {
         var _this = this;
-        console.log('called ngonin');
         //getting event, participants list
         this.event = this.eventService.getEvent();
         if (!this.event) {
@@ -34,7 +33,7 @@ var WelcomeComponent = (function () {
                 .subscribe(function (event) {
                 _this.event = event;
                 _this.eventService.setEvent(event);
-                console.log('hey', event);
+                console.log(event);
             }, function (err) {
                 console.log('error occured');
             });
@@ -66,20 +65,9 @@ var WelcomeComponent = (function () {
         this.eventActiveClass = 'event-active';
         this.showTabContent = 'event';
     };
-    WelcomeComponent.prototype.onInputActive = function () {
-        if (this.i % 2 == 0) {
-            this.inputStatus = 'inputDeactive';
-            console.log("deactive Input");
-            this.i = 1;
-        }
-        else {
-            this.inputStatus = 'inputActive';
-            console.log("active Input");
-            this.i = 2;
-        }
+    WelcomeComponent.prototype.updateStatus = function () {
     };
-    WelcomeComponent.prototype.saveEvent = function () {
-        console.log(this.getEvent());
+    WelcomeComponent.prototype.updateEvent = function () {
     };
     WelcomeComponent = __decorate([
         core_1.Component({

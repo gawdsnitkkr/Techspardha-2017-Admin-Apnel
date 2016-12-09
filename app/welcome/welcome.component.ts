@@ -28,7 +28,7 @@ export class WelcomeComponent {
         this.eventActiveClass = '';
         this.showTabContent = 'response';
     }
-    ngOnInit(): void {console.log('called ngonin');
+    ngOnInit(): void {
         //getting event, participants list
         this.event = this.eventService.getEvent();
         if (!this.event) {
@@ -37,7 +37,7 @@ export class WelcomeComponent {
                     event => {
                         this.event = event;
                         this.eventService.setEvent(event);
-                        console.log('hey', event);
+                        console.log(event);
                     },
 
                     err => {
@@ -76,20 +76,9 @@ export class WelcomeComponent {
         this.eventActiveClass = 'event-active';
         this.showTabContent = 'event';
     }
-    onInputActive(): void {
-      if(this.i % 2 == 0) {
-          this.inputStatus = 'inputDeactive';
-          console.log("deactive Input");
-          this.i = 1;
-      }
-      else {
-        this.inputStatus = 'inputActive';
-        console.log("active Input");
-        this.i = 2;
-      }
+    updateStatus(): void {
     }
-    saveEvent(): void {
-      console.log(this.getEvent());
+    updateEvent(): void {
     }
 
 }
