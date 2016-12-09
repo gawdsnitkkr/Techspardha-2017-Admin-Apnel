@@ -26,9 +26,27 @@ body {
     margin-top: 5%;
     text-align: center;
     width: 50%;
-    background: #414453;
+    background: #349F8D;
     height: 55%;
-    color: #eeeeee;
+    color: white;
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: #fff;
+}
+
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #fff;
+    opacity: 1;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #fff;
+    opacity: 1;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #fff;
 }
 
 #login h1 {
@@ -37,6 +55,8 @@ body {
 
 #login input {
     background: transparent;
+    border: 0px;
+    width: 90%;
 }
 
 .text-box {
@@ -44,11 +64,6 @@ body {
     border: 1px solid #e7e7e7;
     margin: 20px auto;
     padding: 1.9%;
-}
-
-#login input {
-    border: 0px;
-    width: 90%;
 }
 
 #login input, #login button {
@@ -60,17 +75,14 @@ body {
     transition: opacity 0.4s;
     text-align: left;
     height: auto;
-    color: #eeeeee;
+    color: #fff;
 }
 
 #login button {
-    margin: 20px auto;
-    padding: 1.9%;
-    border: 1px solid #e7e7e7;
-    background: #494f53;
+    background: transparent;
+    border: 0px;
     text-align: center;
-    color: #eeeeee;
-    width: 64%;
+    width: 100%;
 }
 
 #login input:focus, #login button:focus {

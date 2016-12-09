@@ -11,9 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 /**
  * Created by varun on 12/10/16.
  */
-/**
- * Created by varun on 19/9/16.
- */
 var core_1 = require('@angular/core');
 var LoginComponent = (function () {
     function LoginComponent() {

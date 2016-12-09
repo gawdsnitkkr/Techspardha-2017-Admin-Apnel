@@ -14,12 +14,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var participants_service_1 = require('../shared/participants.service');
 var event_service_1 = require('../shared/event.service');
+var session_service_1 = require('../shared/session.service');
 var WelcomeComponent = (function () {
-    function WelcomeComponent(participantsService, eventService) {
+    function WelcomeComponent(participantsService, eventService, sessionService) {
         this.participantsService = participantsService;
         this.eventService = eventService;
-        this.inputStatus = "inputDeactive";
-        this.i = 1;
+        this.sessionService = sessionService;
         this.responseActiveClass = 'response-active';
         this.eventActiveClass = '';
         this.showTabContent = 'response';
@@ -33,7 +33,6 @@ var WelcomeComponent = (function () {
                 .subscribe(function (event) {
                 _this.event = event;
                 _this.eventService.setEvent(event);
-                console.log(event);
             }, function (err) {
                 console.log('error occured');
             });
@@ -48,6 +47,7 @@ var WelcomeComponent = (function () {
                 console.log('error occured');
             });
         }
+        this.admin = this.sessionService.getAdmin();
     };
     WelcomeComponent.prototype.getEvent = function () {
         return this.event;
@@ -73,7 +73,7 @@ var WelcomeComponent = (function () {
         core_1.Component({
             templateUrl: 'app/welcome/welcome.component.html'
         }), 
-        __metadata('design:paramtypes', [participants_service_1.ParticipantsService, event_service_1.EventService])
+        __metadata('design:paramtypes', [participants_service_1.ParticipantsService, event_service_1.EventService, session_service_1.SessionService])
     ], WelcomeComponent);
     return WelcomeComponent;
 }());
