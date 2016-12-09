@@ -14,25 +14,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var participants_service_1 = require('../shared/participants.service');
 var event_service_1 = require('../shared/event.service');
+var session_service_1 = require('../shared/session.service');
 var WelcomeComponent = (function () {
-    function WelcomeComponent(participantsService, eventService) {
+    function WelcomeComponent(participantsService, eventService, sessionService) {
         this.participantsService = participantsService;
         this.eventService = eventService;
+        this.sessionService = sessionService;
         this.responseActiveClass = 'response-active';
         this.eventActiveClass = '';
         this.showTabContent = 'response';
     }
     WelcomeComponent.prototype.ngOnInit = function () {
         var _this = this;
-        console.log('called ngonin');
         //getting event, participants list
         this.event = this.eventService.getEvent();
         if (!this.event) {
             this.eventService.retrieveEvent()
                 .subscribe(function (event) {
-                _this.event = event; //console.log(event);
+                _this.event = event;
                 _this.eventService.setEvent(event);
-                console.log('hey', event);
             }, function (err) {
                 console.log('error occured');
             });
@@ -47,6 +47,7 @@ var WelcomeComponent = (function () {
                 console.log('error occured');
             });
         }
+        this.admin = this.sessionService.getAdmin();
     };
     WelcomeComponent.prototype.getEvent = function () {
         return this.event;
@@ -64,11 +65,15 @@ var WelcomeComponent = (function () {
         this.eventActiveClass = 'event-active';
         this.showTabContent = 'event';
     };
+    WelcomeComponent.prototype.updateStatus = function () {
+    };
+    WelcomeComponent.prototype.updateEvent = function () {
+    };
     WelcomeComponent = __decorate([
         core_1.Component({
             templateUrl: 'app/welcome/welcome.component.html'
         }), 
-        __metadata('design:paramtypes', [participants_service_1.ParticipantsService, event_service_1.EventService])
+        __metadata('design:paramtypes', [participants_service_1.ParticipantsService, event_service_1.EventService, session_service_1.SessionService])
     ], WelcomeComponent);
     return WelcomeComponent;
 }());

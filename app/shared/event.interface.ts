@@ -4,9 +4,10 @@
 import { Admin } from './admin.interface';
 
 export interface Event {
-    eventName: string;
+    name: string;
     description: string;
     venue: string;
+    date: string;
     time: string;
     status: string;
     coordinators: Admin[]

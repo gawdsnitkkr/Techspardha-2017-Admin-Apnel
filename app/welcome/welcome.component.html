@@ -3,18 +3,57 @@
         <h1>Techspardha 2017</h1>
     </div>
     <div id="header-right">
-        <h1>Hi, Varun Kumar</h1>
+        <h1>Hi, {{this.admin.name}}</h1>
     </div>
 </div>
 <div id="container">
-    <div id="response-button" (click)="onResponseButtonClick()" [ngClass]="responseActiveClass" >RESPONSES</div>
-    <div id="event-button" (click)="onEventButtonClick()" [ngClass]="eventActiveClass">EVENT</div>
+    <div id="response-button" (click)="onResponseButtonClick()" [ngClass]="responseActiveClass">RESPONSES</div>
+    <div id="event-button" (click)="onEventButtonClick()" [ngClass]="eventActiveClass">
+        Event
+    </div>
     <div id="tab-content">
-        <div id="response-tab-content" *ngIf="showTabContent == 'response'" >
-            Response content goes here
+        <div id="response-tab-content" *ngIf="showTabContent == 'response'">
+            <!-- Response content goes here  -->
+            <div id="update-status-button" (click)="updateStatus()">Update Status</div>
+            <div class="boxes" *ngFor="let participants of participants; let i = index">
+                <p>{{i + 1}}</p>
+                <input type="text" [(ngModel)]="participants.name"/>
+                <input type="text" [(ngModel)]="participants.emailId"/>
+                <input type="text" [(ngModel)]="participants.mobile"/>
+                <input type="text" [(ngModel)]="participants.gender"/>
+                <input type="text" [(ngModel)]="participants.college"/>
+            </div>
         </div>
         <div id="event-tab-content" *ngIf="showTabContent == 'event'">
-            Event content goes here
+            <div id="update-event-button" (click)="updateEvent()">Update Event</div>
+            <div class="single-box">
+                <p>Event Description</p>
+                <textarea [(ngModel)]="event.description" #eventDiscription></textarea>
+            </div>
+            <div class="single-box">
+                <div class="triple-box">
+                    <p>Date</p>
+                    <input type="text" [(ngModel)]="event.date"/>
+                </div>
+                <div class="triple-box">
+                    <p>Time</p>
+                    <input type="text" [(ngModel)]="event.time"/>
+                </div>
+                <div class="triple-box">
+                    <p>Venue</p>
+                    <input type="text" [(ngModel)]="event.venue"/>
+                </div>
+            </div>
+            <div class="single-box">
+                <p>Upload Rules Pdf</p>
+                <input type="file"/>
+            </div>
+            <div class="single-box">
+                <p>Other Coordinators</p>
+                <div class="triple-box" *ngFor="let coordinator of event.coordinators">
+                    <input type="text" [(ngModel)]="coordinator.name"/>
+                </div>
+            </div>
         </div>
     </div>
 </div>

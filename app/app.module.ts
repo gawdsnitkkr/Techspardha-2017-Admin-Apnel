@@ -4,6 +4,7 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
+import { FormsModule }   from '@angular/forms';
 
 import { AppComponent }   from './app.component';
 import { WelcomeComponent }   from './welcome/welcome.component';
@@ -19,7 +20,8 @@ import { LoginComponent }   from './login/login.component';
     imports:      [
         BrowserModule,
         AppRoutingModule,
-        HttpModule
+        HttpModule,
+        FormsModule
     ],
     declarations: [
         AppComponent,
