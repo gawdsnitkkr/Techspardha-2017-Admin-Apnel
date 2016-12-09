@@ -11,6 +11,12 @@ import {Participant} from '../shared/participant.interface';
 import {Event} from '../shared/event.interface';
 import {Admin} from "../shared/admin.interface";
 
+import { ParticipantsService } from '../shared/participants.service';
+import { EventService } from '../shared/event.service';
+import constants = require('../shared/constants');
+import { Participant } from '../shared/participant.interface';
+import { Event } from '../shared/event.interface';
+
 @Component({
     templateUrl:  'app/welcome/welcome.component.html'
 })
@@ -30,7 +36,6 @@ export class WelcomeComponent {
         this.eventActiveClass = '';
         this.showTabContent = 'response';
     }
-
     ngOnInit(): void {
         //getting event, participants list
         this.event = this.eventService.getEvent();
