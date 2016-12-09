@@ -83,6 +83,7 @@ body {
     border: 0px;
     text-align: center;
     width: 100%;
+    cursor: pointer;
 }
 
 #login input:focus, #login button:focus {
