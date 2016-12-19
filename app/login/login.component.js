@@ -8,23 +8,51 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-/**
- * Created by varun on 12/10/16.
- */
 var core_1 = require('@angular/core');
+var router_1 = require('@angular/router');
+var http_1 = require('@angular/http');
+var authentication_service_1 = require('../services/authentication.service');
+var session_service_1 = require('../shared/session.service');
 var LoginComponent = (function () {
-    function LoginComponent() {
+    function LoginComponent(http, authenticationService, sessionService, router) {
+        this.http = http;
+        this.authenticationService = authenticationService;
+        this.sessionService = sessionService;
+        this.router = router;
     }
     LoginComponent.prototype.ngOnInit = function () {
+        if (this.sessionService.getAdmin()) {
+            this.router.navigate(['/welcome']);
+        }
     };
     LoginComponent.prototype.adminLogin = function (username, password) {
-        console.log(username, password);
+        var _this = this;
+        this.authenticationService.login(username, password).subscribe(function (data) {
+            if (data.status.code === 200) {
+                var admin = {
+                    email: data.data.Email,
+                    name: data.data.Name,
+                    id: data.data.Id,
+                    token: data.data.token
+                };
+                _this.sessionService.setAdmin(admin);
+                console.log("Login successful");
+                // Show success alert
+                _this.router.navigate(['/welcome']);
+            }
+            else {
+                // Show failure alert
+                console.log("Login unsuccessful");
+                return null;
+            }
+        });
     };
     LoginComponent = __decorate([
         core_1.Component({
-            templateUrl: 'app/login/login.component.html'
+            templateUrl: 'app/login/login.component.html',
+            providers: [authentication_service_1.AuthenticationService]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [http_1.Http, authentication_service_1.AuthenticationService, session_service_1.SessionService, router_1.Router])
     ], LoginComponent);
     return LoginComponent;
 }());

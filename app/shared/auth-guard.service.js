@@ -1,6 +1,3 @@
-/**
- * Created by varun on 12/10/16.
- */
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -25,18 +22,14 @@ var AuthGuard = (function () {
         return this.checkLogin(admin);
     };
     AuthGuard.prototype.checkLogin = function (admin) {
-        var _this = this;
-        if (admin && admin.name && admin.status) {
+        if (admin && admin.name && admin.email) {
             return true;
         }
-        else if (admin && (!admin.name || !admin.status)) {
+        else if (admin && (!admin.name || !admin.email)) {
             this.router.navigate(['/login']);
             return false;
         }
         else {
-            this.sessionService.retrieveAdmin().subscribe(function (admin) {
-                _this.sessionService.setAdmin(admin);
-            });
             this.router.navigate(['/login']);
         }
     };

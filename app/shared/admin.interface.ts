@@ -4,9 +4,11 @@
 
 export interface Admin {
     name: string;
-    event: string;
-    society: string;
-    status: string;
-    mobile: string;
+    id: number;
+//    event: string;
+//    society: string;
+//    status: string;
+//    mobile: string;
     email: string;
+    token: string;
 }

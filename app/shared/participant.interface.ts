@@ -3,9 +3,11 @@
  */
 
 export interface Participant {
-    name: string;
-    email: string;
-    gender: string;
-    college: string;
-    mobile: string;
+    Id: number;
+    Name: string;
+    Email: string;
+    Gender: string;
+    College: string;
+    Mobile: string;
+    Level: number;
 }

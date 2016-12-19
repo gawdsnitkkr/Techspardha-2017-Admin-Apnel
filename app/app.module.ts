@@ -1,10 +1,8 @@
-/**
- * Created by varun on 19/9/16.
- */
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { FormsModule }   from '@angular/forms';
+import { ToastyModule } from 'ng2-toasty';
 
 import { AppComponent }   from './app.component';
 import { WelcomeComponent }   from './welcome/welcome.component';
@@ -13,15 +11,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { SessionService } from './shared/session.service';
 import { ParticipantsService } from './shared/participants.service';
 import { EventService } from './shared/event.service';
+import { AlertService } from './shared/alert.service';
 import { AuthGuard } from './shared/auth-guard.service';
 
 import { LoginComponent }   from './login/login.component';
+
 @NgModule({
     imports:      [
         BrowserModule,
         AppRoutingModule,
         HttpModule,
-        FormsModule
+        FormsModule,
+        ToastyModule.forRoot()
     ],
     declarations: [
         AppComponent,
@@ -29,12 +30,14 @@ import { LoginComponent }   from './login/login.component';
         WelcomeComponent
     ],
     providers: [
-        SessionService, AuthGuard, ParticipantsService, EventService
+        SessionService,
+        AuthGuard,
+        ParticipantsService,
+        EventService,
+        AlertService
     ],
     bootstrap:    [
         AppComponent
     ]
 })
 export class AppModule { }
-
-

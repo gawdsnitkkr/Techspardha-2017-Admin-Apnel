@@ -1,11 +1,17 @@
-/**
- * Created by varun on 12/10/16.
- */
 "use strict";
+var base = "http://localhost:3000/api/";
 exports.apis = {
-    //getAdmin: 'http://techspardha:81/api/admin/get'
-    getAdmin: 'app/admin.json',
-    getParticipants: 'app/participants.json',
-    getEvent: 'app/event.json'
+    login: base + 'admin/login',
+    myEvent: base + 'admin/events',
+    getParticipants: function (eventId) {
+        return base + 'event/' + eventId + '/participants';
+    },
+    getEvent: function (eventId) {
+        return base + 'event/' + eventId;
+    },
+    forwardParticipant: function (eventId) {
+        return base + 'event/' + eventId + '/forward';
+    },
+    pdfs: 'STATIC PDF PATH'
 };
 //# sourceMappingURL=constants.js.map

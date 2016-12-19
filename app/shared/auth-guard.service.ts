@@ -1,7 +1,3 @@
-/**
- * Created by varun on 12/10/16.
- */
-
 import { Injectable }     from '@angular/core';
 import {
     CanActivate, Router,
@@ -20,15 +16,12 @@ export class AuthGuard implements CanActivate {
         return this.checkLogin(admin);
     }
     checkLogin(admin: Admin): boolean {
-        if (admin && admin.name && admin.status) {
+        if (admin && admin.name && admin.email) {
             return true;
-        } else if (admin && (!admin.name || !admin.status)) {
+        } else if (admin && (!admin.name || !admin.email)) {
             this.router.navigate(['/login']);
             return false;
         } else {
-            this.sessionService.retrieveAdmin().subscribe(admin => {
-                this.sessionService.setAdmin(admin);
-            });
             this.router.navigate(['/login']);
         }
     }

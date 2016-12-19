@@ -21,26 +21,11 @@ export class AppComponent {
     ngOnInit(): void {
         this.admin = this.sessionService.getAdmin();
         this.redirectToDashboard(this.admin);
-        if (this.admin == null) {
-            this.sessionService.retrieveAdmin()
-                .subscribe(
-                    admin => {
-                        this.admin = admin;
-                        this.sessionService.setAdmin(admin);
-                        //console.log(this.sessionService.getAdmin());
-                        this.redirectToDashboard(admin);
-                    },
-                    err => {
-                        console.log('error occured');
-                    }
-                );
-        }
     }
     redirectToDashboard(admin: Admin): void {
-        if (admin && admin.name && admin.status) {
+        if (admin && admin.name) {
             this.router.navigate(['/welcome']);
         }
     }
-    
-}
 
+}

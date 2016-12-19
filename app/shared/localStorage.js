@@ -1,6 +1,3 @@
-/**
- * Created by varun on 11/10/16.
- */
 "use strict";
 var LocalStorage = (function () {
     function LocalStorage() {
@@ -24,6 +21,9 @@ var LocalStorage = (function () {
         else {
             localStorage.setItem(key, value);
         }
+    };
+    LocalStorage.prototype.removeItem = function (key) {
+        localStorage.removeItem(key);
     };
     return LocalStorage;
 }());
