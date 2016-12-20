@@ -9,44 +9,59 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
-var Subject_1 = require('rxjs/Subject');
+var ng2_toasty_1 = require('ng2-toasty');
 var AlertService = (function () {
-    function AlertService(router) {
-        var _this = this;
-        this.router = router;
-        this.subject = new Subject_1.Subject();
-        this.keepAfterNavigationChange = false;
+    function AlertService(toastyService, toastyConfig) {
         // clear alert message on route change
-        router.events.subscribe(function (event) {
-            if (event instanceof router_1.NavigationStart) {
-                if (_this.keepAfterNavigationChange) {
-                    // only keep for a single location change
-                    _this.keepAfterNavigationChange = false;
-                }
-                else {
-                    // clear alert
-                    _this.subject.next();
-                }
+        this.toastyService = toastyService;
+        this.toastyConfig = toastyConfig;
+        this.toastyConfig.theme = 'material';
+        this.toastyConfig.showClose = true;
+    }
+    AlertService.prototype.success = function (msg, title) {
+        if (title === void 0) { title = 'Success'; }
+        this.toastyService.success({
+            title: title,
+            msg: msg,
+            showClose: true,
+            timeout: 3000
+        });
+    };
+    AlertService.prototype.error = function (msg, title) {
+        if (title === void 0) { title = 'Error'; }
+        this.toastyService.error({
+            title: title,
+            msg: msg,
+            showClose: true,
+            timeout: 3000
+        });
+    };
+    AlertService.prototype.timeout = function () {
+        this.toastyService.error({
+            title: 'Request timed out',
+            msg: 'Please check your internet connection',
+            showClose: true,
+            timeout: 3000
+        });
+    };
+    AlertService.prototype.wait = function (msg, title) {
+        var _this = this;
+        this.toastyService.wait({
+            title: title,
+            msg: msg,
+            showClose: true,
+            timeout: 60000,
+            onAdd: function (toast) {
+                _this.currentToastId = toast.id;
             }
         });
-    }
-    AlertService.prototype.success = function (message, keepAfterNavigationChange) {
-        if (keepAfterNavigationChange === void 0) { keepAfterNavigationChange = false; }
-        this.keepAfterNavigationChange = keepAfterNavigationChange;
-        this.subject.next({ type: 'success', text: message });
     };
-    AlertService.prototype.error = function (message, keepAfterNavigationChange) {
-        if (keepAfterNavigationChange === void 0) { keepAfterNavigationChange = false; }
-        this.keepAfterNavigationChange = keepAfterNavigationChange;
-        this.subject.next({ type: 'error', text: message });
-    };
-    AlertService.prototype.getMessage = function () {
-        return this.subject.asObservable();
+    AlertService.prototype.clear = function () {
+        this.toastyService.clear(this.currentToastId);
     };
     AlertService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [router_1.Router])
+        __metadata('design:paramtypes', [ng2_toasty_1.ToastyService, ng2_toasty_1.ToastyConfig])
     ], AlertService);
     return AlertService;
 }());

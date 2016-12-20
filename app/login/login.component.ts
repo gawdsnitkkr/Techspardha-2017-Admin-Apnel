@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http, Response, Headers, Request, RequestMethod, RequestOptions } from '@angular/http';
 import { AuthenticationService } from '../services/authentication.service';
+import { AlertService } from '../services/alert.service';
 import { SessionService } from '../shared/session.service';
 import { Admin } from '../shared/admin.interface';
 
@@ -13,7 +14,8 @@ export class LoginComponent {
     constructor(private http: Http,
         private authenticationService: AuthenticationService,
         private sessionService: SessionService,
-        private router: Router) {
+        private router: Router,
+        private alertService: AlertService) {
     }
     ngOnInit(): void {
         if(this.sessionService.getAdmin()) {
@@ -21,7 +23,9 @@ export class LoginComponent {
         }
     }
     adminLogin(username: string, password: string): void {
+        this.alertService.wait('Please wait', 'Signing in...');
         this.authenticationService.login(username, password).subscribe((data) => {
+            this.alertService.clear();
             if(data.status.code === 200) {
                 let admin: Admin = {
                     email: data.data.Email,
@@ -30,16 +34,20 @@ export class LoginComponent {
                     token: data.data.token
                 };
                 this.sessionService.setAdmin(admin);
-                console.log("Login successful");
                 // Show success alert
                 this.router.navigate(['/welcome']);
             }
             else {
-                // Show failure alert
-                console.log("Login unsuccessful");
-                return null;
+                // Invalid credentials
+                this.alertService.error('Error', data.status.message);
             }
 
-        });
+        },
+        err => {
+            this.alertService.clear();
+            console.log("Error occured", err);
+            this.alertService.timeout();
+        }
+        );
     }
 }

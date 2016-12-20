@@ -1,39 +1,59 @@
 import { Injectable } from '@angular/core';
-import { Router, NavigationStart } from '@angular/router';
-import { Observable } from 'rxjs';
-import { Subject } from 'rxjs/Subject';
+import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
 @Injectable()
 export class AlertService {
-    private subject = new Subject<any>();
-    private keepAfterNavigationChange = false;
-
-    constructor(private router: Router) {
+    private currentToastId;
+    constructor(
+        private toastyService:ToastyService,
+        private toastyConfig: ToastyConfig) {
         // clear alert message on route change
-        router.events.subscribe(event => {
-            if (event instanceof NavigationStart) {
-                if (this.keepAfterNavigationChange) {
-                    // only keep for a single location change
-                    this.keepAfterNavigationChange = false;
-                } else {
-                    // clear alert
-                    this.subject.next();
-                }
+
+        this.toastyConfig.theme = 'material';
+        this.toastyConfig.showClose = true;
+    }
+
+    success(msg: string, title: string = 'Success') {
+        this.toastyService.success({
+            title,
+            msg: msg,
+            showClose: true,
+            timeout: 3000
+        });
+    }
+
+    error(msg: string, title: string = 'Error') {
+        this.toastyService.error({
+            title,
+            msg,
+            showClose: true,
+            timeout: 3000
+        });
+    }
+
+    timeout() {
+        this.toastyService.error({
+            title: 'Request timed out',
+            msg: 'Please check your internet connection',
+            showClose: true,
+            timeout: 3000
+        });
+    }
+
+    wait(msg: string, title: string) {
+        this.toastyService.wait({
+            title: title,
+            msg: msg,
+            showClose: true,
+            timeout: 60000,
+            onAdd: (toast: ToastData) => {
+                this.currentToastId = toast.id;
             }
         });
     }
 
-    success(message: string, keepAfterNavigationChange = false) {
-        this.keepAfterNavigationChange = keepAfterNavigationChange;
-        this.subject.next({ type: 'success', text: message });
+    clear() {
+        this.toastyService.clear(this.currentToastId);
     }
 
-    error(message: string, keepAfterNavigationChange = false) {
-        this.keepAfterNavigationChange = keepAfterNavigationChange;
-        this.subject.next({ type: 'error', text: message });
-    }
-
-    getMessage(): Observable<any> {
-        return this.subject.asObservable();
-    }
 }

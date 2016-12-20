@@ -11,7 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { SessionService } from './shared/session.service';
 import { ParticipantsService } from './shared/participants.service';
 import { EventService } from './shared/event.service';
-import { AlertService } from './shared/alert.service';
+import { AlertService } from './services/alert.service';
 import { AuthGuard } from './shared/auth-guard.service';
 
 import { LoginComponent }   from './login/login.component';

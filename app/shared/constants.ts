@@ -1,4 +1,4 @@
-var base = "http://localhost:3000/api/";
+var base = "http://anshulmalik.me/api/";
 
 export var apis = {
     login: base + 'admin/login',
@@ -12,5 +12,5 @@ export var apis = {
     forwardParticipant: (eventId: number) => {
         return base + 'event/' + eventId + '/forward';
     },
-    pdfs: 'STATIC PDF PATH'
+    pdfs: 'http://localhost:3000/api/admin/upload'
 };

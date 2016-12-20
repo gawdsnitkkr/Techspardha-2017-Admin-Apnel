@@ -12,13 +12,15 @@ var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var http_1 = require('@angular/http');
 var authentication_service_1 = require('../services/authentication.service');
+var alert_service_1 = require('../services/alert.service');
 var session_service_1 = require('../shared/session.service');
 var LoginComponent = (function () {
-    function LoginComponent(http, authenticationService, sessionService, router) {
+    function LoginComponent(http, authenticationService, sessionService, router, alertService) {
         this.http = http;
         this.authenticationService = authenticationService;
         this.sessionService = sessionService;
         this.router = router;
+        this.alertService = alertService;
     }
     LoginComponent.prototype.ngOnInit = function () {
         if (this.sessionService.getAdmin()) {
@@ -27,7 +29,9 @@ var LoginComponent = (function () {
     };
     LoginComponent.prototype.adminLogin = function (username, password) {
         var _this = this;
+        this.alertService.wait('Please wait', 'Signing in...');
         this.authenticationService.login(username, password).subscribe(function (data) {
+            _this.alertService.clear();
             if (data.status.code === 200) {
                 var admin = {
                     email: data.data.Email,
@@ -36,15 +40,17 @@ var LoginComponent = (function () {
                     token: data.data.token
                 };
                 _this.sessionService.setAdmin(admin);
-                console.log("Login successful");
                 // Show success alert
                 _this.router.navigate(['/welcome']);
             }
             else {
-                // Show failure alert
-                console.log("Login unsuccessful");
-                return null;
+                // Invalid credentials
+                _this.alertService.error('Error', data.status.message);
             }
+        }, function (err) {
+            _this.alertService.clear();
+            console.log("Error occured", err);
+            _this.alertService.timeout();
         });
     };
     LoginComponent = __decorate([
@@ -52,7 +58,7 @@ var LoginComponent = (function () {
             templateUrl: 'app/login/login.component.html',
             providers: [authentication_service_1.AuthenticationService]
         }), 
-        __metadata('design:paramtypes', [http_1.Http, authentication_service_1.AuthenticationService, session_service_1.SessionService, router_1.Router])
+        __metadata('design:paramtypes', [http_1.Http, authentication_service_1.AuthenticationService, session_service_1.SessionService, router_1.Router, alert_service_1.AlertService])
     ], LoginComponent);
     return LoginComponent;
 }());

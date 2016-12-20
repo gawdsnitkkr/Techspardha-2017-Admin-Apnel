@@ -20,7 +20,17 @@
     <div id="tab-content">
         <div id="response-tab-content" *ngIf="showTabContent == 'response'">
             <!-- Response content goes here  -->
+            <div class="blue-button" (click)="notifyCurrent()">Notify participants in this level</div>
+            <div class="blue-button" (click)="notifyAll()">Notify All</div>
+
+            <img src="/app/assets/arrows.svg"
+                class="refresh-button"
+                alt="Refresh"
+                (click)="fetchAndUpdateParticipants()"/>
             <div class="single-box">
+                <div *ngIf="!participants || participants.length == 0">
+                    <p>Nothing to display</p>
+                </div>
                 <div class="boxes" *ngFor="let participant of participants; let i = index">
                     <p>{{i + 1}}</p>
                     <div class="left-75">
@@ -32,82 +42,84 @@
                         <input type="text" [(ngModel)]="participant.Level" disabled/>
                     </div>
                     <div class="control-area">
-                        <button class="forward" (click)="forwardParticipant(i, participant.Id)">Forward</button>
+                        <div class="button" (click)="forwardParticipant(i, participant.Id)">Forward</div>
+                        <div class="button" (click)="notify(participant.Id)">Notify</div>
                     </div>
                 </div>
             </div>
         </div>
         <div id="event-tab-content" *ngIf="showTabContent == 'event'">
-            <div id="update-event-button" (click)="updateEvent()">Update Event</div>
-            <div class="single-box">
-                <p>Event Description</p>
-                <textarea rows=6
-                    [(ngModel)]="event.Description"
-                    [ngClass]="classes.desc"
-                    (keyup)="validate('desc')"
-                    #eventDescription>
-                </textarea>
-            </div>
-            <div class="single-box">
-                <p>Rules</p>
-                <textarea rows=6
-                    [(ngModel)]="event.Rules"
-                    [ngClass]="classes.rules"
-                    (keyup)="validate('rules')"
-                    #eventDescription>
-                </textarea>
-            </div>
-            <div class="single-box">
-                <div class="double-box">
-                    <p>Start</p>
-                    <input type="text" [ngModel]="event.Start"
-                        (ngModelChange)="event.Start=$event"
-                        [ngClass]="classes.start"
-                        (keyup)="validate('start')"
-                        #eventStartDate/>
+            <div *ngIf="event">
+                <div id="update-event-button" (click)="updateEvent()">Update Event</div>
+                <div class="single-box">
+                    <p>Event Description</p>
+                    <textarea rows=6
+                        [(ngModel)]="event.Description"
+                        [ngClass]="classes.desc"
+                        (keyup)="validate('desc')"
+                        #eventDescription>
+                    </textarea>
                 </div>
-                <div class="double-box">
-                    <p>End </p>
-                    <input type="text" [ngModel]="event.End"
-                        (ngModelChange)="event.End=$event"
-                        [ngClass]="classes.end"
-                        (keyup)="validate('end')"
-                        #eventEndDate/>
+                <div class="single-box">
+                    <p>Rules</p>
+                    <textarea rows=6
+                        [(ngModel)]="event.Rules"
+                        [ngClass]="classes.rules"
+                        (keyup)="validate('rules')"
+                        #eventDescription>
+                    </textarea>
                 </div>
-            </div>
+                <div class="single-box">
+                    <div class="double-box">
+                        <p>Start</p>
+                        <input type="text" [ngModel]="event.Start"
+                            (ngModelChange)="event.Start=$event"
+                            [ngClass]="classes.start"
+                            (keyup)="validate('start')"
+                            #eventStartDate/>
+                    </div>
+                    <div class="double-box">
+                        <p>End </p>
+                        <input type="text" [ngModel]="event.End"
+                            (ngModelChange)="event.End=$event"
+                            [ngClass]="classes.end"
+                            (keyup)="validate('end')"
+                            #eventEndDate/>
+                    </div>
+                </div>
 
-            <div class="single-box">
-                <div class="double-box">
-                    <p>Venue</p>
-                    <input type="text" [(ngModel)]="event.Venue"
-                    #eventVenue
-                    (keyup)="validate('venue')"
-                    [ngClass]="classes.venue"/>
+                <div class="single-box">
+                    <div class="double-box">
+                        <p>Venue</p>
+                        <input type="text" [(ngModel)]="event.Venue"
+                        #eventVenue
+                        (keyup)="validate('venue')"
+                        [ngClass]="classes.venue"/>
+                    </div>
+                    <div class="double-box">
+                        <p>Current Round</p>
+                        <input type="number" [(ngModel)]="event.CurrentRound"
+                            #maxContestants
+                            (keyup)="validate('cr')"
+                            [ngClass]="classes.file"/>
+                    </div>
                 </div>
-                <div class="double-box">
-                    <p>Current Round</p>
-                    <input type="number" [(ngModel)]="event.CurrentRound"
+                <div class="single-box">
+                    <div class="double-box">
+                        <p>Maximum Constestants</p>
+                        <input type="number" [(ngModel)]="event.MaxContestants"
                         #maxContestants
-                        (keyup)="validate('cr')"
-                        [ngClass]="classes.file"/>
+                        (keyup)="validate('mc')"
+                        [ngClass]="classes.mc"/>
+                    </div>
+                    <div class="double-box">
+                        <p>Upload Rules Pdf</p>
+                        <input type="file"
+                            #inputFile
+                            (change)="fileChanged($event)"/>
+                    </div>
                 </div>
-            </div>
-            <div class="single-box">
-                <div class="double-box">
-                    <p>Maximum Constestants</p>
-                    <input type="number" [(ngModel)]="event.MaxContestants"
-                    #maxContestants
-                    (keyup)="validate('mc')"
-                    [ngClass]="classes.mc"/>
-                </div>
-                <div class="double-box">
-                    <p>Upload Rules Pdf</p>
-                    <input type="file"
-                        #inputFile
-                        (change)="fileChanged($event)"/>
-                </div>
-            </div>
-
+            </div> <!-- ngif-->
         </div>
     </div>
 </div>
