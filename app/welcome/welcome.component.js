@@ -8,13 +8,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var participants_service_1 = require("../shared/participants.service");
-var event_service_1 = require("../shared/event.service");
-var session_service_1 = require("../shared/session.service");
-var upload_service_1 = require("../services/upload.service");
-var alert_service_1 = require("../services/alert.service");
-var constants = require("../shared/constants");
+var core_1 = require('@angular/core');
+var participants_service_1 = require('../shared/participants.service');
+var event_service_1 = require('../shared/event.service');
+var session_service_1 = require('../shared/session.service');
+var upload_service_1 = require('../services/upload.service');
+var alert_service_1 = require('../services/alert.service');
+var constants = require('../shared/constants');
 var WelcomeComponent = (function () {
     function WelcomeComponent(participantsService, eventService, alertService, sessionService, uploadService) {
         var _this = this;
@@ -256,18 +256,14 @@ var WelcomeComponent = (function () {
                 break;
         }
     };
+    WelcomeComponent = __decorate([
+        core_1.Component({
+            templateUrl: 'app/welcome/welcome.component.html',
+            providers: [upload_service_1.UploadService]
+        }), 
+        __metadata('design:paramtypes', [participants_service_1.ParticipantsService, event_service_1.EventService, alert_service_1.AlertService, session_service_1.SessionService, upload_service_1.UploadService])
+    ], WelcomeComponent);
     return WelcomeComponent;
 }());
-WelcomeComponent = __decorate([
-    core_1.Component({
-        templateUrl: 'app/welcome/welcome.component.html',
-        providers: [upload_service_1.UploadService]
-    }),
-    __metadata("design:paramtypes", [participants_service_1.ParticipantsService,
-        event_service_1.EventService,
-        alert_service_1.AlertService,
-        session_service_1.SessionService,
-        upload_service_1.UploadService])
-], WelcomeComponent);
 exports.WelcomeComponent = WelcomeComponent;
 //# sourceMappingURL=welcome.component.js.map
