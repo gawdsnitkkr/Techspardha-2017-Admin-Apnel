@@ -1,7 +1,3 @@
-/**
- * Created by varun on 11/10/16.
- */
-
 export class LocalStorage {
     getItem(key: string) {
         let jsonString = localStorage.getItem(key);
@@ -20,5 +16,9 @@ export class LocalStorage {
         } else {
             localStorage.setItem(key, value);
         }
+    }
+
+    removeItem(key: string) {
+        localStorage.removeItem(key);
     }
 }

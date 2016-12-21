@@ -8,31 +8,30 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-/**
- * Created by varun on 11/10/16.
- */
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
-var Rx_1 = require('rxjs/Rx');
-var constants = require('./constants');
+var localStorage_1 = require('./localStorage');
 var SessionService = (function () {
     function SessionService(http) {
         this.http = http;
-        this.getAdminUrl = constants.apis.getAdmin;
+        this.localStorage = new localStorage_1.LocalStorage();
     }
     SessionService.prototype.getAdmin = function () {
-        //console.log('get admin called');
+        var user = this.localStorage.getItem('user');
+        if (user) {
+            SessionService.admin = user;
+        }
         return SessionService.admin;
     };
-    SessionService.prototype.setAdmin = function (admin) {
-        //console.log('set admin called');
-        SessionService.admin = admin;
+    SessionService.prototype.logout = function () {
+        this.localStorage.removeItem('user');
+        SessionService.admin = undefined;
+        return true;
     };
-    SessionService.prototype.retrieveAdmin = function () {
-        //console.log('retrieve admin called');
-        return this.http.post(this.getAdminUrl, {}, {})
-            .map(function (response) { return response.json(); })
-            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+    SessionService.prototype.setAdmin = function (admin) {
+        this.localStorage.setItem('user', admin);
+        SessionService.admin = admin;
+        return true;
     };
     SessionService = __decorate([
         core_1.Injectable(), 

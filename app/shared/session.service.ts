@@ -1,31 +1,37 @@
-/**
- * Created by varun on 11/10/16.
- */
 import { Injectable} from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 import { Admin } from './admin.interface';
 import constants = require('./constants');
+import { LocalStorage } from './localStorage';
 
 @Injectable()
 export class SessionService {
+    private localStorage;
     private static admin: Admin;
-    private getAdminUrl: string = constants.apis.getAdmin;
     constructor(private http: Http) {
+        this.localStorage = new LocalStorage();
     }
+
     getAdmin(): Admin {
-        //console.log('get admin called');
+        let user: Admin = this.localStorage.getItem('user');
+        if(user) {
+            SessionService.admin = user;
+        }
+
         return SessionService.admin;
     }
-    setAdmin(admin: Admin) : void {
-        //console.log('set admin called');
-        SessionService.admin = admin;
+
+    logout() {
+        this.localStorage.removeItem('user');
+        SessionService.admin = undefined;
+        return true;
     }
-    retrieveAdmin(): Observable<Admin> {
-        //console.log('retrieve admin called');
-        return this.http.post(this.getAdminUrl, {}, {})
-            .map((response: Response) => response.json())
-            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+
+    setAdmin(admin: Admin) : boolean {
+        this.localStorage.setItem('user', admin);
+        SessionService.admin = admin;
+        return true;
     }
 }

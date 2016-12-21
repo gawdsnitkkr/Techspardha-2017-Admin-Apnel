@@ -8,17 +8,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-/**
- * Created by varun on 1/11/16.
- */
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var Rx_1 = require('rxjs/Rx');
+var session_service_1 = require('./session.service');
 var constants = require('./constants');
 var ParticipantsService = (function () {
-    function ParticipantsService(http) {
+    function ParticipantsService(http, sessionService) {
         this.http = http;
-        this.getParticipantsUrl = constants.apis.getParticipants;
+        this.sessionService = sessionService;
     }
     ParticipantsService.prototype.getParticipants = function () {
         return ParticipantsService.participants;
@@ -26,14 +24,25 @@ var ParticipantsService = (function () {
     ParticipantsService.prototype.setParticipants = function (participants) {
         ParticipantsService.participants = participants;
     };
-    ParticipantsService.prototype.retrieveParticipants = function () {
-        return this.http.post(this.getParticipantsUrl, {}, {})
+    ParticipantsService.prototype.retrieveParticipants = function (id) {
+        var admin = this.sessionService.getAdmin();
+        var params = new http_1.URLSearchParams();
+        params.set('token', admin.token);
+        return this.http.get(constants.apis.getParticipants(id), { search: params })
             .map(function (response) { return response.json(); })
+            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+    };
+    ParticipantsService.prototype.forwardParticipant = function (eventId, id) {
+        var admin = this.sessionService.getAdmin();
+        return this.http.post(constants.apis.forwardParticipant(eventId), {
+            token: admin.token,
+            data: [id]
+        }).map(function (response) { return response.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
     ParticipantsService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [http_1.Http, session_service_1.SessionService])
     ], ParticipantsService);
     return ParticipantsService;
 }());

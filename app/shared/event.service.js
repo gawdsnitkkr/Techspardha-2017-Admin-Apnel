@@ -8,17 +8,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-/**
- * Created by varun on 1/11/16.
- */
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var Rx_1 = require('rxjs/Rx');
 var constants = require('./constants');
+var session_service_1 = require('./session.service');
 var EventService = (function () {
-    function EventService(http) {
+    function EventService(http, sessionService) {
         this.http = http;
-        this.getEventUrl = constants.apis.getEvent;
+        this.sessionService = sessionService;
     }
     EventService.prototype.getEvent = function () {
         return EventService.event;
@@ -26,14 +24,27 @@ var EventService = (function () {
     EventService.prototype.setEvent = function (event) {
         EventService.event = event;
     };
-    EventService.prototype.retrieveEvent = function () {
-        return this.http.post(this.getEventUrl, {}, {})
+    EventService.prototype.retrieveEventId = function () {
+        var params = new http_1.URLSearchParams();
+        params.set('token', this.sessionService.getAdmin().token);
+        return this.http.get(constants.apis.myEvent, { search: params })
             .map(function (response) { return response.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
+    EventService.prototype.retrieveEvent = function (id) {
+        return this.http.get(constants.apis.getEvent(id))
+            .map(function (response) { return response.json(); })
+            .catch(function (err) { return Rx_1.Observable.throw(err.json().err || 'Server error'); });
+    };
+    EventService.prototype.updateEvent = function (eventId, event, token) {
+        event.token = token;
+        return this.http.post(constants.apis.getEvent(eventId), event)
+            .map(function (response) { return response.json(); })
+            .catch(function (err) { return Rx_1.Observable.throw(err.json().arr || 'Server error'); });
+    };
     EventService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [http_1.Http, session_service_1.SessionService])
     ], EventService);
     return EventService;
 }());

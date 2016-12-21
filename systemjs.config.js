@@ -11,6 +11,7 @@
         // map tells the System loader where to look for things
         map: {
             // our app is within the app folder
+            'ng2-toasty': 'npm:ng2-toasty',
             app: 'app',
             // angular bundles
             '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
@@ -37,7 +38,11 @@
             'angular2-in-memory-web-api': {
                 main: './index.js',
                 defaultExtension: 'js'
-            }
+            },
+            'ng2-toasty': {
+                main: 'index.js',
+                defaultExtension: 'js'
+            },
         }
     });
 })(this);

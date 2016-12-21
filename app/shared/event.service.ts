@@ -1,18 +1,15 @@
-/**
- * Created by varun on 1/11/16.
- */
 import { Injectable} from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 import { Event } from './event.interface';
 import constants = require('./constants');
+import { SessionService } from './session.service';
 
 @Injectable()
 export class EventService {
     private static event: Event;
-    private getEventUrl: string = constants.apis.getEvent;
-    constructor(private http: Http) {
+    constructor(private http: Http, private sessionService: SessionService) {
     }
     getEvent(): Event {
         return EventService.event;
@@ -20,9 +17,25 @@ export class EventService {
     setEvent(event: Event) : void {
         EventService.event = event;
     }
-    retrieveEvent(): Observable<Event> {
-        return this.http.post(this.getEventUrl, {}, {})
+    retrieveEventId() {
+        let params:URLSearchParams = new URLSearchParams();
+        params.set('token', this.sessionService.getAdmin().token);
+
+        return this.http.get(constants.apis.myEvent, {search: params})
             .map((response: Response) => response.json())
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+    }
+
+    retrieveEvent(id: number) {
+        return this.http.get(constants.apis.getEvent(id))
+            .map((response: Response) => response.json())
+            .catch((err: any) => Observable.throw(err.json().err || 'Server error'));
+    }
+
+    updateEvent(eventId: number, event: any, token: string) {
+        event.token = token;
+        return this.http.post(constants.apis.getEvent(eventId), event)
+            .map((response: Response) => response.json())
+            .catch((err: any) => Observable.throw(err.json().arr || 'Server error'));
     }
 }
