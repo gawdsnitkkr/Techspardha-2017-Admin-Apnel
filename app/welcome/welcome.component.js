@@ -8,21 +8,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var participants_service_1 = require('../shared/participants.service');
-var event_service_1 = require('../shared/event.service');
-var session_service_1 = require('../shared/session.service');
-var upload_service_1 = require('../services/upload.service');
-var alert_service_1 = require('../services/alert.service');
-var constants = require('../shared/constants');
+var core_1 = require("@angular/core");
+var participants_service_1 = require("../shared/participants.service");
+var event_service_1 = require("../shared/event.service");
+var session_service_1 = require("../shared/session.service");
+var upload_service_1 = require("../services/upload.service");
+var alert_service_1 = require("../services/alert.service");
+var notification_service_1 = require("../services/notification.service");
+var constants = require("../shared/constants");
 var WelcomeComponent = (function () {
-    function WelcomeComponent(participantsService, eventService, alertService, sessionService, uploadService) {
+    function WelcomeComponent(participantsService, eventService, alertService, sessionService, uploadService, notificationService) {
         var _this = this;
         this.participantsService = participantsService;
         this.eventService = eventService;
         this.alertService = alertService;
         this.sessionService = sessionService;
         this.uploadService = uploadService;
+        this.notificationService = notificationService;
         this.eventActiveClass = 'event-active';
         this.responseActiveClass = '';
         this.showTabContent = 'event';
@@ -33,13 +35,10 @@ var WelcomeComponent = (function () {
             'end': 'valid',
             'venue': 'valid',
             'mc': 'valid',
+            'tr': 'valid',
             'file': 'valid'
         };
         this.uploadService.progress$.subscribe(function (progress) {
-            if (progress === 100) {
-                _this.alertService.clear();
-                _this.alertService.success("File uploaded successfully, hit update to save the details");
-            }
         }, function (err) {
             _this.alertService.clear();
             _this.alertService.error('upload error', "Error uploading the file");
@@ -49,12 +48,15 @@ var WelcomeComponent = (function () {
         var _this = this;
         this.event = this.eventService.getEvent();
         if (!this.event) {
+            this.alertService.wait("Please wait while we fetch event details", "Loading events");
             this.eventService.retrieveEventId()
                 .subscribe(function (event) {
+                _this.alertService.clear();
                 _this.eventId = event.data[0];
                 _this.fetchAndUpdateEvent();
                 _this.fetchAndUpdateParticipants();
             }, function (err) {
+                _this.alertService.clear();
                 console.log('error occured');
             });
         }
@@ -148,7 +150,7 @@ var WelcomeComponent = (function () {
             this.event.Rules.length < 10 ||
             this.event.Venue.length == 0 ||
             !this.event.MaxContestants ||
-            !this.event.CurrentRound ||
+            this.event.CurrentRound == undefined ||
             this.event.Pdf.length == 0) {
             this.alertService.error("Please correct the red boxes");
         }
@@ -203,22 +205,68 @@ var WelcomeComponent = (function () {
         // Uploads the file to server
         this.alertService.wait("Please wait while pdf is being uploaded", "Uploading");
         var files = event.srcElement.files;
-        this.uploadService.makeFileRequest(constants.apis.pdfs, this.admin.token, files).subscribe(function (data) {
-            if (data) {
-                _this.event.Pdf = "http://google.com/" + data[0].filename;
+        this.uploadService.makeFileRequest(constants.apis.pdfs, this.admin.token, files).subscribe(function (response) {
+            _this.alertService.clear();
+            if (response.status.code == 200) {
+                _this.event.Pdf = "http://api.techspardha.org/static/" + response.data.filename;
+                _this.alertService.success("File uploaded successfully, hit update to save the details");
             }
+            else {
+                _this.alertService.error(response.data, "Upload failed");
+            }
+        }, function (err) {
+            console.log(err);
+            _this.alertService.error(err, "Contact gawds");
+        });
+    };
+    WelcomeComponent.prototype.notifyAll = function () {
+        var _this = this;
+        this.alertService.wait("Please wait while we are notifying participants", "Notifying all participants");
+        var msg = this.notiMessage;
+        this.notificationService.notify(this.event.Id, 'all', msg, this.admin.token).subscribe(function (response) {
+            _this.alertService.clear();
+            if (response.status.code === 200) {
+                _this.alertService.success('Notified');
+                _this.notiMessage = '';
+            }
+            else {
+                _this.alertService.error(response.status.message);
+            }
+        }, function (err) {
+            _this.alertService.clear();
+            _this.alertService.error("Contact gawds to resolve the error");
+            console.log(err);
+        });
+    };
+    WelcomeComponent.prototype.notifyOne = function (pid) {
+        var _this = this;
+        this.alertService.wait("Please wait while we are notifying participants", "Notifying all participants");
+        var msg = this.notiMessage;
+        this.notificationService.notify(this.event.Id, 'current', msg, this.admin.token, [pid]).subscribe(function (response) {
+            _this.alertService.clear();
+            if (response.status.code === 200) {
+                _this.alertService.success('Notified');
+                _this.notiMessage = '';
+            }
+            else {
+                _this.alertService.error(response.status.message);
+            }
+        }, function (err) {
+            _this.alertService.clear();
+            _this.alertService.error("Contact gawds to resolve the error");
+            console.log(err);
         });
     };
     WelcomeComponent.prototype.validate = function (obj) {
         switch (obj) {
             case 'desc':
-                if (this.event.Description.length)
+                if (this.event.Description.length >= 10)
                     this.classes.desc = 'valid';
                 else
                     this.classes.desc = 'invalid';
                 break;
             case 'rules':
-                if (this.event.Rules.length)
+                if (this.event.Rules.length >= 10)
                     this.classes.rules = 'valid';
                 else
                     this.classes.rules = 'invalid';
@@ -230,16 +278,25 @@ var WelcomeComponent = (function () {
                     this.classes.venue = 'invalid';
                 break;
             case 'mc':
-                if (this.event.MaxContestants)
+                if (this.event.MaxContestants != undefined &&
+                    this.event.MaxContestants >= 0)
                     this.classes.mc = 'valid';
                 else
                     this.classes.mc = 'invalid';
                 break;
             case 'cr':
-                if (this.event.CurrentRound)
+                if (this.event.CurrentRound != undefined &&
+                    this.event.CurrentRound >= 0)
                     this.classes.cr = 'valid';
                 else
                     this.classes.cr = 'invalid';
+                break;
+            case 'tr':
+                if (this.event.TotalRounds != undefined &&
+                    this.event.TotalRounds > 0)
+                    this.classes.tr = 'valid';
+                else
+                    this.classes.tr = 'invalid';
             case 'start':
                 var d = new Date(this.event.Start);
                 if (isNaN(d.getDate()))
@@ -256,14 +313,19 @@ var WelcomeComponent = (function () {
                 break;
         }
     };
-    WelcomeComponent = __decorate([
-        core_1.Component({
-            templateUrl: 'app/welcome/welcome.component.html',
-            providers: [upload_service_1.UploadService]
-        }), 
-        __metadata('design:paramtypes', [participants_service_1.ParticipantsService, event_service_1.EventService, alert_service_1.AlertService, session_service_1.SessionService, upload_service_1.UploadService])
-    ], WelcomeComponent);
     return WelcomeComponent;
 }());
+WelcomeComponent = __decorate([
+    core_1.Component({
+        templateUrl: 'app/welcome/welcome.component.html',
+        providers: [upload_service_1.UploadService]
+    }),
+    __metadata("design:paramtypes", [participants_service_1.ParticipantsService,
+        event_service_1.EventService,
+        alert_service_1.AlertService,
+        session_service_1.SessionService,
+        upload_service_1.UploadService,
+        notification_service_1.NotificationService])
+], WelcomeComponent);
 exports.WelcomeComponent = WelcomeComponent;
 //# sourceMappingURL=welcome.component.js.map

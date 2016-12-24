@@ -4,24 +4,25 @@
         <h1>Techspardha 2017</h1>
     </div>
     <div id="header-right">
-        <h1>Hi, {{this.admin.name}} <a href="#" (click)="logout()">Logout</a></h1>
+        <h1>Hi {{this.admin.name}}, <a href="#" id="logout-button" (click)="logout()">Logout</a></h1>
     </div>
 </div>
 <div id="container">
 
     <div id="response-button" (click)="onResponseButtonClick()"
         [ngClass]="responseActiveClass">
-        RESPONSES
+        Responses
     </div>
     <div id="event-button" (click)="onEventButtonClick()"
-        [ngClass]="eventActiveClass">
-        EVENT
+        [ngClass]="eventActiveClass"
+        *ngIf="this.event">
+          {{this.event.Name}}
     </div>
     <div id="tab-content">
         <div id="response-tab-content" *ngIf="showTabContent == 'response'">
             <!-- Response content goes here  -->
-            <div class="blue-button" (click)="notifyCurrent()">Notify participants in this level</div>
-            <div class="blue-button" (click)="notifyAll()">Notify All</div>
+
+            <div class="blue-button" (click)="allModal.open()">Notify All</div>
 
             <img src="/app/assets/arrows.svg"
                 class="refresh-button"
@@ -43,7 +44,7 @@
                     </div>
                     <div class="control-area">
                         <div class="button" (click)="forwardParticipant(i, participant.Id)">Forward</div>
-                        <div class="button" (click)="notify(participant.Id)">Notify</div>
+                        <div class="button" (click)="oneModal.open(i)">Notify</div>
                     </div>
                 </div>
             </div>
@@ -97,29 +98,70 @@
                         [ngClass]="classes.venue"/>
                     </div>
                     <div class="double-box">
-                        <p>Current Round</p>
-                        <input type="number" [(ngModel)]="event.CurrentRound"
-                            #maxContestants
-                            (keyup)="validate('cr')"
-                            [ngClass]="classes.file"/>
-                    </div>
-                </div>
-                <div class="single-box">
-                    <div class="double-box">
                         <p>Maximum Constestants</p>
                         <input type="number" [(ngModel)]="event.MaxContestants"
                         #maxContestants
                         (keyup)="validate('mc')"
                         [ngClass]="classes.mc"/>
                     </div>
+                </div>
+                <div class="single-box">
                     <div class="double-box">
-                        <p>Upload Rules Pdf</p>
-                        <input type="file"
-                            #inputFile
-                            (change)="fileChanged($event)"/>
+                        <p>Current Round</p>
+                        <input type="number" [(ngModel)]="event.CurrentRound"
+                            #maxContestants
+                            (keyup)="validate('cr')"
+                            [ngClass]="classes.file"/>
                     </div>
+                    <div class="double-box">
+                        <p>Total Rounds</p>
+                        <input type="number" [(ngModel)]="event.TotalRounds"
+                        #maxContestants
+                        (keyup)="validate('tr')"
+                        [ngClass]="classes.tr"/>
+                    </div>
+                </div>
+                <div class="single-box">
+                    <p>Upload Rules Pdf</p>
+                    <input type="file"
+                        #inputFile
+                        (change)="fileChanged($event)"/>
                 </div>
             </div> <!-- ngif-->
         </div>
     </div>
 </div>
+<modal  title="Notify All"
+        cancelButtonLabel="cancel"
+        submitButtonLabel="Notify"
+        modalClass="modal-lg modal-sm any-other-css-class"
+        [hideCloseButton]="false"
+        [closeOnEscape]="true"
+        [closeOnOutsideClick]="true"
+        (onSubmit)="notifyAll($event)"
+        #allModal>
+
+    <modal-content>
+        Enter the notification message to send.
+        <br />
+        <textarea rows="4" [(ngModel)]="notiMessage" class="message-box"></textarea>
+    </modal-content>
+
+</modal>
+<modal  title="Notify Participant"
+        cancelButtonLabel="cancel"
+        submitButtonLabel="Notify"
+        modalClass="modal-lg modal-sm any-other-css-class"
+        [hideCloseButton]="false"
+        [closeOnEscape]="true"
+        [closeOnOutsideClick]="true"
+        (onSubmit)="notifyOne()"
+        #oneModal>
+
+    <modal-content>
+        Enter the notification message to send.
+        <br />
+        <textarea rows="4" [(ngModel)]="notiMessage" class="message-box"></textarea>
+    </modal-content>
+
+</modal>

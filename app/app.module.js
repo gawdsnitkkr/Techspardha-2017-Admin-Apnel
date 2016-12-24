@@ -13,6 +13,7 @@ var platform_browser_1 = require('@angular/platform-browser');
 var http_1 = require('@angular/http');
 var forms_1 = require('@angular/forms');
 var ng2_toasty_1 = require('ng2-toasty');
+var ng2_modal_1 = require("ng2-modal");
 var app_component_1 = require('./app.component');
 var welcome_component_1 = require('./welcome/welcome.component');
 var app_routing_module_1 = require('./app-routing.module');
@@ -20,6 +21,7 @@ var session_service_1 = require('./shared/session.service');
 var participants_service_1 = require('./shared/participants.service');
 var event_service_1 = require('./shared/event.service');
 var alert_service_1 = require('./services/alert.service');
+var notification_service_1 = require('./services/notification.service');
 var auth_guard_service_1 = require('./shared/auth-guard.service');
 var login_component_1 = require('./login/login.component');
 var AppModule = (function () {
@@ -32,7 +34,8 @@ var AppModule = (function () {
                 app_routing_module_1.AppRoutingModule,
                 http_1.HttpModule,
                 forms_1.FormsModule,
-                ng2_toasty_1.ToastyModule.forRoot()
+                ng2_toasty_1.ToastyModule.forRoot(),
+                ng2_modal_1.ModalModule
             ],
             declarations: [
                 app_component_1.AppComponent,
@@ -44,7 +47,8 @@ var AppModule = (function () {
                 auth_guard_service_1.AuthGuard,
                 participants_service_1.ParticipantsService,
                 event_service_1.EventService,
-                alert_service_1.AlertService
+                alert_service_1.AlertService,
+                notification_service_1.NotificationService
             ],
             bootstrap: [
                 app_component_1.AppComponent

@@ -1,6 +1,7 @@
 import { Admin } from './admin.interface';
 
 export interface Event {
+    Id: number;
     Name: string;
     Description: string;
     Venue: string;

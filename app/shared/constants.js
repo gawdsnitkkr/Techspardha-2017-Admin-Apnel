@@ -1,5 +1,5 @@
 "use strict";
-var base = "http://anshulmalik.me/api/";
+var base = "http://localhost:3000/api/";
 exports.apis = {
     login: base + 'admin/login',
     myEvent: base + 'admin/events',
@@ -12,6 +12,12 @@ exports.apis = {
     forwardParticipant: function (eventId) {
         return base + 'event/' + eventId + '/forward';
     },
-    pdfs: 'http://localhost:3000/api/admin/upload'
+    pdfs: base + 'admin/upload',
+    notifyAll: function (eventId) {
+        return base + 'event/' + eventId + '/notify/all';
+    },
+    notify: function (eventId) {
+        return base + 'event/' + eventId + '/notify';
+    }
 };
 //# sourceMappingURL=constants.js.map

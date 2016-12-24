@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalModule } from "ng2-modal";
 
 import { ParticipantsService } from '../shared/participants.service';
 import { EventService } from '../shared/event.service';
 import { SessionService } from '../shared/session.service';
 import { UploadService } from '../services/upload.service';
 import { AlertService } from '../services/alert.service';
+import { NotificationService } from '../services/notification.service';
 import constants = require('../shared/constants');
 import { Participant } from '../shared/participant.interface';
 import { Event } from '../shared/event.interface';
@@ -24,6 +26,7 @@ export class WelcomeComponent {
     private responseActiveClass: string;
     private eventActiveClass: string;
     private showTabContent: string;
+    private notiMessage: string;        // Notification message
     private admin: Admin;               // Coordinator details
 
     constructor(
@@ -32,7 +35,7 @@ export class WelcomeComponent {
             private alertService: AlertService,
             private sessionService: SessionService,
             private uploadService: UploadService,
-            ) {
+            private notificationService: NotificationService) {
         this.eventActiveClass = 'event-active';
         this.responseActiveClass = '';
         this.showTabContent = 'event';
@@ -43,16 +46,11 @@ export class WelcomeComponent {
             'end': 'valid',
             'venue': 'valid',
             'mc': 'valid',
+            'tr': 'valid',
             'file': 'valid'
         };
         this.uploadService.progress$.subscribe(progress => {
-            if(progress === 100) {
-                this.alertService.clear();
-                this.alertService.success(
-                    "File uploaded successfully, hit update to save the details"
-                );
 
-            }
         },
         err => {
             this.alertService.clear();
@@ -60,17 +58,20 @@ export class WelcomeComponent {
         });
     }
     ngOnInit(): void {
-
         this.event = this.eventService.getEvent();
         if (!this.event) {
+            this.alertService.wait("Please wait while we fetch event details",
+                "Loading events");
             this.eventService.retrieveEventId()
                 .subscribe(
                     event => {
+                        this.alertService.clear();
                         this.eventId = event.data[0];
                         this.fetchAndUpdateEvent();
                         this.fetchAndUpdateParticipants();
                     },
                     err => {
+                        this.alertService.clear();
                         console.log('error occured');
                     }
                 );
@@ -177,7 +178,7 @@ export class WelcomeComponent {
             this.event.Rules.length < 10 ||
             this.event.Venue.length == 0 ||
             !this.event.MaxContestants ||
-            !this.event.CurrentRound ||
+            this.event.CurrentRound == undefined ||
             this.event.Pdf.length == 0
             ) {
             this.alertService.error("Please correct the red boxes");
@@ -242,23 +243,81 @@ export class WelcomeComponent {
         this.alertService.wait("Please wait while pdf is being uploaded", "Uploading");
         var files = event.srcElement.files;
         this.uploadService.makeFileRequest(constants.apis.pdfs,
-            this.admin.token, files).subscribe((data) => {
-                if(data) {
-                    this.event.Pdf = "http://google.com/" + data[0].filename;
+            this.admin.token, files).subscribe((response) => {
+                this.alertService.clear();
+                if(response.status.code == 200) {
+                    this.event.Pdf = "http://api.techspardha.org/static/" + response.data.filename;
+                    this.alertService.success(
+                        "File uploaded successfully, hit update to save the details"
+                    );
                 }
+                else {
+                    this.alertService.error(
+                        response.data, "Upload failed");
+                }
+            }, (err) => {
+                console.log(err);
+                this.alertService.error(err, "Contact gawds");
             });
     }
+
+    notifyAll() {
+        this.alertService.wait("Please wait while we are notifying participants",
+            "Notifying all participants");
+        let msg = this.notiMessage;
+        this.notificationService.notify(this.event.Id, 'all', msg, this.admin.token).subscribe(
+            response => {
+                this.alertService.clear();
+                if(response.status.code === 200) {
+                    this.alertService.success('Notified');
+                    this.notiMessage = '';
+                }
+                else {
+                    this.alertService.error(response.status.message);
+                }
+            },
+            err => {
+                this.alertService.clear();
+                this.alertService.error("Contact gawds to resolve the error");
+                console.log(err);
+            }
+        )
+    }
+
+    notifyOne(pid: number) {
+        this.alertService.wait("Please wait while we are notifying participants",
+            "Notifying all participants");
+        let msg = this.notiMessage;
+        this.notificationService.notify(this.event.Id, 'current', msg, this.admin.token, [pid]).subscribe(
+            response => {
+                this.alertService.clear();
+                if(response.status.code === 200) {
+                    this.alertService.success('Notified');
+                    this.notiMessage = '';
+                }
+                else {
+                    this.alertService.error(response.status.message);
+                }
+            },
+            err => {
+                this.alertService.clear();
+                this.alertService.error("Contact gawds to resolve the error");
+                console.log(err);
+            }
+        )
+    }
+
 
     validate(obj) {
         switch(obj) {
             case 'desc':
-                if(this.event.Description.length)
+                if(this.event.Description.length >= 10)
                     this.classes.desc = 'valid';
                 else
                     this.classes.desc = 'invalid';
                 break;
             case 'rules':
-                if(this.event.Rules.length)
+                if(this.event.Rules.length >= 10)
                     this.classes.rules = 'valid';
                 else
                     this.classes.rules = 'invalid';
@@ -270,16 +329,25 @@ export class WelcomeComponent {
                     this.classes.venue = 'invalid';
                 break;
             case 'mc':
-                if(this.event.MaxContestants)
+                if(this.event.MaxContestants != undefined &&
+                    this.event.MaxContestants >= 0)
                     this.classes.mc = 'valid';
                 else
                     this.classes.mc = 'invalid';
                 break;
             case 'cr':
-                if(this.event.CurrentRound)
+                if(this.event.CurrentRound != undefined &&
+                    this.event.CurrentRound >= 0)
                     this.classes.cr = 'valid';
                 else
                     this.classes.cr = 'invalid';
+                break;
+            case 'tr':
+                if(this.event.TotalRounds != undefined &&
+                    this.event.TotalRounds > 0)
+                    this.classes.tr = 'valid';
+                else
+                    this.classes.tr = 'invalid';
             case 'start':
                 var d = new Date(this.event.Start);
                 if(isNaN(d.getDate()))
