@@ -15,9 +15,10 @@ var session_service_1 = require("../shared/session.service");
 var upload_service_1 = require("../services/upload.service");
 var alert_service_1 = require("../services/alert.service");
 var notification_service_1 = require("../services/notification.service");
+var authentication_service_1 = require("../services/authentication.service");
 var constants = require("../shared/constants");
 var WelcomeComponent = (function () {
-    function WelcomeComponent(participantsService, eventService, alertService, sessionService, uploadService, notificationService) {
+    function WelcomeComponent(participantsService, eventService, alertService, sessionService, uploadService, notificationService, authenticationService) {
         var _this = this;
         this.participantsService = participantsService;
         this.eventService = eventService;
@@ -25,6 +26,7 @@ var WelcomeComponent = (function () {
         this.sessionService = sessionService;
         this.uploadService = uploadService;
         this.notificationService = notificationService;
+        this.authenticationService = authenticationService;
         this.eventActiveClass = 'event-active';
         this.responseActiveClass = '';
         this.showTabContent = 'event';
@@ -141,9 +143,11 @@ var WelcomeComponent = (function () {
     WelcomeComponent.prototype.updateStatus = function () {
     };
     WelcomeComponent.prototype.updateEvent = function () {
+        var _this = this;
         // When update event button is clicked, validate form and
         // upload the changes
-        var _this = this;
+        var payload = JSON.parse(JSON.stringify(this.event));
+        ;
         var s = new Date(this.event.Start);
         var e = new Date(this.event.End);
         if (isNaN(s.getDate()) ||
@@ -158,8 +162,10 @@ var WelcomeComponent = (function () {
         }
         else {
             // No errors, post request
+            payload.Start = this.convertDate(payload.Start);
+            payload.End = this.convertDate(payload.End);
             this.alertService.wait("Pushing the changes", "Uploading");
-            this.eventService.updateEvent(this.eventId, this.event, this.admin.token).subscribe(function (response) {
+            this.eventService.updateEvent(this.eventId, payload, this.admin.token).subscribe(function (response) {
                 if (response.status.code === 200) {
                     _this.alertService.clear();
                     _this.alertService.success("Successfully updated");
@@ -266,6 +272,11 @@ var WelcomeComponent = (function () {
             this.validate(choice);
         }
     };
+    WelcomeComponent.prototype.convertDate = function (d) {
+        d = new Date(d);
+        var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+        return new Date(utc + (3600000 * '+5.5'));
+    };
     WelcomeComponent.prototype.validate = function (obj) {
         switch (obj) {
             case 'desc':
@@ -338,19 +349,39 @@ var WelcomeComponent = (function () {
                 break;
         }
     };
+    WelcomeComponent.prototype.changePassword = function () {
+        var _this = this;
+        console.log(this.chPass);
+        this.alertService.wait('Please wait...', 'Changing password');
+        if (this.chPass) {
+            this.authenticationService.changePassword(this.admin.token, this.chPass).subscribe(function (response) {
+                _this.alertService.clear();
+                if (response.status.code == 200) {
+                    _this.alertService.success('Password changed successfully');
+                }
+                else {
+                    _this.alertService.error(response.status.message);
+                }
+            }, function (err) {
+                console.log(err);
+                _this.alertService.error("Please check your internet connection");
+            });
+        }
+    };
     return WelcomeComponent;
 }());
 WelcomeComponent = __decorate([
     core_1.Component({
         templateUrl: 'app/welcome/welcome.component.html',
-        providers: [upload_service_1.UploadService]
+        providers: [upload_service_1.UploadService, authentication_service_1.AuthenticationService]
     }),
     __metadata("design:paramtypes", [participants_service_1.ParticipantsService,
         event_service_1.EventService,
         alert_service_1.AlertService,
         session_service_1.SessionService,
         upload_service_1.UploadService,
-        notification_service_1.NotificationService])
+        notification_service_1.NotificationService,
+        authentication_service_1.AuthenticationService])
 ], WelcomeComponent);
 exports.WelcomeComponent = WelcomeComponent;
 //# sourceMappingURL=welcome.component.js.map

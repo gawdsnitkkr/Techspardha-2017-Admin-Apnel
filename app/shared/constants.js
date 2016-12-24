@@ -18,6 +18,7 @@ exports.apis = {
     },
     notify: function (eventId) {
         return base + 'event/' + eventId + '/notify';
-    }
+    },
+    changePassword: base + 'admin/change-password'
 };
 //# sourceMappingURL=constants.js.map

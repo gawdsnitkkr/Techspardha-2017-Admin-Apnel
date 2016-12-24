@@ -38,7 +38,7 @@ import { LoginComponent }   from './login/login.component';
         ParticipantsService,
         EventService,
         AlertService,
-        NotificationService
+        NotificationService,
     ],
     bootstrap:    [
         AppComponent

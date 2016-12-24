@@ -7,6 +7,7 @@ import { SessionService } from '../shared/session.service';
 import { UploadService } from '../services/upload.service';
 import { AlertService } from '../services/alert.service';
 import { NotificationService } from '../services/notification.service';
+import { AuthenticationService } from '../services/authentication.service';
 import constants = require('../shared/constants');
 import { Participant } from '../shared/participant.interface';
 import { Event } from '../shared/event.interface';
@@ -15,7 +16,7 @@ import { Admin } from "../shared/admin.interface";
 
 @Component({
     templateUrl:  'app/welcome/welcome.component.html',
-    providers: [ UploadService ]
+    providers: [ UploadService, AuthenticationService ]
 })
 export class WelcomeComponent {
     private eventId: number;            // Coordinator's event ID
@@ -35,7 +36,8 @@ export class WelcomeComponent {
             private alertService: AlertService,
             private sessionService: SessionService,
             private uploadService: UploadService,
-            private notificationService: NotificationService) {
+            private notificationService: NotificationService,
+            private authenticationService: AuthenticationService) {
         this.eventActiveClass = 'event-active';
         this.responseActiveClass = '';
         this.showTabContent = 'event';
@@ -170,9 +172,10 @@ export class WelcomeComponent {
     updateEvent(): void {
         // When update event button is clicked, validate form and
         // upload the changes
+        let payload: Event = JSON.parse(JSON.stringify(this.event));;
 
-        var s = new Date(this.event.Start);
-        var e = new Date(this.event.End);
+        let s = new Date(this.event.Start);
+        let e = new Date(this.event.End);
         if(
             isNaN(s.getDate()) ||
             isNaN(e.getDate()) ||
@@ -187,8 +190,11 @@ export class WelcomeComponent {
         }
         else {
             // No errors, post request
+            payload.Start = this.convertDate(payload.Start);
+            payload.End = this.convertDate(payload.End);
+
             this.alertService.wait("Pushing the changes", "Uploading");
-            this.eventService.updateEvent(this.eventId, this.event, this.admin.token).subscribe(
+            this.eventService.updateEvent(this.eventId, payload, this.admin.token).subscribe(
                 response => {
                     if(response.status.code === 200) {
                         this.alertService.clear();
@@ -316,6 +322,11 @@ export class WelcomeComponent {
         }
     }
 
+    convertDate(d) {
+        d = new Date(d);
+        let utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+        return new Date(utc + (3600000*'+5.5'));
+    }
 
     validate(obj) {
         switch(obj) {
@@ -388,5 +399,27 @@ export class WelcomeComponent {
                 }
                 break;
         }
+    }
+
+    changePassword() {
+      console.log(this.chPass);
+      this.alertService.wait('Please wait...', 'Changing password');
+      if(this.chPass) {
+          this.authenticationService.changePassword(this.admin.token, this.chPass).subscribe(
+              response => {
+                  this.alertService.clear();
+                  if(response.status.code == 200) {
+                      this.alertService.success('Password changed successfully');
+                  }
+                  else {
+                      this.alertService.error(response.status.message);
+                  }
+              },
+              err => {
+                  console.log(err);
+                  this.alertService.error("Please check your internet connection");
+              }
+          )
+      }
     }
 }

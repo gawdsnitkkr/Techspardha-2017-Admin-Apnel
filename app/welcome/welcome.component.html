@@ -24,7 +24,7 @@
 
             <div class="blue-button" (click)="allModal.open()">Notify All</div>
 
-            <img src="/app/assets/arrows.svg"
+            <img src="app/assets/arrows.svg"
                 class="refresh-button"
                 alt="Refresh"
                 (click)="fetchAndUpdateParticipants()"/>
@@ -52,6 +52,7 @@
         <div id="event-tab-content" *ngIf="showTabContent == 'event'">
             <div *ngIf="event">
                 <div id="update-event-button" (click)="updateEvent()">Update Event</div>
+                <div class="blue-button" (click)="chPassModal.open()">Change Password</div>
                 <div class="single-box">
                     <p>Event Description</p>
                     <textarea rows=6
@@ -72,7 +73,7 @@
                 </div>
                 <div class="single-box">
                     <div class="double-box">
-                        <p>Start</p>
+                        <p>Start(MM/dd/yyyy)</p>
                         <input type="text" [ngModel]="event.Start"
                             (ngModelChange)="event.Start=$event"
                             [ngClass]="classes.start"
@@ -180,6 +181,24 @@
         Enter the notification message to send.
         <br />
         <textarea rows="4" [(ngModel)]="notiMessage" class="message-box"></textarea>
+    </modal-content>
+
+</modal>
+
+<modal  title="Change Password"
+        cancelButtonLabel="cancel"
+        submitButtonLabel="Change"
+        modalClass="modal-lg modal-sm any-other-css-class"
+        [hideCloseButton]="false"
+        [closeOnEscape]="true"
+        [closeOnOutsideClick]="true"
+        (onSubmit)="changePassword()"
+        #chPassModal>
+
+    <modal-content>
+        Enter the new password
+        <br />
+        <input rows="4" [(ngModel)]="chPass" class="message-box" />
     </modal-content>
 
 </modal>

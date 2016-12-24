@@ -27,4 +27,11 @@ export class AuthenticationService {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
     }
+
+    changePassword(token: string, password: string) {
+        return this.http.post(Constants.apis.changePassword, {
+            token,
+            password 
+        }).map(res => res.json());
+    }
 }
