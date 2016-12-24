@@ -1,10 +1,10 @@
 <ng2-toasty [position]="'top-right'"></ng2-toasty>
 <div id="header">
     <div id="header-left">
-        <h1>Techspardha 2017</h1>
+        <h3>Techspardha 2017</h3>
     </div>
     <div id="header-right">
-        <h1>Hi {{this.admin.name}}, <a href="#" id="logout-button" (click)="logout()">Logout</a></h1>
+        <h3>Hi {{this.admin.name}}, <a href="#" id="logout-button" (click)="logout()">Logout</a></h3>
     </div>
 </div>
 <div id="container">
@@ -67,7 +67,7 @@
                         [(ngModel)]="event.Rules"
                         [ngClass]="classes.rules"
                         (keyup)="validate('rules')"
-                        #eventDescription>
+                        #eventRules>
                     </textarea>
                 </div>
                 <div class="single-box">
@@ -109,24 +109,42 @@
                     <div class="double-box">
                         <p>Current Round</p>
                         <input type="number" [(ngModel)]="event.CurrentRound"
-                            #maxContestants
+                            #currentRound
                             (keyup)="validate('cr')"
-                            [ngClass]="classes.file"/>
+                            [ngClass]="classes.cr"/>
                     </div>
                     <div class="double-box">
                         <p>Total Rounds</p>
                         <input type="number" [(ngModel)]="event.TotalRounds"
-                        #maxContestants
+                        #totalRounds
                         (keyup)="validate('tr')"
                         [ngClass]="classes.tr"/>
                     </div>
                 </div>
                 <div class="single-box">
-                    <p>Upload Rules Pdf</p>
-                    <input type="file"
-                        #inputFile
-                        (change)="fileChanged($event)"/>
-                </div>
+                    <div class="double-box">
+                        <p>Status</p>
+                        <select type="number" [(ngModel)]="event.Status"
+                        #status
+                        (change)="validate('st')"
+                        [ngClass]="classes.st">
+                            <option>Running</option>
+                            <option>Not started</option>
+                            <option>Started</option>
+                            <option>Delayed</option>
+                            <option>Waiting</option>
+                            <option>Finished</option>
+                        </select>
+                    </div>
+                    <div class="double-box">
+                        <p>Upload Rules Pdf</p>
+                        <input type="file"
+                            #inputFile
+                            [ngClass]="classes.file"
+                            (change)="fileChanged($event)"/>
+                        </div>
+                    </div>
+
             </div> <!-- ngif-->
         </div>
     </div>

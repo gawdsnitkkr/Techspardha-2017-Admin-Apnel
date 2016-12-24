@@ -47,7 +47,8 @@ export class WelcomeComponent {
             'venue': 'valid',
             'mc': 'valid',
             'tr': 'valid',
-            'file': 'valid'
+            'file': 'valid',
+            'st': 'valid',
         };
         this.uploadService.progress$.subscribe(progress => {
 
@@ -95,6 +96,7 @@ export class WelcomeComponent {
                 else {
                     this.alertService.error(event.status.message);
                 }
+                this.validateAll();
             },
             err => {
                 this.alertService.clear();
@@ -307,6 +309,13 @@ export class WelcomeComponent {
         )
     }
 
+    validateAll() {
+        let choices = ['desc', 'rules', 'venue', 'mc', 'cr', 'tr', 'start', 'end' ,'file', 'st'];
+        for ( let choice of choices ) {
+            this.validate(choice);
+        }
+    }
+
 
     validate(obj) {
         switch(obj) {
@@ -362,7 +371,22 @@ export class WelcomeComponent {
                 else
                     this.classes.end = 'valid';
                 break;
-
+            case 'file':
+                if(this.event.Pdf.length == 0) {
+                    this.classes.file = 'invalid';
+                }
+                else {
+                    this.classes.file = 'valid';
+                }
+                break;
+            case 'st':
+                if(this.event.Status != undefined && this.event.Status.length > 0) {
+                    this.classes.st = 'valid';
+                }
+                else {
+                    this.classes.st = 'invalid';
+                }
+                break;
         }
     }
 }

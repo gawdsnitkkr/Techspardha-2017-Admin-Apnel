@@ -36,7 +36,8 @@ var WelcomeComponent = (function () {
             'venue': 'valid',
             'mc': 'valid',
             'tr': 'valid',
-            'file': 'valid'
+            'file': 'valid',
+            'st': 'valid',
         };
         this.uploadService.progress$.subscribe(function (progress) {
         }, function (err) {
@@ -79,6 +80,7 @@ var WelcomeComponent = (function () {
             else {
                 _this.alertService.error(event.status.message);
             }
+            _this.validateAll();
         }, function (err) {
             _this.alertService.clear();
             _this.alertService.error("Error occured, contact gawds");
@@ -257,6 +259,13 @@ var WelcomeComponent = (function () {
             console.log(err);
         });
     };
+    WelcomeComponent.prototype.validateAll = function () {
+        var choices = ['desc', 'rules', 'venue', 'mc', 'cr', 'tr', 'start', 'end', 'file', 'st'];
+        for (var _i = 0, choices_1 = choices; _i < choices_1.length; _i++) {
+            var choice = choices_1[_i];
+            this.validate(choice);
+        }
+    };
     WelcomeComponent.prototype.validate = function (obj) {
         switch (obj) {
             case 'desc':
@@ -310,6 +319,22 @@ var WelcomeComponent = (function () {
                     this.classes.end = 'invalid';
                 else
                     this.classes.end = 'valid';
+                break;
+            case 'file':
+                if (this.event.Pdf.length == 0) {
+                    this.classes.file = 'invalid';
+                }
+                else {
+                    this.classes.file = 'valid';
+                }
+                break;
+            case 'st':
+                if (this.event.Status != undefined && this.event.Status.length > 0) {
+                    this.classes.st = 'valid';
+                }
+                else {
+                    this.classes.st = 'invalid';
+                }
                 break;
         }
     };

@@ -225,7 +225,7 @@ body {
     width: 100%;
 }
 
-#event-tab-content textarea, #event-tab-content input {
+#event-tab-content textarea, #event-tab-content input, #event-tab-content select {
     background: #2f3438;
     color: inherit;
     border: none;
