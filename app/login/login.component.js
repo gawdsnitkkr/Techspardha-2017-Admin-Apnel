@@ -8,12 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
-var http_1 = require('@angular/http');
-var authentication_service_1 = require('../services/authentication.service');
-var alert_service_1 = require('../services/alert.service');
-var session_service_1 = require('../shared/session.service');
+var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
+var http_1 = require("@angular/http");
+var authentication_service_1 = require("../services/authentication.service");
+var alert_service_1 = require("../services/alert.service");
+var session_service_1 = require("../shared/session.service");
 var LoginComponent = (function () {
     function LoginComponent(http, authenticationService, sessionService, router, alertService) {
         this.http = http;
@@ -53,14 +53,18 @@ var LoginComponent = (function () {
             _this.alertService.timeout();
         });
     };
-    LoginComponent = __decorate([
-        core_1.Component({
-            templateUrl: 'app/login/login.component.html',
-            providers: [authentication_service_1.AuthenticationService]
-        }), 
-        __metadata('design:paramtypes', [http_1.Http, authentication_service_1.AuthenticationService, session_service_1.SessionService, router_1.Router, alert_service_1.AlertService])
-    ], LoginComponent);
     return LoginComponent;
 }());
+LoginComponent = __decorate([
+    core_1.Component({
+        templateUrl: 'app/login/login.component.html',
+        providers: [authentication_service_1.AuthenticationService]
+    }),
+    __metadata("design:paramtypes", [http_1.Http,
+        authentication_service_1.AuthenticationService,
+        session_service_1.SessionService,
+        router_1.Router,
+        alert_service_1.AlertService])
+], LoginComponent);
 exports.LoginComponent = LoginComponent;
 //# sourceMappingURL=login.component.js.map
