@@ -18,5 +18,6 @@ export var apis = {
     },
     notify: (eventId: number) => {
         return base + 'event/' + eventId + '/notify';
-    }
+    },
+    changePassword: base + 'admin/change-password';
 };

@@ -8,55 +8,55 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var platform_browser_1 = require('@angular/platform-browser');
-var http_1 = require('@angular/http');
-var forms_1 = require('@angular/forms');
-var ng2_toasty_1 = require('ng2-toasty');
+var core_1 = require("@angular/core");
+var platform_browser_1 = require("@angular/platform-browser");
+var http_1 = require("@angular/http");
+var forms_1 = require("@angular/forms");
+var ng2_toasty_1 = require("ng2-toasty");
 var ng2_modal_1 = require("ng2-modal");
-var app_component_1 = require('./app.component');
-var welcome_component_1 = require('./welcome/welcome.component');
-var app_routing_module_1 = require('./app-routing.module');
-var session_service_1 = require('./shared/session.service');
-var participants_service_1 = require('./shared/participants.service');
-var event_service_1 = require('./shared/event.service');
-var alert_service_1 = require('./services/alert.service');
-var notification_service_1 = require('./services/notification.service');
-var auth_guard_service_1 = require('./shared/auth-guard.service');
-var login_component_1 = require('./login/login.component');
+var app_component_1 = require("./app.component");
+var welcome_component_1 = require("./welcome/welcome.component");
+var app_routing_module_1 = require("./app-routing.module");
+var session_service_1 = require("./shared/session.service");
+var participants_service_1 = require("./shared/participants.service");
+var event_service_1 = require("./shared/event.service");
+var alert_service_1 = require("./services/alert.service");
+var notification_service_1 = require("./services/notification.service");
+var auth_guard_service_1 = require("./shared/auth-guard.service");
+var login_component_1 = require("./login/login.component");
 var AppModule = (function () {
     function AppModule() {
     }
-    AppModule = __decorate([
-        core_1.NgModule({
-            imports: [
-                platform_browser_1.BrowserModule,
-                app_routing_module_1.AppRoutingModule,
-                http_1.HttpModule,
-                forms_1.FormsModule,
-                ng2_toasty_1.ToastyModule.forRoot(),
-                ng2_modal_1.ModalModule
-            ],
-            declarations: [
-                app_component_1.AppComponent,
-                login_component_1.LoginComponent,
-                welcome_component_1.WelcomeComponent
-            ],
-            providers: [
-                session_service_1.SessionService,
-                auth_guard_service_1.AuthGuard,
-                participants_service_1.ParticipantsService,
-                event_service_1.EventService,
-                alert_service_1.AlertService,
-                notification_service_1.NotificationService
-            ],
-            bootstrap: [
-                app_component_1.AppComponent
-            ]
-        }), 
-        __metadata('design:paramtypes', [])
-    ], AppModule);
     return AppModule;
 }());
+AppModule = __decorate([
+    core_1.NgModule({
+        imports: [
+            platform_browser_1.BrowserModule,
+            app_routing_module_1.AppRoutingModule,
+            http_1.HttpModule,
+            forms_1.FormsModule,
+            ng2_toasty_1.ToastyModule.forRoot(),
+            ng2_modal_1.ModalModule
+        ],
+        declarations: [
+            app_component_1.AppComponent,
+            login_component_1.LoginComponent,
+            welcome_component_1.WelcomeComponent
+        ],
+        providers: [
+            session_service_1.SessionService,
+            auth_guard_service_1.AuthGuard,
+            participants_service_1.ParticipantsService,
+            event_service_1.EventService,
+            alert_service_1.AlertService,
+            notification_service_1.NotificationService,
+        ],
+        bootstrap: [
+            app_component_1.AppComponent
+        ]
+    }),
+    __metadata("design:paramtypes", [])
+], AppModule);
 exports.AppModule = AppModule;
 //# sourceMappingURL=app.module.js.map

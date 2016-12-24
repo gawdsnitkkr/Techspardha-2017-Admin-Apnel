@@ -8,7 +8,7 @@ import { Admin } from '../shared/admin.interface';
 
 @Component({
     templateUrl: 'app/login/login.component.html',
-    providers: [AuthenticationService]
+    providers: [ AuthenticationService ]
 })
 export class LoginComponent {
     constructor(private http: Http,
