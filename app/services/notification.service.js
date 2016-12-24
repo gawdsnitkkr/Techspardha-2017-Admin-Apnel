@@ -12,29 +12,31 @@ var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var Constants = require('../shared/constants');
 require('rxjs/add/operator/map');
-var AuthenticationService = (function () {
-    function AuthenticationService(http) {
+var NotificationService = (function () {
+    function NotificationService(http) {
         this.http = http;
     }
-    AuthenticationService.prototype.login = function (username, password) {
-        return this.http.post(Constants.apis.login, { username: username, password: password }, {
-            headers: this.getHeaders()
-        }).map(function (res) { return res.json(); });
+    NotificationService.prototype.notify = function (eventId, type, message, token, ids) {
+        if (ids === void 0) { ids = null; }
+        switch (type) {
+            case 'all':
+                return this.http.post(Constants.apis.notifyAll(eventId), {
+                    message: message,
+                    token: token
+                }).map(function (res) { return res.json(); });
+            case 'current':
+                return this.http.post(Constants.apis.notify(eventId), {
+                    token: token,
+                    message: message,
+                    data: ids
+                }).map(function (res) { return res.json(); });
+        }
     };
-    AuthenticationService.prototype.getHeaders = function () {
-        var headers = new http_1.Headers();
-        headers.append('Content-Type', 'application/json');
-        return headers;
-    };
-    AuthenticationService.prototype.logout = function () {
-        // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
-    };
-    AuthenticationService = __decorate([
+    NotificationService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])
-    ], AuthenticationService);
-    return AuthenticationService;
+    ], NotificationService);
+    return NotificationService;
 }());
-exports.AuthenticationService = AuthenticationService;
-//# sourceMappingURL=authentication.service.js.map
+exports.NotificationService = NotificationService;
+//# sourceMappingURL=notification.service.js.map

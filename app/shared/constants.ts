@@ -12,5 +12,11 @@ export var apis = {
     forwardParticipant: (eventId: number) => {
         return base + 'event/' + eventId + '/forward';
     },
-    pdfs: 'http://localhost:3000/api/admin/upload'
+    pdfs: base + 'admin/upload',
+    notifyAll: (eventId: number) => {
+        return base + 'event/' + eventId + '/notify/all';
+    },
+    notify: (eventId: number) => {
+        return base + 'event/' + eventId + '/notify';
+    }
 };

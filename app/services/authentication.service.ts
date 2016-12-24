@@ -1,18 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Http, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import  Constants = require('../shared/constants');
-import { SessionService } from '../shared/session.service';
 
 import 'rxjs/add/operator/map'
 
 @Injectable()
 export class AuthenticationService {
     constructor(
-        private http: Http,
-        private sessionService: SessionService,
-        private router: Router) {
+        private http: Http,) {
 
     }
 
