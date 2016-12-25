@@ -1,4 +1,4 @@
-var base = "http://anshulmalik.me/api/";
+var base = "http://techspardha.org/api/";
 
 export var apis = {
     login: base + 'admin/login',

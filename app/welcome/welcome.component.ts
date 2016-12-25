@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalModule } from "ng2-modal";
 
 import { ParticipantsService } from '../shared/participants.service';
@@ -29,6 +29,9 @@ export class WelcomeComponent {
     private showTabContent: string;
     private notiMessage: string;        // Notification message
     private admin: Admin;               // Coordinator details
+    private curInviteId: number;
+    @ViewChild('oneModal') oneModal;
+
 
     constructor(
             private participantsService: ParticipantsService,
@@ -62,6 +65,9 @@ export class WelcomeComponent {
     }
     ngOnInit(): void {
         this.event = this.eventService.getEvent();
+        this.oneModal.onOpen.subscribe((id) => {
+          this.curInviteId = id[0];
+        });
         if (!this.event) {
             this.alertService.wait("Please wait while we fetch event details",
                 "Loading events");
@@ -120,17 +126,20 @@ export class WelcomeComponent {
                         this.participants = response.data.map((participant) => {
                             if(participant.Student) {
                                 return {
-                                    Id: participant.Student.Id,
                                     Name: participant.Student.Name,
                                     Level: participant.CurrentRound,
-                                    Email: participant.Student.Email
+                                    Email: participant.Student.Email,
+                                    College: participant.Student.Details.College,
+                                    Mobile: participant.Student.Details.PhoneNumber
                                 }
                             }
                             else if(participant.Team) {
                                 return {
-                                    Id: participant.Team.Id,
                                     Name: participant.Team.Name,
-                                    Level: participant.Team.Name
+                                    Id: participant.Team.Id,
+                                    Level: participant.CurrentRound,
+                                    College: participant.Team.TeamLeader.Details.College,
+                                    Mobile: participant.Team.TeamLeader.Details.PhoneNumber
                                 }
                             }
                         });
@@ -292,11 +301,11 @@ export class WelcomeComponent {
         )
     }
 
-    notifyOne(pid: number) {
+    notifyOne() {
         this.alertService.wait("Please wait while we are notifying participants",
             "Notifying all participants");
         let msg = this.notiMessage;
-        this.notificationService.notify(this.event.Id, 'current', msg, this.admin.token, [pid]).subscribe(
+        this.notificationService.notify(this.event.Id, 'current', msg, this.admin.token, [this.curInviteId]).subscribe(
             response => {
                 this.alertService.clear();
                 if(response.status.code === 200) {
