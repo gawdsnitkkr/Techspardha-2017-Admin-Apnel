@@ -50,6 +50,9 @@ var WelcomeComponent = (function () {
     WelcomeComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.event = this.eventService.getEvent();
+        this.oneModal.onOpen.subscribe(function (id) {
+            _this.curInviteId = id[0];
+        });
         if (!this.event) {
             this.alertService.wait("Please wait while we fetch event details", "Loading events");
             this.eventService.retrieveEventId()
@@ -101,17 +104,20 @@ var WelcomeComponent = (function () {
                 _this.participants = response.data.map(function (participant) {
                     if (participant.Student) {
                         return {
-                            Id: participant.Student.Id,
                             Name: participant.Student.Name,
                             Level: participant.CurrentRound,
-                            Email: participant.Student.Email
+                            Email: participant.Student.Email,
+                            College: participant.Student.Details.College,
+                            Mobile: participant.Student.Details.PhoneNumber
                         };
                     }
                     else if (participant.Team) {
                         return {
-                            Id: participant.Team.Id,
                             Name: participant.Team.Name,
-                            Level: participant.Team.Name
+                            Id: participant.Team.Id,
+                            Level: participant.CurrentRound,
+                            College: participant.Team.TeamLeader.Details.College,
+                            Mobile: participant.Team.TeamLeader.Details.PhoneNumber
                         };
                     }
                 });
@@ -246,11 +252,11 @@ var WelcomeComponent = (function () {
             console.log(err);
         });
     };
-    WelcomeComponent.prototype.notifyOne = function (pid) {
+    WelcomeComponent.prototype.notifyOne = function () {
         var _this = this;
         this.alertService.wait("Please wait while we are notifying participants", "Notifying all participants");
         var msg = this.notiMessage;
-        this.notificationService.notify(this.event.Id, 'current', msg, this.admin.token, [pid]).subscribe(function (response) {
+        this.notificationService.notify(this.event.Id, 'current', msg, this.admin.token, [this.curInviteId]).subscribe(function (response) {
             _this.alertService.clear();
             if (response.status.code === 200) {
                 _this.alertService.success('Notified');
@@ -370,6 +376,10 @@ var WelcomeComponent = (function () {
     };
     return WelcomeComponent;
 }());
+__decorate([
+    core_1.ViewChild('oneModal'),
+    __metadata("design:type", Object)
+], WelcomeComponent.prototype, "oneModal", void 0);
 WelcomeComponent = __decorate([
     core_1.Component({
         templateUrl: 'app/welcome/welcome.component.html',
