@@ -263,7 +263,7 @@ export class WelcomeComponent {
             this.admin.token, files).subscribe((response) => {
                 this.alertService.clear();
                 if(response.status.code == 200) {
-                    this.event.Pdf = "http://api.techspardha.org/static/" + response.data.filename;
+                    this.event.Pdf = "http://techspardha.org/api/static/" + response.data.filename;
                     this.alertService.success(
                         "File uploaded successfully, hit update to save the details"
                     );

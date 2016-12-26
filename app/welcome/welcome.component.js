@@ -222,7 +222,7 @@ var WelcomeComponent = (function () {
         this.uploadService.makeFileRequest(constants.apis.pdfs, this.admin.token, files).subscribe(function (response) {
             _this.alertService.clear();
             if (response.status.code == 200) {
-                _this.event.Pdf = "http://api.techspardha.org/static/" + response.data.filename;
+                _this.event.Pdf = "http://techspardha.org/api/static/" + response.data.filename;
                 _this.alertService.success("File uploaded successfully, hit update to save the details");
             }
             else {
