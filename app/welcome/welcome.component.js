@@ -223,6 +223,7 @@ var WelcomeComponent = (function () {
             _this.alertService.clear();
             if (response.status.code == 200) {
                 _this.event.Pdf = "http://techspardha.org/api/static/" + response.data.filename;
+                _this.validate('file');
                 _this.alertService.success("File uploaded successfully, hit update to save the details");
             }
             else {

@@ -264,6 +264,7 @@ export class WelcomeComponent {
                 this.alertService.clear();
                 if(response.status.code == 200) {
                     this.event.Pdf = "http://techspardha.org/api/static/" + response.data.filename;
+                    this.validate('file');
                     this.alertService.success(
                         "File uploaded successfully, hit update to save the details"
                     );
