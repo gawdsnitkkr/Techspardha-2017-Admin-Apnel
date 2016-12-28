@@ -44,17 +44,6 @@ export class WelcomeComponent {
         this.eventActiveClass = 'event-active';
         this.responseActiveClass = '';
         this.showTabContent = 'event';
-        this.classes = {
-            'desc': 'valid',
-            'rules': 'valid',
-            'start': 'valid',
-            'end': 'valid',
-            'venue': 'valid',
-            'mc': 'valid',
-            'tr': 'valid',
-            'file': 'valid',
-            'st': 'valid',
-        };
         this.uploadService.progress$.subscribe(progress => {
 
         },
@@ -94,17 +83,16 @@ export class WelcomeComponent {
             .subscribe((event) => {
                 if(event.status.code === 200) {
                     if(event.data.Start) {
-                        event.data.Start = new Date(event.data.Start).toLocaleString();
+                        event.data.Start = this.toDateString(new Date(event.data.Start));
                     }
                     if(event.data.End) {
-                        event.data.End = new Date(event.data.End).toLocaleString();
+                        event.data.End = this.toDateString(new Date(event.data.End));
                     }
                     this.event = event.data;
                 }
                 else {
                     this.alertService.error(event.status.message);
                 }
-                this.validateAll();
             },
             err => {
                 this.alertService.clear();
@@ -188,8 +176,8 @@ export class WelcomeComponent {
         if(
             isNaN(s.getDate()) ||
             isNaN(e.getDate()) ||
-            this.event.Description.length < 10 ||
-            this.event.Rules.length < 10 ||
+            this.event.Description.length < 1 ||
+            this.event.Rules.length < 1 ||
             this.event.Venue.length == 0 ||
             !this.event.MaxContestants ||
             this.event.CurrentRound == undefined ||
@@ -264,7 +252,7 @@ export class WelcomeComponent {
                 this.alertService.clear();
                 if(response.status.code == 200) {
                     this.event.Pdf = "http://techspardha.org/api/static/" + response.data.filename;
-                    this.validate('file');
+
                     this.alertService.success(
                         "File uploaded successfully, hit update to save the details"
                     );
@@ -325,90 +313,16 @@ export class WelcomeComponent {
         )
     }
 
-    validateAll() {
-        let choices = ['desc', 'rules', 'venue', 'mc', 'cr', 'tr', 'start', 'end' ,'file', 'st'];
-        for ( let choice of choices ) {
-            this.validate(choice);
-        }
+    private toDateString(date: Date): string {
+        return (date.getFullYear().toString() + '-'
+            + ("0" + (date.getMonth() + 1)).slice(-2) + '-'
+            + ("0" + (date.getDate())).slice(-2))
+            + 'T' + date.toTimeString().slice(0,5);
     }
-
     convertDate(d) {
         d = new Date(d);
         let utc = d.getTime() + (d.getTimezoneOffset() * 60000);
-        return new Date(utc + (3600000*'+5.5'));
-    }
-
-    validate(obj) {
-        switch(obj) {
-            case 'desc':
-                if(this.event.Description.length >= 10)
-                    this.classes.desc = 'valid';
-                else
-                    this.classes.desc = 'invalid';
-                break;
-            case 'rules':
-                if(this.event.Rules.length >= 10)
-                    this.classes.rules = 'valid';
-                else
-                    this.classes.rules = 'invalid';
-                break;
-            case 'venue':
-                if(this.event.Venue.length)
-                    this.classes.venue = 'valid';
-                else
-                    this.classes.venue = 'invalid';
-                break;
-            case 'mc':
-                if(this.event.MaxContestants != undefined &&
-                    this.event.MaxContestants >= 0)
-                    this.classes.mc = 'valid';
-                else
-                    this.classes.mc = 'invalid';
-                break;
-            case 'cr':
-                if(this.event.CurrentRound != undefined &&
-                    this.event.CurrentRound >= 0)
-                    this.classes.cr = 'valid';
-                else
-                    this.classes.cr = 'invalid';
-                break;
-            case 'tr':
-                if(this.event.TotalRounds != undefined &&
-                    this.event.TotalRounds > 0)
-                    this.classes.tr = 'valid';
-                else
-                    this.classes.tr = 'invalid';
-            case 'start':
-                var d = new Date(this.event.Start);
-                if(isNaN(d.getDate()))
-                    this.classes.start = 'invalid';
-                else
-                    this.classes.start = 'valid';
-                break;
-            case 'end':
-                var d = new Date(this.event.End);
-                if(isNaN(d.getDate()))
-                    this.classes.end = 'invalid';
-                else
-                    this.classes.end = 'valid';
-                break;
-            case 'file':
-                if(this.event.Pdf.length == 0) {
-                    this.classes.file = 'invalid';
-                }
-                else {
-                    this.classes.file = 'valid';
-                }
-                break;
-            case 'st':
-                if(this.event.Status != undefined && this.event.Status.length > 0) {
-                    this.classes.st = 'valid';
-                }
-                else {
-                    this.classes.st = 'invalid';
-                }
-                break;
-        }
+        return new Date(utc + (3600000*'+0.0'));
     }
 
     changePassword() {

@@ -55,91 +55,72 @@
                     <p>Event Description</p>
                     <textarea rows=6
                         [(ngModel)]="event.Description"
-                        [ngClass]="classes.desc"
-                        (keyup)="validate('desc')"
-                        #eventDescription>
+                        #eventDescription
+                        required>
                     </textarea>
                 </div>
                 <div class="single-box">
                     <p>Rules</p>
                     <textarea rows=6
                         [(ngModel)]="event.Rules"
-                        [ngClass]="classes.rules"
-                        (keyup)="validate('rules')"
-                        #eventRules>
+                        #eventRules
+                        required>
                     </textarea>
                 </div>
-                <div class="single-box">
-                    <div class="double-box">
-                        <p>Start(MM/dd/yyyy)</p>
-                        <input type="text" [ngModel]="event.Start"
-                            (ngModelChange)="event.Start=$event"
-                            [ngClass]="classes.start"
-                            (keyup)="validate('start')"
-                            #eventStartDate/>
-                    </div>
-                    <div class="double-box">
-                        <p>End </p>
-                        <input type="text" [ngModel]="event.End"
-                            (ngModelChange)="event.End=$event"
-                            [ngClass]="classes.end"
-                            (keyup)="validate('end')"
-                            #eventEndDate/>
-                    </div>
+                <div class="double-box">
+                    <p>Start(MM/dd/yyyy)</p>
+                    <input type="datetime-local" [(ngModel)]="event.Start"
+                        #eventStartDate
+                        required/>
+                </div>
+                <div class="double-box">
+                    <p>End </p>
+                    <input type="datetime-local" [ngModel]="event.End"
+                        #eventEndDate
+                        required/>
                 </div>
 
-                <div class="single-box">
-                    <div class="double-box">
-                        <p>Venue</p>
-                        <input type="text" [(ngModel)]="event.Venue"
-                        #eventVenue
-                        (keyup)="validate('venue')"
-                        [ngClass]="classes.venue"/>
-                    </div>
-                    <div class="double-box">
-                        <p>Maximum Constestants(Per team)</p>
-                        <input type="number" [(ngModel)]="event.MaxContestants"
-                        #maxContestants
-                        (keyup)="validate('mc')"
-                        [ngClass]="classes.mc"/>
-                    </div>
+                <div class="double-box">
+                    <p>Venue</p>
+                    <input type="text" [(ngModel)]="event.Venue"
+                    #eventVenue
+                    required/>
                 </div>
-                <div class="single-box">
-                    <div class="double-box">
-                        <p>Current Round</p>
-                        <input type="number" [(ngModel)]="event.CurrentRound"
-                            #currentRound
-                            (keyup)="validate('cr')"
-                            [ngClass]="classes.cr"/>
-                    </div>
-                    <div class="double-box">
-                        <p>Total Rounds</p>
-                        <input type="number" [(ngModel)]="event.TotalRounds"
-                        #totalRounds
-                        (keyup)="validate('tr')"
-                        [ngClass]="classes.tr"/>
-                    </div>
+                <div class="double-box">
+                    <p>Max Constestants(Per team)</p>
+                    <input type="number" [(ngModel)]="event.MaxContestants"
+                    #maxContestants
+                    required/>
                 </div>
-                <div class="single-box">
-                    <div class="double-box">
-                        <p>Status</p>
-                        <select type="number" [(ngModel)]="event.Status"
-                        #status
-                        (change)="validate('st')"
-                        [ngClass]="classes.st">
-                            <option>Not started</option>
-                            <option>Started</option>
-                            <option>Finished</option>
-                        </select>
-                    </div>
-                    <div class="double-box">
-                        <p>Upload Rules Pdf</p>
-                        <input type="file"
-                            #inputFile
-                            [ngClass]="classes.file"
-                            (change)="fileChanged($event)"/>
-                        </div>
-                    </div>
+                <div class="double-box">
+                    <p>Current Round</p>
+                    <input type="number" [(ngModel)]="event.CurrentRound"
+                        #currentRound
+                        required/>
+                </div>
+                <div class="double-box">
+                    <p>Total Rounds</p>
+                    <input type="number" [(ngModel)]="event.TotalRounds"
+                    #totalRounds
+                    required/>
+                </div>
+                <div class="double-box">
+                    <p>Status</p>
+                    <select type="number"
+                    [(ngModel)]="event.Status"
+                    #status
+                    required>
+                        <option>Not started</option>
+                        <option>Started</option>
+                        <option>Finished</option>
+                    </select>
+                </div>
+                <div class="double-box">
+                    <p>Upload Rules Pdf</p>
+                    <input type="file"
+                        #inputFile
+                        (change)="fileChanged($event)"/>
+                </div>
 
             </div> <!-- ngif-->
         </div>

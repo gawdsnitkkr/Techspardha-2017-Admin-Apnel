@@ -30,17 +30,6 @@ var WelcomeComponent = (function () {
         this.eventActiveClass = 'event-active';
         this.responseActiveClass = '';
         this.showTabContent = 'event';
-        this.classes = {
-            'desc': 'valid',
-            'rules': 'valid',
-            'start': 'valid',
-            'end': 'valid',
-            'venue': 'valid',
-            'mc': 'valid',
-            'tr': 'valid',
-            'file': 'valid',
-            'st': 'valid',
-        };
         this.uploadService.progress$.subscribe(function (progress) {
         }, function (err) {
             _this.alertService.clear();
@@ -75,17 +64,16 @@ var WelcomeComponent = (function () {
             .subscribe(function (event) {
             if (event.status.code === 200) {
                 if (event.data.Start) {
-                    event.data.Start = new Date(event.data.Start).toLocaleString();
+                    event.data.Start = _this.toDateString(new Date(event.data.Start));
                 }
                 if (event.data.End) {
-                    event.data.End = new Date(event.data.End).toLocaleString();
+                    event.data.End = _this.toDateString(new Date(event.data.End));
                 }
                 _this.event = event.data;
             }
             else {
                 _this.alertService.error(event.status.message);
             }
-            _this.validateAll();
         }, function (err) {
             _this.alertService.clear();
             _this.alertService.error("Error occured, contact gawds");
@@ -158,8 +146,8 @@ var WelcomeComponent = (function () {
         var e = new Date(this.event.End);
         if (isNaN(s.getDate()) ||
             isNaN(e.getDate()) ||
-            this.event.Description.length < 10 ||
-            this.event.Rules.length < 10 ||
+            this.event.Description.length < 1 ||
+            this.event.Rules.length < 1 ||
             this.event.Venue.length == 0 ||
             !this.event.MaxContestants ||
             this.event.CurrentRound == undefined ||
@@ -223,7 +211,6 @@ var WelcomeComponent = (function () {
             _this.alertService.clear();
             if (response.status.code == 200) {
                 _this.event.Pdf = "http://techspardha.org/api/static/" + response.data.filename;
-                _this.validate('file');
                 _this.alertService.success("File uploaded successfully, hit update to save the details");
             }
             else {
@@ -272,89 +259,16 @@ var WelcomeComponent = (function () {
             console.log(err);
         });
     };
-    WelcomeComponent.prototype.validateAll = function () {
-        var choices = ['desc', 'rules', 'venue', 'mc', 'cr', 'tr', 'start', 'end', 'file', 'st'];
-        for (var _i = 0, choices_1 = choices; _i < choices_1.length; _i++) {
-            var choice = choices_1[_i];
-            this.validate(choice);
-        }
+    WelcomeComponent.prototype.toDateString = function (date) {
+        return (date.getFullYear().toString() + '-'
+            + ("0" + (date.getMonth() + 1)).slice(-2) + '-'
+            + ("0" + (date.getDate())).slice(-2))
+            + 'T' + date.toTimeString().slice(0, 5);
     };
     WelcomeComponent.prototype.convertDate = function (d) {
         d = new Date(d);
         var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
-        return new Date(utc + (3600000 * '+5.5'));
-    };
-    WelcomeComponent.prototype.validate = function (obj) {
-        switch (obj) {
-            case 'desc':
-                if (this.event.Description.length >= 10)
-                    this.classes.desc = 'valid';
-                else
-                    this.classes.desc = 'invalid';
-                break;
-            case 'rules':
-                if (this.event.Rules.length >= 10)
-                    this.classes.rules = 'valid';
-                else
-                    this.classes.rules = 'invalid';
-                break;
-            case 'venue':
-                if (this.event.Venue.length)
-                    this.classes.venue = 'valid';
-                else
-                    this.classes.venue = 'invalid';
-                break;
-            case 'mc':
-                if (this.event.MaxContestants != undefined &&
-                    this.event.MaxContestants >= 0)
-                    this.classes.mc = 'valid';
-                else
-                    this.classes.mc = 'invalid';
-                break;
-            case 'cr':
-                if (this.event.CurrentRound != undefined &&
-                    this.event.CurrentRound >= 0)
-                    this.classes.cr = 'valid';
-                else
-                    this.classes.cr = 'invalid';
-                break;
-            case 'tr':
-                if (this.event.TotalRounds != undefined &&
-                    this.event.TotalRounds > 0)
-                    this.classes.tr = 'valid';
-                else
-                    this.classes.tr = 'invalid';
-            case 'start':
-                var d = new Date(this.event.Start);
-                if (isNaN(d.getDate()))
-                    this.classes.start = 'invalid';
-                else
-                    this.classes.start = 'valid';
-                break;
-            case 'end':
-                var d = new Date(this.event.End);
-                if (isNaN(d.getDate()))
-                    this.classes.end = 'invalid';
-                else
-                    this.classes.end = 'valid';
-                break;
-            case 'file':
-                if (this.event.Pdf.length == 0) {
-                    this.classes.file = 'invalid';
-                }
-                else {
-                    this.classes.file = 'valid';
-                }
-                break;
-            case 'st':
-                if (this.event.Status != undefined && this.event.Status.length > 0) {
-                    this.classes.st = 'valid';
-                }
-                else {
-                    this.classes.st = 'invalid';
-                }
-                break;
-        }
+        return new Date(utc + (3600000 * '+0.0'));
     };
     WelcomeComponent.prototype.changePassword = function () {
         var _this = this;

@@ -14,5 +14,5 @@ export interface Event {
     Pdf: string;
     CategoryId: number;
     SocietyId: number;
-    Rounds: number;
+    TotalRounds: number;
 }

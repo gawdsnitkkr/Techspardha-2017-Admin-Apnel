@@ -8,18 +8,31 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var http_1 = require('@angular/http');
-var Rx_1 = require('rxjs/Rx');
-var constants = require('./constants');
-var session_service_1 = require('./session.service');
+var core_1 = require("@angular/core");
+var http_1 = require("@angular/http");
+var Rx_1 = require("rxjs/Rx");
+var constants = require("./constants");
+var session_service_1 = require("./session.service");
 var EventService = (function () {
     function EventService(http, sessionService) {
         this.http = http;
         this.sessionService = sessionService;
     }
     EventService.prototype.getEvent = function () {
-        return EventService.event;
+        /*        return {
+                  Id: 1,
+                  Description: 'desc',
+                  Rules: 'rules',
+                  Start: '',
+                  End: '',
+                  Venue: 'venue',
+                  MaxContestants: 5,
+                  CurrentRound: 0,
+                  TotalRounds: 1,
+                  Status: 'Not started',
+                  Pdf: 'hi'
+                }
+        */ return EventService.event;
     };
     EventService.prototype.setEvent = function (event) {
         EventService.event = event;
@@ -42,11 +55,11 @@ var EventService = (function () {
             .map(function (response) { return response.json(); })
             .catch(function (err) { return Rx_1.Observable.throw(err.json().arr || 'Server error'); });
     };
-    EventService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http, session_service_1.SessionService])
-    ], EventService);
     return EventService;
 }());
+EventService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [http_1.Http, session_service_1.SessionService])
+], EventService);
 exports.EventService = EventService;
 //# sourceMappingURL=event.service.js.map

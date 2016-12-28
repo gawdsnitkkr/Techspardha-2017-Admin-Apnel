@@ -12,7 +12,20 @@ export class EventService {
     constructor(private http: Http, private sessionService: SessionService) {
     }
     getEvent(): Event {
-        return EventService.event;
+/*        return {
+          Id: 1,
+          Description: 'desc',
+          Rules: 'rules',
+          Start: '',
+          End: '',
+          Venue: 'venue',
+          MaxContestants: 5,
+          CurrentRound: 0,
+          TotalRounds: 1,
+          Status: 'Not started',
+          Pdf: 'hi'
+        }
+*/      return EventService.event;
     }
     setEvent(event: Event) : void {
         EventService.event = event;
