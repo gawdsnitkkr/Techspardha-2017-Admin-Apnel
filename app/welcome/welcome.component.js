@@ -144,16 +144,23 @@ var WelcomeComponent = (function () {
         ;
         var s = new Date(this.event.Start);
         var e = new Date(this.event.End);
-        if (isNaN(s.getDate()) ||
-            isNaN(e.getDate()) ||
-            this.event.Description.length < 1 ||
-            this.event.Rules.length < 1 ||
-            this.event.Venue.length == 0 ||
-            !this.event.MaxContestants ||
-            this.event.CurrentRound == undefined ||
-            this.event.Pdf.length == 0) {
-            this.alertService.error("Please correct the red boxes");
-        }
+        var errMsg = '';
+        if (isNaN(s.getDate()))
+            errMsg = 'Start date is undefined';
+        else if (isNaN(e.getDate()))
+            errMsg = 'End date is undefined';
+        else if (this.event.Description.length < 1)
+            errMsg = 'Please write some description';
+        else if (this.event.Rules.length < 1)
+            errMsg = 'Please write rules for the event';
+        else if (this.event.Venue.length == 0)
+            errMsg = 'Please specify venue for the event';
+        else if (!this.event.MaxContestants)
+            errMsg = 'Plese specify maxiumum number of contestants per team';
+        else if (this.event.CurrentRound == undefined)
+            errMsg = 'Please specify current round of the event';
+        else if (this.event.TotalRounds == undefined)
+            errMsg = 'Please specify total number of rounds';
         else {
             // No errors, post request
             payload.Start = this.convertDate(payload.Start);
@@ -169,6 +176,9 @@ var WelcomeComponent = (function () {
                 console.log("error occured", err);
             });
         }
+        if (errMsg.length) {
+            this.alertService.error(errMsg);
+        }
     };
     WelcomeComponent.prototype.forwardParticipant = function (index, id) {
         var _this = this;
@@ -180,6 +190,28 @@ var WelcomeComponent = (function () {
             if (response.status.code === 200) {
                 _this.alertService.success("Successfully forwarded");
                 _this.participants[index].Level++;
+                _this.sortParticipants();
+            }
+            else {
+                _this.alertService.clear();
+                _this.alertService.error(response.status.message);
+            }
+        }, function (err) {
+            _this.alertService.clear();
+            _this.alertService.error("Something went wrong, contact gawds");
+            console.log('Error occured', err);
+        });
+    };
+    WelcomeComponent.prototype.backwardParticipant = function (index, id) {
+        var _this = this;
+        // Move participants to next level
+        this.alertService.wait("Taking back", "Processing...");
+        this.participantsService.backwardParticipant(this.eventId, id)
+            .subscribe(function (response) {
+            _this.alertService.clear();
+            if (response.status.code === 200) {
+                _this.alertService.success("Successfully processed");
+                _this.participants[index].Level--;
                 _this.sortParticipants();
             }
             else {

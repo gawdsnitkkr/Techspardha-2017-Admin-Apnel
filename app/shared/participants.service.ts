@@ -30,6 +30,7 @@ export class ParticipantsService {
             .map((response: Response) => response.json())
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
+
     forwardParticipant(eventId: number, id: number) {
         let admin: Admin = this.sessionService.getAdmin();
 
@@ -38,7 +39,15 @@ export class ParticipantsService {
             data: [id]
         }).map(response => response.json())
         .catch(error => Observable.throw(error.json().error || 'Server error'));
+    }
 
+    backwardParticipant(eventId: number, id: number) {
+        let admin: Admin = this.sessionService.getAdmin();
 
+        return this.http.post(constants.apis.backwardParticipant(eventId), {
+            token: admin.token,
+            data: [id]
+        }).map(response => response.json())
+        .catch(error => Observable.throw(error.json().error || 'Server error'));
     }
 }

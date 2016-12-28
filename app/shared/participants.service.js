@@ -8,11 +8,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var http_1 = require('@angular/http');
-var Rx_1 = require('rxjs/Rx');
-var session_service_1 = require('./session.service');
-var constants = require('./constants');
+var core_1 = require("@angular/core");
+var http_1 = require("@angular/http");
+var Rx_1 = require("rxjs/Rx");
+var session_service_1 = require("./session.service");
+var constants = require("./constants");
 var ParticipantsService = (function () {
     function ParticipantsService(http, sessionService) {
         this.http = http;
@@ -40,11 +40,20 @@ var ParticipantsService = (function () {
         }).map(function (response) { return response.json(); })
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    ParticipantsService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http, session_service_1.SessionService])
-    ], ParticipantsService);
+    ParticipantsService.prototype.backwardParticipant = function (eventId, id) {
+        var admin = this.sessionService.getAdmin();
+        return this.http.post(constants.apis.backwardParticipant(eventId), {
+            token: admin.token,
+            data: [id]
+        }).map(function (response) { return response.json(); })
+            .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); });
+    };
     return ParticipantsService;
 }());
+ParticipantsService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [http_1.Http,
+        session_service_1.SessionService])
+], ParticipantsService);
 exports.ParticipantsService = ParticipantsService;
 //# sourceMappingURL=participants.service.js.map

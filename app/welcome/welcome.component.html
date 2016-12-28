@@ -28,20 +28,26 @@
                 class="refresh-button"
                 alt="Refresh"
                 (click)="fetchAndUpdateParticipants()"/>
+            <div style="clear:both;"></div>
+            <hr class="separator"/>
             <div class="single-box">
                 <div *ngIf="!participants || participants.length == 0">
                     <p>Nothing to display</p>
                 </div>
                 <div class="boxes responses" *ngFor="let participant of participants; let i = index">
-                    <p>{{i + 1}}</p>
                     <div class="left-75">
-                        Name: &nbsp;&nbsp;&nbsp; <input type="text" [(ngModel)]="participant.Name" disabled/><br/>
-                        Mobile: &nbsp;&nbsp;&nbsp;<input type="text" [(ngModel)]="participant.Mobile" disabled/><br/>
-                        College: &nbsp;&nbsp;<input type="text" [(ngModel)]="participant.College" disabled/><br/>
-                        Level: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" [(ngModel)]="participant.Level" disabled/>
+                        <div class="box">
+                            Name: &nbsp;&nbsp;&nbsp; <input type="text" [(ngModel)]="participant.Name" disabled/><br/>
+                            Mobile: &nbsp;&nbsp;&nbsp;<input type="text" [(ngModel)]="participant.Mobile" disabled/><br/>
+                        </div>
+                        <div class="box">
+                            College: &nbsp;&nbsp;<input type="text" [(ngModel)]="participant.College" disabled/><br/>
+                            Level: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" [(ngModel)]="participant.Level" disabled/>
+                        </div>
                     </div>
                     <div class="control-area">
                         <div class="button" (click)="forwardParticipant(i, participant.Id)">Forward</div>
+                        <div class="button" (click)="backwardParticipant(i, participant.Id)">Backward</div>
                         <div class="button" (click)="oneModal.open(participant.Id)">Notify</div>
                     </div>
                 </div>
