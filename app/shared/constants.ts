@@ -12,6 +12,9 @@ export var apis = {
     forwardParticipant: (eventId: number) => {
         return base + 'event/' + eventId + '/forward';
     },
+    backwardParticipant: (eventId: number) => {
+        return base + 'event/' + eventId + '/backward';
+    },
     pdfs: base + 'admin/upload',
     notifyAll: (eventId: number) => {
         return base + 'event/' + eventId + '/notify/all';
@@ -19,5 +22,5 @@ export var apis = {
     notify: (eventId: number) => {
         return base + 'event/' + eventId + '/notify';
     },
-    changePassword: base + 'admin/change-password';
+    changePassword: base + 'admin/change-password'
 };

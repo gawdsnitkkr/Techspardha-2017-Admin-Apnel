@@ -91,7 +91,7 @@ export class WelcomeComponent {
                     this.event = event.data;
                 }
                 else {
-                    this.alertService.error(event.status.message);
+                    this.alertService.error(event.data);
                 }
             },
             err => {
@@ -173,18 +173,23 @@ export class WelcomeComponent {
 
         let s = new Date(this.event.Start);
         let e = new Date(this.event.End);
-        if(
-            isNaN(s.getDate()) ||
-            isNaN(e.getDate()) ||
-            this.event.Description.length < 1 ||
-            this.event.Rules.length < 1 ||
-            this.event.Venue.length == 0 ||
-            !this.event.MaxContestants ||
-            this.event.CurrentRound == undefined ||
-            this.event.Pdf.length == 0
-            ) {
-            this.alertService.error("Please correct the red boxes");
-        }
+        let errMsg = '';
+        if(isNaN(s.getDate()))
+            errMsg = 'Start date is undefined';
+        else if(isNaN(e.getDate()))
+            errMsg = 'End date is undefined';
+        else if(this.event.Description.length < 1)
+            errMsg = 'Please write some description';
+        else if(this.event.Rules.length < 1)
+            errMsg = 'Please write rules for the event';
+        else if(this.event.Venue.length == 0)
+            errMsg = 'Please specify venue for the event';
+        else if(!this.event.MaxContestants)
+            errMsg = 'Plese specify maxiumum number of contestants per team';
+        else if(this.event.CurrentRound == undefined)
+            errMsg = 'Please specify current round of the event';
+        else if(this.event.TotalRounds == undefined)
+            errMsg = 'Please specify total number of rounds';
         else {
             // No errors, post request
             payload.Start = this.convertDate(payload.Start);
@@ -204,8 +209,9 @@ export class WelcomeComponent {
                 }
             );
         }
-
-
+        if(errMsg.length) {
+            this.alertService.error(errMsg);
+        }
     }
     forwardParticipant(index: number, id: number) {
         // Move participants to next level
@@ -221,7 +227,7 @@ export class WelcomeComponent {
                     }
                     else {
                         this.alertService.clear();
-                        this.alertService.error(response.status.message);
+                        this.alertService.error(response.data);
                     }
                 },
                 err => {
@@ -231,6 +237,32 @@ export class WelcomeComponent {
                 }
             )
     }
+
+    backwardParticipant(index: number, id: number) {
+        // Move participants to next level
+        this.alertService.wait("Taking back", "Processing...");
+        this.participantsService.backwardParticipant(this.eventId, id)
+            .subscribe(
+                response => {
+                    this.alertService.clear();
+                    if(response.status.code === 200) {
+                        this.alertService.success("Successfully processed");
+                        this.participants[index].Level--;
+                        this.sortParticipants();
+                    }
+                    else {
+                        this.alertService.clear();
+                        this.alertService.error(response.data);
+                    }
+                },
+                err => {
+                    this.alertService.clear();
+                    this.alertService.error("Something went wrong, contact gawds");
+                    console.log('Error occured', err);
+                }
+            )
+    }
+
     sortParticipants() {
         // Arrange participants according to current round
         // Participants in current round on top
@@ -279,7 +311,7 @@ export class WelcomeComponent {
                     this.notiMessage = '';
                 }
                 else {
-                    this.alertService.error(response.status.message);
+                    this.alertService.error(response.data);
                 }
             },
             err => {
@@ -302,7 +334,7 @@ export class WelcomeComponent {
                     this.notiMessage = '';
                 }
                 else {
-                    this.alertService.error(response.status.message);
+                    this.alertService.error(response.data);
                 }
             },
             err => {
@@ -336,7 +368,7 @@ export class WelcomeComponent {
                       this.alertService.success('Password changed successfully');
                   }
                   else {
-                      this.alertService.error(response.status.message);
+                      this.alertService.error(response.data);
                   }
               },
               err => {

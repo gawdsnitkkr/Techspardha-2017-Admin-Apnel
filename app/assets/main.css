@@ -260,6 +260,17 @@ body {
     margin: 0% 0 1% 0;
 }
 
+.box {
+    display: inline-block;
+    width: 49%;
+}
+
+.separator {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    border-top: 1px solid #7d7d7d;
+}
+
 .left-75 {
     width: 76%;
     float: left;
@@ -284,7 +295,6 @@ input[type=datetime-local]::-webkit-calendar-picker-indicator {
 .control-area {
     width: 24%;
     text-align: center;
-    margin-top: 10px;
     display: inline-block;
 }
 
@@ -438,6 +448,11 @@ Slim loading ends
 
     .text-box {
         width: 87%;
+    }
+
+    .box {
+        display: block;
+        width: 100%;
     }
 
     #response-button, #event-button, #update-status-button, #save-event {

@@ -12,6 +12,9 @@ exports.apis = {
     forwardParticipant: function (eventId) {
         return base + 'event/' + eventId + '/forward';
     },
+    backwardParticipant: function (eventId) {
+        return base + 'event/' + eventId + '/backward';
+    },
     pdfs: base + 'admin/upload',
     notifyAll: function (eventId) {
         return base + 'event/' + eventId + '/notify/all';
