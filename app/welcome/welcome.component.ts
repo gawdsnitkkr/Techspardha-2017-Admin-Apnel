@@ -55,6 +55,7 @@ export class WelcomeComponent {
     ngOnInit(): void {
         this.event = this.eventService.getEvent();
         this.oneModal.onOpen.subscribe((id) => {
+          console.log(id);
           this.curInviteId = id[0];
         });
         if (!this.event) {
@@ -115,6 +116,7 @@ export class WelcomeComponent {
                             if(participant.Student) {
                                 return {
                                     Name: participant.Student.Name,
+                                    Id: participant.Student.Id,
                                     Level: participant.CurrentRound,
                                     Email: participant.Student.Email,
                                     College: participant.Student.Details.College,
