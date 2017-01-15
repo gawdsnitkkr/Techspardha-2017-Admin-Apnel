@@ -40,6 +40,7 @@ var WelcomeComponent = (function () {
         var _this = this;
         this.event = this.eventService.getEvent();
         this.oneModal.onOpen.subscribe(function (id) {
+            console.log(id);
             _this.curInviteId = id[0];
         });
         if (!this.event) {
@@ -72,7 +73,7 @@ var WelcomeComponent = (function () {
                 _this.event = event.data;
             }
             else {
-                _this.alertService.error(event.status.message);
+                _this.alertService.error(event.data);
             }
         }, function (err) {
             _this.alertService.clear();
@@ -93,6 +94,7 @@ var WelcomeComponent = (function () {
                     if (participant.Student) {
                         return {
                             Name: participant.Student.Name,
+                            Id: participant.Student.Id,
                             Level: participant.CurrentRound,
                             Email: participant.Student.Email,
                             College: participant.Student.Details.College,
@@ -194,7 +196,7 @@ var WelcomeComponent = (function () {
             }
             else {
                 _this.alertService.clear();
-                _this.alertService.error(response.status.message);
+                _this.alertService.error(response.data);
             }
         }, function (err) {
             _this.alertService.clear();
@@ -216,7 +218,7 @@ var WelcomeComponent = (function () {
             }
             else {
                 _this.alertService.clear();
-                _this.alertService.error(response.status.message);
+                _this.alertService.error(response.data);
             }
         }, function (err) {
             _this.alertService.clear();
@@ -228,7 +230,7 @@ var WelcomeComponent = (function () {
         // Arrange participants according to current round
         // Participants in current round on top
         this.participants = this.participants.sort(function (first, second) {
-            return first.Level - second.Level;
+            return second.Level - first.Level;
         });
     };
     WelcomeComponent.prototype.logout = function () {
@@ -264,7 +266,33 @@ var WelcomeComponent = (function () {
                 _this.notiMessage = '';
             }
             else {
-                _this.alertService.error(response.status.message);
+                _this.alertService.error(response.data);
+            }
+        }, function (err) {
+            _this.alertService.clear();
+            _this.alertService.error("Contact gawds to resolve the error");
+            console.log(err);
+        });
+    };
+    WelcomeComponent.prototype.notifyAllCurrent = function () {
+        var _this = this;
+        this.alertService.wait("Please wait while we are notifying participants", "Notifying all participants");
+        var msg = this.notiMessage;
+        var levels = this.participants.map(function (participant) { return participant.Level; });
+        var maxLevel = Math.max.apply(Math, levels);
+        var participantIds = this.participants.filter(function (participant) {
+            return participant.Level === maxLevel;
+        }).map(function (participant) {
+            return participant.Id;
+        });
+        this.notificationService.notify(this.event.Id, 'current', msg, this.admin.token, participantIds).subscribe(function (response) {
+            _this.alertService.clear();
+            if (response.status.code === 200) {
+                _this.alertService.success('Notified');
+                _this.notiMessage = '';
+            }
+            else {
+                _this.alertService.error(response.data);
             }
         }, function (err) {
             _this.alertService.clear();
@@ -283,7 +311,7 @@ var WelcomeComponent = (function () {
                 _this.notiMessage = '';
             }
             else {
-                _this.alertService.error(response.status.message);
+                _this.alertService.error(response.data);
             }
         }, function (err) {
             _this.alertService.clear();
@@ -313,7 +341,7 @@ var WelcomeComponent = (function () {
                     _this.alertService.success('Password changed successfully');
                 }
                 else {
-                    _this.alertService.error(response.status.message);
+                    _this.alertService.error(response.data);
                 }
             }, function (err) {
                 console.log(err);

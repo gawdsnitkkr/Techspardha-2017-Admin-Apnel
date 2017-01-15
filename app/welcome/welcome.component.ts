@@ -32,7 +32,6 @@ export class WelcomeComponent {
     private curInviteId: number;
     @ViewChild('oneModal') oneModal;
 
-
     constructor(
             private participantsService: ParticipantsService,
             private eventService: EventService,
@@ -269,7 +268,7 @@ export class WelcomeComponent {
         // Arrange participants according to current round
         // Participants in current round on top
         this.participants = this.participants.sort((first, second) => {
-            return first.Level - second.Level;
+            return second.Level - first.Level;
         });
     }
 
@@ -323,6 +322,38 @@ export class WelcomeComponent {
             }
         )
     }
+
+    notifyAllCurrent() {
+        this.alertService.wait("Please wait while we are notifying participants",
+            "Notifying all participants");
+        let msg = this.notiMessage;
+        let levels = this.participants.map((participant) => { return participant.Level;});
+        let maxLevel = Math.max(...levels);
+        let participantIds = this.participants.filter((participant) => {
+            return participant.Level === maxLevel;
+        }).map((participant) => {
+            return participant.Id;
+        });
+
+        this.notificationService.notify(this.event.Id, 'current', msg, this.admin.token, participantIds).subscribe(
+            response => {
+                this.alertService.clear();
+                if(response.status.code === 200) {
+                    this.alertService.success('Notified');
+                    this.notiMessage = '';
+                }
+                else {
+                    this.alertService.error(response.data);
+                }
+            },
+            err => {
+                this.alertService.clear();
+                this.alertService.error("Contact gawds to resolve the error");
+                console.log(err);
+            }
+        )
+    }
+
 
     notifyOne() {
         this.alertService.wait("Please wait while we are notifying participants",

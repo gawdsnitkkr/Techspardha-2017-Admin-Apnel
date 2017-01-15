@@ -23,12 +23,14 @@
             <!-- Response content goes here  -->
 
             <div class="blue-button" (click)="allModal.open()">Notify All</div>
-
+            <div class="blue-button" (click)="allCurrentModal.open()">Notify All in Current Round</div>
             <img src="app/assets/arrows.svg"
                 class="refresh-button"
                 alt="Refresh"
                 (click)="fetchAndUpdateParticipants()"/>
             <div style="clear:both;"></div>
+            <h6>NOTE: When you forward a participant, a non-cancelable notification is sent to the participant that he/she is selected for the next round.</h6>
+
             <hr class="separator"/>
             <div class="single-box">
                 <div *ngIf="!participants || participants.length == 0">
@@ -127,6 +129,7 @@
                         #inputFile
                         (change)="fileChanged($event)"/>
                 </div>
+                <div id="update-event-button" class="button" (click)="updateEvent()">Update Event</div>
 
             </div> <!-- ngif-->
         </div>
@@ -149,6 +152,25 @@
     </modal-content>
 
 </modal>
+
+<modal  title="Notify All in CurrentRound"
+        cancelButtonLabel="cancel"
+        submitButtonLabel="Notify"
+        modalClass="modal-lg modal-sm any-other-css-class"
+        [hideCloseButton]="false"
+        [closeOnEscape]="true"
+        [closeOnOutsideClick]="true"
+        (onSubmit)="notifyAllCurrent($event)"
+        #allCurrentModal>
+
+    <modal-content>
+        Enter the notification message to send.
+        <br />
+        <textarea rows="4" [(ngModel)]="notiMessage" class="message-box"></textarea>
+    </modal-content>
+
+</modal>
+
 <modal  title="Notify Participant"
         cancelButtonLabel="cancel"
         submitButtonLabel="Notify"
