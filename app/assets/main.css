@@ -231,11 +231,16 @@ body {
 
 .boxes {
     width: 100%;
+    padding: 1%;
+    padding-bottom: 0px;
     overflow: hidden;
-    margin-bottom: 2%;
     float: left;
     display: inline-block;
-    border-bottom: 1px solid #7d7d7d
+    border-radius: 2px;
+}
+
+.boxes:nth-child(2n+1) {
+    background-color: rgba(86, 87, 95, 0.68);
 }
 
 .boxes input[type="text"] {
@@ -303,7 +308,7 @@ input[type=datetime-local]::-webkit-calendar-picker-indicator {
     display: block;
     float: right;
     margin: 1%;
-    padding: 4%;
+    padding: 3%;
     margin-right: 1.5%;
     border-radius: 2px;
     outline: none;
