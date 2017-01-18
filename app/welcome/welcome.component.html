@@ -129,6 +129,13 @@
                         #inputFile
                         (change)="fileChanged($event)"/>
                 </div>
+                <div class="single-box">
+                    <p>Result</p>
+                    <textarea rows=6
+                        [(ngModel)]="event.Result"
+                        #eventResult>
+                    </textarea>
+                </div>
                 <div id="update-event-button" class="button" (click)="updateEvent()">Update Event</div>
 
             </div> <!-- ngif-->
